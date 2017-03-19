@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using Photon.SocketServer;
 using PhotonHostRuntimeInterfaces;
 using HearthStone.Server;
+using HearthStone.Protocol.Communication.OperationCodes;
 
 namespace HearthStone.PhotonServerEnvironment
 {
@@ -12,7 +14,7 @@ namespace HearthStone.PhotonServerEnvironment
 
         public PhotonServerPeer(InitRequest initRequest) : base(initRequest)
         {
-            ServerEndPoint = new ServerEndPoint();
+            ServerEndPoint = new ServerEndPoint(new PhotonServerCommunicationInterface(this));
             EndPointFactory.Instance.EndPointConnect(ServerEndPoint);
         }
 
@@ -23,7 +25,9 @@ namespace HearthStone.PhotonServerEnvironment
 
         protected override void OnOperationRequest(OperationRequest operationRequest, SendParameters sendParameters)
         {
-
+            EndPointOperationCode operationCode = (EndPointOperationCode)operationRequest.OperationCode;
+            Dictionary<byte, object> parameters = operationRequest.Parameters;
+            ServerEndPoint.OperationManager.Operate(operationCode, parameters);
         }
     }
 }

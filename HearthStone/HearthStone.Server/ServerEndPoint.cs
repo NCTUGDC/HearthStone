@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HearthStone.Library;
+using HearthStone.Library.CommunicationInfrastructure;
 
 namespace HearthStone.Server
 {
@@ -11,7 +12,7 @@ namespace HearthStone.Server
     {
         public Guid Guid { get; protected set; }
 
-        public ServerEndPoint()
+        public ServerEndPoint(CommunicationInterface communicationInterface) : base(communicationInterface)
         {
             Guid = Guid.NewGuid();
             while (EndPointFactory.Instance.ContainsEndPointGuid(Guid))

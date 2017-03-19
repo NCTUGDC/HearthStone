@@ -1,7 +1,9 @@
 ﻿using ExitGames.Client.Photon;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using HearthStone.Library;
+using HearthStone.Protocol.Communication.OperationCodes;
 
 public class PhotonService : IPhotonPeerListener
 {
@@ -97,5 +99,10 @@ public class PhotonService : IPhotonPeerListener
     public void Disconnect()
     {
         peer.Disconnect();
+    }
+
+    public void SendOperation(EndPointOperationCode operationCode, Dictionary<byte, object> parameters)
+    {
+        peer.OpCustom((byte)operationCode, parameters, true, 0, true);
     }
 }
