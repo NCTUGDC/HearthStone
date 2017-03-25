@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HearthStone.Unity.Plugins", "HearthStone.Unity.Plugins.csproj", "{E30069A0-1F3F-082E-B189-B3110EC51E13}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HearthStone.Unity", "HearthStone.Unity.csproj", "{E66B08A9-A7AE-F10D-FB9D-FC13FEA04068}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E30069A0-1F3F-082E-B189-B3110EC51E13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E30069A0-1F3F-082E-B189-B3110EC51E13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E30069A0-1F3F-082E-B189-B3110EC51E13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E30069A0-1F3F-082E-B189-B3110EC51E13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E66B08A9-A7AE-F10D-FB9D-FC13FEA04068}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E66B08A9-A7AE-F10D-FB9D-FC13FEA04068}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E66B08A9-A7AE-F10D-FB9D-FC13FEA04068}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E66B08A9-A7AE-F10D-FB9D-FC13FEA04068}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

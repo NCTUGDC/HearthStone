@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HearthStone.Library", "HearthStone.Library\HearthStone.Library.csproj", "{ADCF3A1D-6023-4FBA-BB3C-69256C730B59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HearthStone.PhotonServerEnvironment", "HearthStone.PhotonServerEnvironment\HearthStone.PhotonServerEnvironment.csproj", "{584097B2-EE09-49B4-8532-E293625EE7C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HearthStone.Server", "HearthStone.Server\HearthStone.Server.csproj", "{F836777D-A8C1-43E5-BA67-A5648BBA4AA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HearthStone.Protocol", "HearthStone.Protocol\HearthStone.Protocol.csproj", "{B58CAE3F-3DFA-4A85-8789-DE6A667B2F8E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HearthStone.Protocol.Communication", "HearthStone.Protocol.Communication\HearthStone.Protocol.Communication.csproj", "{05B30BA3-F142-42A3-868C-8B3A344FDF8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HearthStone.Database", "HearthStone.Database\HearthStone.Database.csproj", "{32C00DC3-D1FE-4C46-9040-A105F6855AB7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HearthStone.Database.MySQL", "HearthStone.Database.MySQL\HearthStone.Database.MySQL.csproj", "{A3CAD60A-7FAD-4652-B9D9-F3B99B888721}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ADCF3A1D-6023-4FBA-BB3C-69256C730B59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADCF3A1D-6023-4FBA-BB3C-69256C730B59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADCF3A1D-6023-4FBA-BB3C-69256C730B59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADCF3A1D-6023-4FBA-BB3C-69256C730B59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{584097B2-EE09-49B4-8532-E293625EE7C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{584097B2-EE09-49B4-8532-E293625EE7C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{584097B2-EE09-49B4-8532-E293625EE7C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{584097B2-EE09-49B4-8532-E293625EE7C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F836777D-A8C1-43E5-BA67-A5648BBA4AA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F836777D-A8C1-43E5-BA67-A5648BBA4AA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F836777D-A8C1-43E5-BA67-A5648BBA4AA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F836777D-A8C1-43E5-BA67-A5648BBA4AA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B58CAE3F-3DFA-4A85-8789-DE6A667B2F8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B58CAE3F-3DFA-4A85-8789-DE6A667B2F8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B58CAE3F-3DFA-4A85-8789-DE6A667B2F8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B58CAE3F-3DFA-4A85-8789-DE6A667B2F8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05B30BA3-F142-42A3-868C-8B3A344FDF8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05B30BA3-F142-42A3-868C-8B3A344FDF8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05B30BA3-F142-42A3-868C-8B3A344FDF8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05B30BA3-F142-42A3-868C-8B3A344FDF8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32C00DC3-D1FE-4C46-9040-A105F6855AB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32C00DC3-D1FE-4C46-9040-A105F6855AB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32C00DC3-D1FE-4C46-9040-A105F6855AB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32C00DC3-D1FE-4C46-9040-A105F6855AB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3CAD60A-7FAD-4652-B9D9-F3B99B888721}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3CAD60A-7FAD-4652-B9D9-F3B99B888721}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3CAD60A-7FAD-4652-B9D9-F3B99B888721}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3CAD60A-7FAD-4652-B9D9-F3B99B888721}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
