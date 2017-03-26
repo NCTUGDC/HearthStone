@@ -13,27 +13,40 @@ namespace HearthStone.Library.CommunicationInfrastructure.Response.Handlers
             this.subject = subject;
         }
 
-        internal virtual bool Handle(TOperationCode operationCode, ReturnCode returnCode, string debugMessage, Dictionary<byte, object> parameters)
+        internal virtual bool Handle(TOperationCode operationCode, ReturnCode returnCode, string operationMessage, Dictionary<byte, object> parameters, out string errorMessage)
         {
-            if (CheckError(operationCode, parameters, returnCode, debugMessage))
+            if (CheckError(operationCode, parameters, returnCode, operationMessage, out errorMessage))
             {
                 return true;
             }
             else
             {
-                LogService.ErrorFormat($"Error On {subject.GetType()}  OperationCode: {operationCode}, ReturnCode: {returnCode}, DebugMessage: {debugMessage}");
+                errorMessage = $"Error On {subject.GetType()}  OperationCode: {operationCode}, ReturnCode: {returnCode}, OperationMessage: {operationMessage}, ErrorMessage: {errorMessage}";
                 return false;
             }
         }
-        internal virtual bool CheckError(TOperationCode operationCode, Dictionary<byte, object> parameters, ReturnCode returnCode, string debugMessage)
+        internal virtual bool CheckError(TOperationCode operationCode, Dictionary<byte, object> parameters, ReturnCode returnCode, string operationMessage, out string errorMessage)
         {
             switch (returnCode)
             {
                 case ReturnCode.Correct:
-                    return parameters.Count == correctParameterCount;
+                    return CheckParameters(parameters, out errorMessage);
                 default:
-                    LogService.ErrorFormat($"OperationResponse: {operationCode} Unknown ReturnCode: {returnCode}, DebugMessage: {debugMessage}");
+                    errorMessage = $"OperationResponse: {operationCode} Unknown ReturnCode: {returnCode}, OperationMessage: {operationMessage}";
                     return false;
+            }
+        }
+        internal virtual bool CheckParameters(Dictionary<byte, object> parameters, out string errorMessage)
+        {
+            if (parameters.Count != correctParameterCount)
+            {
+                errorMessage = string.Format("Parameter Count: {0} Should be {1}", parameters.Count, correctParameterCount);
+                return false;
+            }
+            else
+            {
+                errorMessage = "";
+                return true;
             }
         }
     }

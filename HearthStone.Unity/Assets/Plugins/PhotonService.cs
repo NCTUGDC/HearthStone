@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using HearthStone.Library;
+using HearthStone.Protocol;
 using HearthStone.Protocol.Communication.OperationCodes;
+using HearthStone.Protocol.Communication.EventCodes;
 
 public class PhotonService : IPhotonPeerListener
 {
@@ -54,12 +56,20 @@ public class PhotonService : IPhotonPeerListener
 
     public void OnEvent(EventData eventData)
     {
-
+        string errorMessage;
+        if(!EndPointManager.EndPoint.EventManager.Operate((EndPointEventCode)eventData.Code, eventData.Parameters, out errorMessage))
+        {
+            LogService.ErrorFormat("Event Fail, ErrorMessage: {0}", errorMessage);
+        }
     }
 
     public void OnOperationResponse(OperationResponse operationResponse)
     {
-
+        string errorMessage;
+        if (!EndPointManager.EndPoint.ResponseManager.Operate((EndPointOperationCode)operationResponse.OperationCode, (ReturnCode)operationResponse.ReturnCode, operationResponse.DebugMessage, operationResponse.Parameters, out errorMessage))
+        {
+            LogService.ErrorFormat("OperationResponse Fail, ErrorMessage: {0}", errorMessage);
+        }
     }
 
     public void OnStatusChanged(StatusCode statusCode)

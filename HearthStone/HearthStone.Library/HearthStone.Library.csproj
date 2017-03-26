@@ -39,16 +39,30 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommunicationInfrastructure\CommunicationInterface.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\EndPointEventHandlers\EndPointSyncDataBroker.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Handlers\EndPointEventHandlers\PlayerEventBroker.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Handlers\EventHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\PlayerEventHandlers\PlayerSyncDataBroker.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\SyncDataBroker.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\SyncDataHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Managers\EndPointEventManager.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Managers\PlayerEventManager.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\EndPointOperationHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Operation\Handlers\EndPointOperationHandlers\EndPointFetchDataBroker.cs" />
+    <Compile Include="CommunicationInfrastructure\Operation\Handlers\EndPointOperationHandlers\EndPointFetchDataHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\EndPointOperationHandlers\PlayerOperationBroker.cs" />
+    <Compile Include="CommunicationInfrastructure\Operation\Handlers\FetchDataBroker.cs" />
+    <Compile Include="CommunicationInfrastructure\Operation\Handlers\FetchDataHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\OperationHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\PlayerFetchDataBroker.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Managers\EndPointOperationManager.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Managers\PlayerOperationManager.cs" />
+    <Compile Include="CommunicationInfrastructure\Response\Handlers\EndPointResponseHandlers\FetchDataResponseBroker.cs" />
     <Compile Include="CommunicationInfrastructure\Response\Handlers\EndPointResponseHandlers\PlayerOperationResponseBroker.cs" />
+    <Compile Include="CommunicationInfrastructure\Response\Handlers\FetchDataResponseHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Response\Handlers\FetchDataResponseResolver.cs" />
+    <Compile Include="CommunicationInfrastructure\Response\Handlers\PlayerResponseHandlers\FetchDataResponseBroker.cs" />
     <Compile Include="CommunicationInfrastructure\Response\Handlers\ResponseHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Response\Managers\EndPointResponseManager.cs" />
     <Compile Include="CommunicationInfrastructure\Response\Managers\PlayerResponseManager.cs" />

@@ -1,8 +1,10 @@
 ﻿using HearthStone.Library.CommunicationInfrastructure.Operation.Handlers;
 using HearthStone.Library.CommunicationInfrastructure.Operation.Handlers.EndPointOperationHandlers;
+using HearthStone.Protocol.Communication.FetchDataCodes;
+using HearthStone.Protocol.Communication.FetchDataParameters;
 using HearthStone.Protocol.Communication.OperationCodes;
-using System.Collections.Generic;
 using HearthStone.Protocol.Communication.OperationParameters.EndPointParameterCodes;
+using System.Collections.Generic;
 
 namespace HearthStone.Library.CommunicationInfrastructure.Operation.Managers
 {
@@ -10,33 +12,51 @@ namespace HearthStone.Library.CommunicationInfrastructure.Operation.Managers
     {
         private readonly EndPoint endPoint;
         private readonly Dictionary<EndPointOperationCode, OperationHandler<EndPoint, EndPointOperationCode>> operationTable = new Dictionary<EndPointOperationCode, OperationHandler<EndPoint, EndPointOperationCode>>();
+        public EndPointFetchDataBroker FetchDataBroker { get; private set; }
 
-        public EndPointOperationManager(EndPoint endPoint)
+        internal EndPointOperationManager(EndPoint endPoint)
         {
             this.endPoint = endPoint;
+            FetchDataBroker = new EndPointFetchDataBroker(endPoint);
 
+            operationTable.Add(EndPointOperationCode.FetchData, FetchDataBroker);
             operationTable.Add(EndPointOperationCode.PlayerOperation, new PlayerOperationBroker(endPoint));
         }
-        public void Operate(EndPointOperationCode operationCode, Dictionary<byte, object> parameters)
+        public bool Operate(EndPointOperationCode operationCode, Dictionary<byte, object> parameters, out string errorMessage)
         {
             if(operationTable.ContainsKey(operationCode))
             {
-                if (!operationTable[operationCode].Handle(operationCode, parameters))
+                if (operationTable[operationCode].Handle(operationCode, parameters, out errorMessage))
                 {
-                    LogService.ErrorFormat($"EndPointOperation Error: {operationCode} from EndPoint: {endPoint.LastConnectedIPAddress}");
+                    return true;
+                }
+                else
+                {
+                    errorMessage = $"EndPointOperation Error: {operationCode} from EndPoint: {endPoint.LastConnectedIPAddress}\nErrorMessage: {errorMessage}";
+                    return false;
                 }
             }
             else
             {
-                LogService.ErrorFormat($"Unknow EndPointOperation:{operationCode} from EndPoint: {endPoint.LastConnectedIPAddress}");
+                errorMessage = $"Unknow EndPointOperation:{operationCode} from EndPoint: {endPoint.LastConnectedIPAddress}";
+                return false;
             }
         }
-        public void SendOperation(EndPointOperationCode operationCode, Dictionary<byte, object> parameters)
+        internal void SendOperation(EndPointOperationCode operationCode, Dictionary<byte, object> parameters)
         {
             endPoint.CommunicationInterface.SendOperation(operationCode, parameters);
         }
 
-        public void SendPlayerOperation(Player player, PlayerOperationCode operationCode, Dictionary<byte, object> parameters)
+        internal void SendFetchDataOperation(EndPointFetchDataCode fetchCode, Dictionary<byte, object> parameters)
+        {
+            Dictionary<byte, object> fetchDataParameters = new Dictionary<byte, object>
+            {
+                { (byte)FetchDataParameterCode.FetchDataCode, (byte)fetchCode },
+                { (byte)FetchDataParameterCode.Parameters, parameters }
+            };
+            SendOperation(EndPointOperationCode.FetchData, fetchDataParameters);
+        }
+        internal void SendPlayerOperation(Player player, PlayerOperationCode operationCode, Dictionary<byte, object> parameters)
         {
             Dictionary<byte, object> operationParameters = new Dictionary<byte, object>
             {

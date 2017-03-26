@@ -22,5 +22,9 @@ namespace HearthStone.Library
             OperationManager = new PlayerOperationManager(this);
             ResponseManager = new PlayerResponseManager(this);
         }
+        public override string ToString()
+        {
+            return $"PlayerID: {PlayerID}";
+        }
     }
 }

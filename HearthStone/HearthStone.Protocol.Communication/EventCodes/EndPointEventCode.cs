@@ -2,6 +2,7 @@
 {
     public enum EndPointEventCode : byte
     {
+        SyncData,
         PlayerEvent
     }
 }

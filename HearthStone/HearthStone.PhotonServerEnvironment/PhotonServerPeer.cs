@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using HearthStone.Library;
+using HearthStone.Protocol.Communication.OperationCodes;
+using HearthStone.Server;
 using Photon.SocketServer;
 using PhotonHostRuntimeInterfaces;
-using HearthStone.Server;
-using HearthStone.Protocol.Communication.OperationCodes;
+using System;
+using System.Collections.Generic;
 
 namespace HearthStone.PhotonServerEnvironment
 {
@@ -27,7 +28,12 @@ namespace HearthStone.PhotonServerEnvironment
         {
             EndPointOperationCode operationCode = (EndPointOperationCode)operationRequest.OperationCode;
             Dictionary<byte, object> parameters = operationRequest.Parameters;
-            ServerEndPoint.OperationManager.Operate(operationCode, parameters);
+
+            string errorMessage;
+            if(!ServerEndPoint.OperationManager.Operate(operationCode, parameters, out errorMessage))
+            {
+                LogService.Error($"OperationRequest Fail, Guid: {Guid}\nErrorMessage: {errorMessage}");
+            }
         }
     }
 }

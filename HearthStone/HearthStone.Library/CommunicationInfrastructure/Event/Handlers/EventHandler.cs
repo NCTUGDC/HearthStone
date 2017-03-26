@@ -13,29 +13,28 @@ namespace HearthStone.Library.CommunicationInfrastructure.Event.Handlers
             this.correctParameterCount = correctParameterCount;
         }
 
-        internal virtual bool Handle(TEventCode eventCode, Dictionary<byte, object> parameters)
+        internal virtual bool Handle(TEventCode eventCode, Dictionary<byte, object> parameters, out string errorMessage)
         {
-            string debugMessage;
-            if (CheckParameterCount(parameters, out debugMessage))
+            if (CheckParameters(parameters, out errorMessage))
             {
                 return true;
             }
             else
             {
-                LogService.ErrorFormat($"Error On {subject.GetType()}  EventCode: {eventCode}, DebugMessage: {debugMessage}");
+                errorMessage = $"Error On {subject.GetType()}  EventCode: {eventCode}, DebugMessage: {errorMessage}";
                 return false;
             }
         }
-        internal virtual bool CheckParameterCount(Dictionary<byte, object> parameters, out string debugMessage)
+        internal virtual bool CheckParameters(Dictionary<byte, object> parameters, out string errorMessage)
         {
             if (parameters.Count == correctParameterCount)
             {
-                debugMessage = "";
+                errorMessage = "";
                 return true;
             }
             else
             {
-                debugMessage = string.Format($"Parameter Count: {parameters.Count} Should be {correctParameterCount}");
+                errorMessage = string.Format($"Parameter Count: {parameters.Count} Should be {correctParameterCount}");
                 return false;
             }
         }

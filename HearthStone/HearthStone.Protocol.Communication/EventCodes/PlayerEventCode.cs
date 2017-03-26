@@ -2,5 +2,6 @@
 {
     public enum PlayerEventCode : byte
     {
+        SyncData
     }
 }

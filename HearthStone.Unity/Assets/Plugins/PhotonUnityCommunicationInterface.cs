@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using HearthStone.Library;
+﻿using HearthStone.Library;
 using HearthStone.Library.CommunicationInfrastructure;
 using HearthStone.Protocol;
 using HearthStone.Protocol.Communication.EventCodes;
 using HearthStone.Protocol.Communication.OperationCodes;
+using System.Collections.Generic;
 
 public class PhotonUnityCommunicationInterface : CommunicationInterface
 {

@@ -5,7 +5,7 @@
         PlayerID,
         OperationCode,
         ReturnCode,
-        DebugMessage,
+        OperationMessage,
         Parameters
     }
 }

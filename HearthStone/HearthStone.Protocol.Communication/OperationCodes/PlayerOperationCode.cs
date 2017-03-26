@@ -2,5 +2,6 @@
 {
     public enum PlayerOperationCode : byte
     {
+        FetchData
     }
 }

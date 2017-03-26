@@ -8,42 +8,40 @@ namespace HearthStone.Library.CommunicationInfrastructure.Operation.Handlers
         protected TSubject subject;
         protected int correctParameterCount;
 
-        internal OperationHandler(TSubject subject, int correctParameterCount)
+        protected OperationHandler(TSubject subject, int correctParameterCount)
         {
             this.subject = subject;
             this.correctParameterCount = correctParameterCount;
         }
 
-        internal virtual bool Handle(TOperationCode operationCode, Dictionary<byte, object> parameters)
+        internal virtual bool Handle(TOperationCode operationCode, Dictionary<byte, object> parameters, out string errorMessage)
         {
-            string debugMessage;
-            if (CheckParameterCount(parameters, out debugMessage))
+            ReturnCode errorCode;
+            if (CheckParameters(parameters, out errorCode, out errorMessage))
             {
                 return true;
             }
             else
             {
-                SendError(operationCode, ReturnCode.ParameterCountError, debugMessage);
+                SendResponse(operationCode, errorCode, errorMessage, new Dictionary<byte, object>());
                 return false;
             }
         }
-        internal virtual bool CheckParameterCount(Dictionary<byte, object> parameters, out string debugMessage)
+        internal virtual bool CheckParameters(Dictionary<byte, object> parameters, out ReturnCode errorCode, out string errorMessage)
         {
             if (parameters.Count == correctParameterCount)
             {
-                debugMessage = "";
+                errorCode = ReturnCode.Correct;
+                errorMessage = "";
                 return true;
             }
             else
             {
-                debugMessage = string.Format($"Parameter Count: {parameters.Count} Should be {correctParameterCount}");
+                errorCode = ReturnCode.ParameterCountError;
+                errorMessage = $"Parameter Count: {parameters.Count} Should be {correctParameterCount}";
                 return false;
             }
         }
-        internal virtual void SendError(TOperationCode operationCode, ReturnCode returnCode, string debugMessage)
-        {
-            LogService.ErrorFormat($"Error On {subject.GetType()}  OperationCode: {operationCode}, ReturnCode: {returnCode}, DebugMessage: {debugMessage}");
-        }
-        internal abstract void SendResponse(TOperationCode operationCode, Dictionary<byte, object> parameter);
+        internal abstract void SendResponse(TOperationCode operationCode, ReturnCode returnCode, string operationMessage, Dictionary<byte, object> parameters);
     }
 }

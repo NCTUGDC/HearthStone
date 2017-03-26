@@ -2,6 +2,7 @@
 {
     public enum EndPointOperationCode : byte
     {
+        FetchData,
         PlayerOperation
     }
 }

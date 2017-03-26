@@ -1,7 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using HearthStone.Library.CommunicationInfrastructure.Event.Handlers;
+﻿using HearthStone.Library.CommunicationInfrastructure.Event.Handlers;
+using HearthStone.Library.CommunicationInfrastructure.Event.Handlers.PlayerEventHandlers;
 using HearthStone.Protocol.Communication.EventCodes;
+using HearthStone.Protocol.Communication.SyncDataCodes;
+using HearthStone.Protocol.Communication.SyncDataParameters;
+using System.Collections.Generic;
 
 namespace HearthStone.Library.CommunicationInfrastructure.Event.Managers
 {
@@ -9,29 +11,49 @@ namespace HearthStone.Library.CommunicationInfrastructure.Event.Managers
     {
         private readonly Player player;
         private readonly Dictionary<PlayerEventCode, EventHandler<Player, PlayerEventCode>> eventTable = new Dictionary<PlayerEventCode, EventHandler<Player, PlayerEventCode>>();
+        public PlayerSyncDataBroker SyncDataBroker { get; private set; }
+
         internal PlayerEventManager(Player player)
         {
             this.player = player;
+            SyncDataBroker = new PlayerSyncDataBroker(player);
+
+            eventTable.Add(PlayerEventCode.SyncData, SyncDataBroker);
         }
 
-        internal void Operate(PlayerEventCode eventCode, Dictionary<byte, object> parameters)
+        internal bool Operate(PlayerEventCode eventCode, Dictionary<byte, object> parameters, out string errorMessage)
         {
             if (eventTable.ContainsKey(eventCode))
             {
-                if (!eventTable[eventCode].Handle(eventCode, parameters))
+                if (eventTable[eventCode].Handle(eventCode, parameters, out errorMessage))
                 {
-                    LogService.ErrorFormat($"Player Event Error: {eventCode} from PlayerID: {player.PlayerID}");
+                    return true;
+                }
+                else
+                {
+                    errorMessage = $"Player Event Error: {eventCode} from PlayerID: {player.PlayerID}\nErrorMessage: {errorMessage}";
+                    return false;
                 }
             }
             else
             {
-                LogService.ErrorFormat($"Unknow Player Event:{eventCode} from PlayerID: {player.PlayerID}");
+                errorMessage = $"Unknow Player Event:{eventCode} from PlayerID: {player.PlayerID}";
+                return false;
             }
         }
 
         internal void SendEvent(PlayerEventCode eventCode, Dictionary<byte, object> parameters)
         {
             player.EndPoint.EventManager.SendPlayerEvent(player, eventCode, parameters);
+        }
+        internal void SendSyncDataEvent(PlayerSyncDataCode syncCode, Dictionary<byte, object> parameters)
+        {
+            Dictionary<byte, object> syncDataParameters = new Dictionary<byte, object>
+            {
+                { (byte)SyncDataEventParameterCode.SyncDataCode, (byte)syncCode },
+                { (byte)SyncDataEventParameterCode.Parameters, parameters }
+            };
+            SendEvent(PlayerEventCode.SyncData, syncDataParameters);
         }
     }
 }

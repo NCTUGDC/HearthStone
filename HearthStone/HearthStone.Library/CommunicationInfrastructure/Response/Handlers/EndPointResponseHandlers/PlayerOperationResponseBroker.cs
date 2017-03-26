@@ -7,28 +7,27 @@ namespace HearthStone.Library.CommunicationInfrastructure.Response.Handlers.EndP
 {
     internal class PlayerOperationResponseBroker : ResponseHandler<EndPoint, EndPointOperationCode>
     {
-        public PlayerOperationResponseBroker(EndPoint subject) : base(subject)
+        internal PlayerOperationResponseBroker(EndPoint subject) : base(subject)
         {
         }
 
-        internal override bool Handle(EndPointOperationCode operationCode, ReturnCode returnCode, string debugMessage, Dictionary<byte, object> parameters)
+        internal override bool Handle(EndPointOperationCode operationCode, ReturnCode returnCode, string operationMessage, Dictionary<byte, object> parameters, out string errorMessage)
         {
-            if (base.Handle(operationCode, returnCode, debugMessage, parameters))
+            if (base.Handle(operationCode, returnCode, operationMessage, parameters, out errorMessage))
             {
                 int playerID = (int)parameters[(byte)PlayerResponseParameterCode.PlayerID];
                 PlayerOperationCode resolvedOperationCode = (PlayerOperationCode)parameters[(byte)PlayerResponseParameterCode.OperationCode];
                 ReturnCode resolvedReturnCode = (ReturnCode)parameters[(byte)PlayerResponseParameterCode.ReturnCode];
-                string resolvedDebugMessage = (string)parameters[(byte)PlayerResponseParameterCode.DebugMessage];
+                string resolvedOperationMessage = (string)parameters[(byte)PlayerResponseParameterCode.OperationMessage];
                 Dictionary<byte, object> resolvedParameters = (Dictionary<byte, object>)parameters[(byte)PlayerResponseParameterCode.Parameters];
 
                 if (subject.Player.PlayerID == playerID)
                 {
-                    subject.Player.ResponseManager.Operate(resolvedOperationCode, resolvedReturnCode, resolvedDebugMessage, resolvedParameters);
-                    return true;
+                    return subject.Player.ResponseManager.Operate(resolvedOperationCode, resolvedReturnCode, resolvedOperationMessage, resolvedParameters, out errorMessage);
                 }
                 else
                 {
-                    LogService.ErrorFormat($"PlayerOperationResponse Error Player ID: {playerID} Not in EndPoint: {subject.LastConnectedIPAddress}");
+                    errorMessage = $"PlayerOperationResponse Error Player ID: {playerID} Not in EndPoint: {subject.LastConnectedIPAddress}";
                     return false;
                 }
             }

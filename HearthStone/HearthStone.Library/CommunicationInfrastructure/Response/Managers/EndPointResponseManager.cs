@@ -12,38 +12,46 @@ namespace HearthStone.Library.CommunicationInfrastructure.Response.Managers
         private readonly EndPoint endPoint;
         protected readonly Dictionary<EndPointOperationCode, ResponseHandler<EndPoint, EndPointOperationCode>> operationTable = new Dictionary<EndPointOperationCode, ResponseHandler<EndPoint, EndPointOperationCode>>();
 
-        public EndPointResponseManager(EndPoint endPoint)
+        internal EndPointResponseManager(EndPoint endPoint)
         {
             this.endPoint = endPoint;
+
+            operationTable.Add(EndPointOperationCode.FetchData, new FetchDataResponseBroker(endPoint));
             operationTable.Add(EndPointOperationCode.PlayerOperation, new PlayerOperationResponseBroker(endPoint));
         }
-        public void Operate(EndPointOperationCode operationCode, ReturnCode returnCode, string debugMessage, Dictionary<byte, object> parameters)
+        public bool Operate(EndPointOperationCode operationCode, ReturnCode returnCode, string debugMessage, Dictionary<byte, object> parameters, out string errorMessage)
         {
             if (operationTable.ContainsKey(operationCode))
             {
-                if (!operationTable[operationCode].Handle(operationCode, returnCode, debugMessage, parameters))
+                if (operationTable[operationCode].Handle(operationCode, returnCode, debugMessage, parameters, out errorMessage))
                 {
-                    LogService.ErrorFormat($"EndPointResponse Error: {operationCode} from EndPoint: {endPoint.LastConnectedIPAddress}");
+                    return true;
+                }
+                else
+                {
+                    errorMessage = $"EndPointResponse Error: {operationCode} from EndPoint: {endPoint.LastConnectedIPAddress}\nErrorMessage: {errorMessage}";
+                    return false;
                 }
             }
             else
             {
-                LogService.ErrorFormat($"Unknow EndPointResponse:{operationCode} from EndPoint: {endPoint.LastConnectedIPAddress}");
+                errorMessage = $"Unknow EndPointResponse:{operationCode} from EndPoint: {endPoint.LastConnectedIPAddress}";
+                return false;
             }
         }
-        public void SendResponse(EndPointOperationCode operationCode, ReturnCode errorCode, string debugMessage, Dictionary<byte, object> parameters)
+        internal void SendResponse(EndPointOperationCode operationCode, ReturnCode errorCode, string operationMessage, Dictionary<byte, object> parameters)
         {
-            endPoint.CommunicationInterface.SendResponse(operationCode, errorCode, debugMessage, parameters);
+            endPoint.CommunicationInterface.SendResponse(operationCode, errorCode, operationMessage, parameters);
         }
 
-        public void SendPlayerResponse(Player player, PlayerOperationCode operationCode, ReturnCode returnCode, string debugMessage, Dictionary<byte, object> parameters)
+        internal void SendPlayerResponse(Player player, PlayerOperationCode operationCode, ReturnCode returnCode, string operationMessage, Dictionary<byte, object> parameters)
         {
             Dictionary<byte, object> responseData = new Dictionary<byte, object>
             {
                 { (byte)PlayerResponseParameterCode.PlayerID, player.PlayerID },
                 { (byte)PlayerResponseParameterCode.OperationCode, (byte)operationCode },
                 { (byte)PlayerResponseParameterCode.ReturnCode, (short)returnCode },
-                { (byte)PlayerResponseParameterCode.DebugMessage, debugMessage },
+                { (byte)PlayerResponseParameterCode.OperationMessage, operationMessage },
                 { (byte)PlayerResponseParameterCode.Parameters, parameters }
             };
             SendResponse(EndPointOperationCode.PlayerOperation, ReturnCode.Correct, null, responseData);

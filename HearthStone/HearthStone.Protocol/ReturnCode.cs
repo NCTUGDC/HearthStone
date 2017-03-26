@@ -3,6 +3,7 @@
     public enum ReturnCode : short
     {
         Correct,
-        ParameterCountError
+        ParameterCountError,
+        UndefinedOperation
     }
 }

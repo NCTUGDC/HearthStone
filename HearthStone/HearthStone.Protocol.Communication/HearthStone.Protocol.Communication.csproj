@@ -41,11 +41,18 @@
     <Compile Include="EventCodes\EndPointEventCode.cs" />
     <Compile Include="EventCodes\PlayerEventCode.cs" />
     <Compile Include="EventParameters\EndPointEventParameterCodes\PlayerEventParameterCode.cs" />
+    <Compile Include="FetchDataCodes\EndPointFetchDataCode.cs" />
+    <Compile Include="FetchDataCodes\PlayerFetchDataCode.cs" />
+    <Compile Include="FetchDataParameters\FetchDataParameterCode.cs" />
+    <Compile Include="FetchDataResponseParameters\FetchDataResponseParameterCode.cs" />
     <Compile Include="OperationCodes\EndPointOperationCode.cs" />
     <Compile Include="OperationCodes\PlayerOperationCode.cs" />
     <Compile Include="OperationParameters\EndPointParameterCodes\PlayerOperationParameterCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResponseParameters\EndPointResponseParameterCodes\PlayerResponseParameterCode.cs" />
+    <Compile Include="SyncDataCodes\EndPointSyncDataCode.cs" />
+    <Compile Include="SyncDataCodes\PlayerSyncDataCode.cs" />
+    <Compile Include="SyncDataParameters\SyncDataEventParameterCode.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

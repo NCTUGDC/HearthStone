@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 namespace HearthStone.Library.CommunicationInfrastructure.Event.Handlers.EndPointEventHandlers
 {
-    internal class PlayerEventBroker : EventHandler<EndPoint, EndPointEventCode>
+    public class PlayerEventBroker : EventHandler<EndPoint, EndPointEventCode>
     {
-        public PlayerEventBroker(EndPoint subject) : base(subject, 3)
+        internal PlayerEventBroker(EndPoint subject) : base(subject, 3)
         {
         }
-        internal override bool Handle(EndPointEventCode eventCode, Dictionary<byte, object> parameters)
+        internal override bool Handle(EndPointEventCode eventCode, Dictionary<byte, object> parameters, out string errorMessage)
         {
-            if(base.Handle(eventCode, parameters))
+            if(base.Handle(eventCode, parameters, out errorMessage))
             {
                 int playerID = (int)parameters[(byte)PlayerEventParameterCode.PlayerID];
                 PlayerEventCode resolvedEventCode = (PlayerEventCode)parameters[(byte)PlayerEventParameterCode.EventCode];
@@ -19,12 +19,11 @@ namespace HearthStone.Library.CommunicationInfrastructure.Event.Handlers.EndPoin
 
                 if (subject.Player.PlayerID == playerID)
                 {
-                    subject.Player.EventManager.Operate(resolvedEventCode, resolvedParameters);
-                    return true;
+                    return subject.Player.EventManager.Operate(resolvedEventCode, resolvedParameters, out errorMessage);
                 }
                 else
                 {
-                    LogService.ErrorFormat($"PlayerEvent Error Player ID: {playerID} Not in EndPoint: {subject.LastConnectedIPAddress}");
+                    errorMessage = $"PlayerEvent Error Player ID: {playerID} Not in EndPoint: {subject.LastConnectedIPAddress}";
                     return false;
                 }
             }
