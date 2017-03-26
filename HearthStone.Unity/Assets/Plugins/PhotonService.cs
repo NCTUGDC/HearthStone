@@ -50,8 +50,7 @@ public class PhotonService : IPhotonPeerListener
 
     public void DebugReturn(DebugLevel level, string message)
     {
-        //LogService.InfoFormat("{0}:{1}", level, message);
-        Debug.LogFormat("{0}:{1}", level, message);
+        LogService.InfoFormat("{0}:{1}", level, message);
     }
 
     public void OnEvent(EventData eventData)

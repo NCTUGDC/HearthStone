@@ -8,9 +8,10 @@ namespace HearthStone.Library.CommunicationInfrastructure.Response.Handlers
         protected TSubject subject;
         protected int correctParameterCount;
 
-        protected ResponseHandler(TSubject subject)
+        protected ResponseHandler(TSubject subject, int correctParameterCount)
         {
             this.subject = subject;
+            this.correctParameterCount = correctParameterCount;
         }
 
         internal virtual bool Handle(TOperationCode operationCode, ReturnCode returnCode, string operationMessage, Dictionary<byte, object> parameters, out string errorMessage)

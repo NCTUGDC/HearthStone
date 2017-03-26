@@ -50,7 +50,9 @@
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\EndPointOperationHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\EndPointOperationHandlers\EndPointFetchDataBroker.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\EndPointOperationHandlers\EndPointFetchDataHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Operation\Handlers\EndPointOperationHandlers\LoginHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\EndPointOperationHandlers\PlayerOperationBroker.cs" />
+    <Compile Include="CommunicationInfrastructure\Operation\Handlers\EndPointOperationHandlers\RegisterHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\FetchDataBroker.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\FetchDataHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\OperationHandler.cs" />
@@ -59,7 +61,9 @@
     <Compile Include="CommunicationInfrastructure\Operation\Managers\EndPointOperationManager.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Managers\PlayerOperationManager.cs" />
     <Compile Include="CommunicationInfrastructure\Response\Handlers\EndPointResponseHandlers\FetchDataResponseBroker.cs" />
+    <Compile Include="CommunicationInfrastructure\Response\Handlers\EndPointResponseHandlers\LoginResponseHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Response\Handlers\EndPointResponseHandlers\PlayerOperationResponseBroker.cs" />
+    <Compile Include="CommunicationInfrastructure\Response\Handlers\EndPointResponseHandlers\RegisterResponseHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Response\Handlers\FetchDataResponseHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Response\Handlers\FetchDataResponseResolver.cs" />
     <Compile Include="CommunicationInfrastructure\Response\Handlers\PlayerResponseHandlers\FetchDataResponseBroker.cs" />
@@ -68,6 +72,7 @@
     <Compile Include="CommunicationInfrastructure\Response\Managers\PlayerResponseManager.cs" />
     <Compile Include="EndPoint.cs" />
     <Compile Include="LogService.cs" />
+    <Compile Include="OperationInterface.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

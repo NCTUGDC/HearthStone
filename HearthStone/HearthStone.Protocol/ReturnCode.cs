@@ -4,6 +4,11 @@
     {
         Correct,
         ParameterCountError,
-        UndefinedOperation
+        UndefinedOperation,
+        InvalidOperation,
+        AlreadyExisted,
+        InvalidParameter,
+        PermissionDeny,
+        NotExisted
     }
 }

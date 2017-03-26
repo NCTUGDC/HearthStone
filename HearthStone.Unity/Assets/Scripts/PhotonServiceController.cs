@@ -6,24 +6,13 @@ public class PhotonServiceController : MonoBehaviour
     {
         PhotonService.Instance.OnConnectChange += OnConnectChange;
     }
+    private void Start()
+    {
+        PhotonService.Instance.Connect("HearthStone.DevelopmentServer", "127.0.0.1", 30000);
+    }
     void Update()
     {
         PhotonService.Instance.Service();
-    }
-    void OnGUI()
-    {
-        if (PhotonService.Instance.ServerConnected)
-        {
-            GUI.Label(new Rect(20, 10, 100, 20), "connected");
-        }
-        else
-        {
-            GUI.Label(new Rect(20, 10, 100, 20), "connect failed");
-            if (GUI.Button(new Rect(Screen.width / 2 - 200, Screen.height / 2, 400, 100), "連接至伺服器"))
-            {
-                PhotonService.Instance.Connect("HearthStone.DevelopmentServer", "127.0.0.1", 30000);
-            }
-        }
     }
     void OnDestroy()
     {

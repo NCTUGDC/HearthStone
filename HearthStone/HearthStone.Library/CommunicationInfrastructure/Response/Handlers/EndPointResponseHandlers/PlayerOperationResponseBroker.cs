@@ -7,7 +7,7 @@ namespace HearthStone.Library.CommunicationInfrastructure.Response.Handlers.EndP
 {
     internal class PlayerOperationResponseBroker : ResponseHandler<EndPoint, EndPointOperationCode>
     {
-        internal PlayerOperationResponseBroker(EndPoint subject) : base(subject)
+        internal PlayerOperationResponseBroker(EndPoint subject) : base(subject, 5)
         {
         }
 

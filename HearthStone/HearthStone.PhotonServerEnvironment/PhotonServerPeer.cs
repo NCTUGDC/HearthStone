@@ -16,6 +16,7 @@ namespace HearthStone.PhotonServerEnvironment
         public PhotonServerPeer(InitRequest initRequest) : base(initRequest)
         {
             ServerEndPoint = new ServerEndPoint(new PhotonServerCommunicationInterface(this));
+            ServerEndPoint.LastConnectedIPAddress = RemoteIPAddress;
             EndPointFactory.Instance.EndPointConnect(ServerEndPoint);
         }
 

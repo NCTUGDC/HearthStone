@@ -12,7 +12,7 @@ namespace HearthStone.Server
     {
         public Guid Guid { get; protected set; }
 
-        public ServerEndPoint(CommunicationInterface communicationInterface) : base(communicationInterface)
+        public ServerEndPoint(CommunicationInterface communicationInterface) : base(communicationInterface, new ServerOperationInterface())
         {
             Guid = Guid.NewGuid();
             while (EndPointFactory.Instance.ContainsEndPointGuid(Guid))

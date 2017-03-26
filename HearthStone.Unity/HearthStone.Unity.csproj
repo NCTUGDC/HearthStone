@@ -82,14 +82,14 @@
     <Reference Include="HearthStone.Library">
       <HintPath>Assets\Plugins\DLLs\HearthStone.Library.dll</HintPath>
     </Reference>
-    <Reference Include="Photon3Unity3D">
-      <HintPath>Assets\Plugins\DLLs\Photon3Unity3D.dll</HintPath>
+    <Reference Include="HearthStone.Protocol.Communication">
+      <HintPath>Assets\Plugins\DLLs\HearthStone.Protocol.Communication.dll</HintPath>
     </Reference>
     <Reference Include="HearthStone.Protocol">
       <HintPath>Assets\Plugins\DLLs\HearthStone.Protocol.dll</HintPath>
     </Reference>
-    <Reference Include="HearthStone.Protocol.Communication">
-      <HintPath>Assets\Plugins\DLLs\HearthStone.Protocol.Communication.dll</HintPath>
+    <Reference Include="Photon3Unity3D">
+      <HintPath>Assets\Plugins\DLLs\Photon3Unity3D.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -99,7 +99,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\EternalObject.cs" />
+    <Compile Include="Assets\Scripts\LoginController.cs" />
     <Compile Include="Assets\Scripts\PhotonServiceController.cs" />
+    <Compile Include="Assets\Scripts\RegisterController.cs" />
+    <Compile Include="Assets\Scripts\SystemInitializer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

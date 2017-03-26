@@ -3,6 +3,8 @@
     public enum EndPointOperationCode : byte
     {
         FetchData,
-        PlayerOperation
+        PlayerOperation,
+        Register,
+        Login
     }
 }

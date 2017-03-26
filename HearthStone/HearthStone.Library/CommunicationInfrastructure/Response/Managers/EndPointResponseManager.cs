@@ -3,6 +3,7 @@ using HearthStone.Library.CommunicationInfrastructure.Response.Handlers.EndPoint
 using HearthStone.Protocol;
 using HearthStone.Protocol.Communication.OperationCodes;
 using HearthStone.Protocol.Communication.ResponseParameters.EndPointResponseParameterCodes;
+using System;
 using System.Collections.Generic;
 
 namespace HearthStone.Library.CommunicationInfrastructure.Response.Managers
@@ -12,12 +13,20 @@ namespace HearthStone.Library.CommunicationInfrastructure.Response.Managers
         private readonly EndPoint endPoint;
         protected readonly Dictionary<EndPointOperationCode, ResponseHandler<EndPoint, EndPointOperationCode>> operationTable = new Dictionary<EndPointOperationCode, ResponseHandler<EndPoint, EndPointOperationCode>>();
 
+        private event Action<ReturnCode, string> onRegisterResponse;
+        public event Action<ReturnCode, string> OnRegisterResponse { add { onRegisterResponse += value; } remove { onRegisterResponse -= value; } }
+
+        private event Action<ReturnCode, string> onLoginResponse;
+        public event Action<ReturnCode, string> OnLoginResponse { add { onLoginResponse += value; } remove { onLoginResponse -= value; } }
+
         internal EndPointResponseManager(EndPoint endPoint)
         {
             this.endPoint = endPoint;
 
             operationTable.Add(EndPointOperationCode.FetchData, new FetchDataResponseBroker(endPoint));
             operationTable.Add(EndPointOperationCode.PlayerOperation, new PlayerOperationResponseBroker(endPoint));
+            operationTable.Add(EndPointOperationCode.Register, new RegisterResponseHandler(endPoint));
+            operationTable.Add(EndPointOperationCode.Login, new LoginResponseHandler(endPoint));
         }
         public bool Operate(EndPointOperationCode operationCode, ReturnCode returnCode, string debugMessage, Dictionary<byte, object> parameters, out string errorMessage)
         {
@@ -43,7 +52,6 @@ namespace HearthStone.Library.CommunicationInfrastructure.Response.Managers
         {
             endPoint.CommunicationInterface.SendResponse(operationCode, errorCode, operationMessage, parameters);
         }
-
         internal void SendPlayerResponse(Player player, PlayerOperationCode operationCode, ReturnCode returnCode, string operationMessage, Dictionary<byte, object> parameters)
         {
             Dictionary<byte, object> responseData = new Dictionary<byte, object>
@@ -55,6 +63,15 @@ namespace HearthStone.Library.CommunicationInfrastructure.Response.Managers
                 { (byte)PlayerResponseParameterCode.Parameters, parameters }
             };
             SendResponse(EndPointOperationCode.PlayerOperation, ReturnCode.Correct, null, responseData);
+        }
+
+        internal void RegisterResponse(ReturnCode returnCode, string operationMessage)
+        {
+            onRegisterResponse?.Invoke(returnCode, operationMessage);
+        }
+        internal void LoginResponse(ReturnCode returnCode, string operationMessage)
+        {
+            onLoginResponse?.Invoke(returnCode, operationMessage);
         }
     }
 }

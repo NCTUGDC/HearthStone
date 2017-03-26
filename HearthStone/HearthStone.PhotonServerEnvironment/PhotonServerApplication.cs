@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.IO;
 using HearthStone.Server;
 using HearthStone.Library;
+using HearthStone.Database;
+using HearthStone.Database.MySQL;
 
 namespace HearthStone.PhotonServerEnvironment
 {
@@ -36,6 +38,11 @@ namespace HearthStone.PhotonServerEnvironment
         private void SetupServices()
         {
             SetupLog();
+            DatabaseService.Initial(new MySQL_DatabaseService());
+            if(DatabaseService.Connect("127.0.0.1", "HearthStone", "HearthStone", "HearthStone"))
+            {
+                LogService.Info("DatabaseService Setup Successful!");
+            }
         }
         private void SetupFactories()
         {

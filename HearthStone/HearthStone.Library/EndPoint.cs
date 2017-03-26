@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using HearthStone.Library.CommunicationInfrastructure;
 using HearthStone.Library.CommunicationInfrastructure.Event.Managers;
 using HearthStone.Library.CommunicationInfrastructure.Operation.Managers;
@@ -18,7 +19,7 @@ namespace HearthStone.Library
             {
                 return (IsOnline) ? Player.LastConnectedIPAddress : lastConnectedIPAddress;
             }
-            protected set
+            set
             {
                 lastConnectedIPAddress = value;
                 if (IsOnline)
@@ -29,16 +30,29 @@ namespace HearthStone.Library
         }
 
         public CommunicationInterface CommunicationInterface { get; private set; }
+        public OperationInterface OperationInterface { get; private set; }
+
         public EndPointEventManager EventManager { get; private set; }
         public EndPointOperationManager OperationManager { get; private set; }
         public EndPointResponseManager ResponseManager { get; private set; }
 
-        public EndPoint(CommunicationInterface communicationInterface)
+        private event Action<Player> onPlayerOnline;
+        public event Action<Player> OnPlayerOnline { add { onPlayerOnline += value; } remove { onPlayerOnline -= value; } }
+
+        public EndPoint(CommunicationInterface communicationInterface, OperationInterface operationInterface)
         {
             CommunicationInterface = communicationInterface;
+            OperationInterface = operationInterface;
+
             EventManager = new EndPointEventManager(this);
             OperationManager = new EndPointOperationManager(this);
             ResponseManager = new EndPointResponseManager(this);
+        }
+
+        public void PlayerOnline(Player player)
+        {
+            Player = player;
+            onPlayerOnline?.Invoke(player);
         }
     }
 }

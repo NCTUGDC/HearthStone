@@ -8,7 +8,7 @@ namespace HearthStone.Library.CommunicationInfrastructure.Response.Handlers
     {
         protected readonly Dictionary<TFetchDataCode, FetchDataResponseHandler<TSubject, TFetchDataCode>> fetchResponseTable;
 
-        public FetchDataResponseResolver(TSubject subject) : base(subject)
+        public FetchDataResponseResolver(TSubject subject) : base(subject, 4)
         {
             fetchResponseTable = new Dictionary<TFetchDataCode, FetchDataResponseHandler<TSubject, TFetchDataCode>>();
         }

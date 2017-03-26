@@ -6,6 +6,6 @@ public class EndPointManager
 
     static EndPointManager()
     {
-        EndPoint = new EndPoint(new PhotonUnityCommunicationInterface());
+        EndPoint = new EndPoint(new PhotonUnityCommunicationInterface(), null);
     }
 }

@@ -21,6 +21,8 @@ namespace HearthStone.Library.CommunicationInfrastructure.Operation.Managers
 
             operationTable.Add(EndPointOperationCode.FetchData, FetchDataBroker);
             operationTable.Add(EndPointOperationCode.PlayerOperation, new PlayerOperationBroker(endPoint));
+            operationTable.Add(EndPointOperationCode.Register, new RegisterHandler(endPoint));
+            operationTable.Add(EndPointOperationCode.Login, new LoginHandler(endPoint));
         }
         public bool Operate(EndPointOperationCode operationCode, Dictionary<byte, object> parameters, out string errorMessage)
         {
@@ -65,6 +67,26 @@ namespace HearthStone.Library.CommunicationInfrastructure.Operation.Managers
                 { (byte)PlayerOperationParameterCode.Parameters, parameters }
             };
             SendOperation(EndPointOperationCode.PlayerOperation, operationParameters);
+        }
+
+        public void Register(string account, string password, string nickname)
+        {
+            Dictionary<byte, object> parameters = new Dictionary<byte, object>
+            {
+                { (byte)RegisterParameterCode.Account, account },
+                { (byte)RegisterParameterCode.Password, password },
+                { (byte)RegisterParameterCode.Nickname, nickname }
+            };
+            SendOperation(EndPointOperationCode.Register, parameters);
+        }
+        public void Login(string account, string password)
+        {
+            Dictionary<byte, object> parameters = new Dictionary<byte, object>
+            {
+                { (byte)LoginParameterCode.Account, account },
+                { (byte)LoginParameterCode.Password, password },
+            };
+            SendOperation(EndPointOperationCode.Login, parameters);
         }
     }
 }
