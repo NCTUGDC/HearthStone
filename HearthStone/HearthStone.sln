@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HearthStone.Database", "Hea
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HearthStone.Database.MySQL", "HearthStone.Database.MySQL\HearthStone.Database.MySQL.csproj", "{A3CAD60A-7FAD-4652-B9D9-F3B99B888721}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HearthStone.Library.Test", "HearthStone.Library.Test\HearthStone.Library.Test.csproj", "{869BFE29-977A-410C-977B-839DB792E51D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{A3CAD60A-7FAD-4652-B9D9-F3B99B888721}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3CAD60A-7FAD-4652-B9D9-F3B99B888721}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3CAD60A-7FAD-4652-B9D9-F3B99B888721}.Release|Any CPU.Build.0 = Release|Any CPU
+		{869BFE29-977A-410C-977B-839DB792E51D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{869BFE29-977A-410C-977B-839DB792E51D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{869BFE29-977A-410C-977B-839DB792E51D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{869BFE29-977A-410C-977B-839DB792E51D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
