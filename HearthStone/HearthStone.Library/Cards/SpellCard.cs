@@ -10,13 +10,13 @@ namespace HearthStone.Library.Cards
         {
             get
             {
-                throw new NotImplementedException("SpellCard CardType");
+                return CardTypeCode.Spell;
             }
         }
 
         public SpellCard(int cardID, int manaCost, string cardName, List<Effect> effects) : base(cardID, manaCost, cardName, effects)
         {
-            throw new NotImplementedException("SpellCard Constructor");
+            
         }
     }
 }
