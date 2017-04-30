@@ -40,6 +40,9 @@
   <ItemGroup>
     <Compile Include="Card.cs" />
     <Compile Include="CardRecord.cs" />
+    <Compile Include="Cards\ServantCard.cs" />
+    <Compile Include="Cards\SpellCard.cs" />
+    <Compile Include="Cards\WeaponCard.cs" />
     <Compile Include="CommunicationInfrastructure\CommunicationInterface.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Handlers\EndPointEventHandlers\EndPointSyncDataBroker.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Handlers\EndPointEventHandlers\PlayerEventBroker.cs" />
@@ -73,6 +76,7 @@
     <Compile Include="CommunicationInfrastructure\Response\Managers\EndPointResponseManager.cs" />
     <Compile Include="CommunicationInfrastructure\Response\Managers\PlayerResponseManager.cs" />
     <Compile Include="Deck.cs" />
+    <Compile Include="Effect.cs" />
     <Compile Include="Effector.cs" />
     <Compile Include="EndPoint.cs" />
     <Compile Include="Field.cs" />
@@ -94,7 +98,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Cards\" />
     <Folder Include="Effectors\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
