@@ -30,10 +30,10 @@ namespace HearthStone.Library.Test
             Card card = new TestCard(1, 2, "Test", new List<Effect>());
 
             Assert.IsNotNull(card);
-            Assert.Equals(card.CardID, 1);
-            Assert.Equals(card.ManaCost, 2);
-            Assert.Equals(card.CardName, "Test");
-            Assert.Equals(card.Description, "");
+            Assert.AreEqual(card.CardID, 1);
+            Assert.AreEqual(card.ManaCost, 2);
+            Assert.AreEqual(card.CardName, "Test");
+            Assert.AreEqual(card.Description, "");
         }
         [TestMethod]
         public void ConstructorTestMethod2()
@@ -41,10 +41,10 @@ namespace HearthStone.Library.Test
             Card card = new TestCard(1, 2, "Test", new List<Effect> { new TestEffect(1) });
 
             Assert.IsNotNull(card);
-            Assert.Equals(card.CardID, 1);
-            Assert.Equals(card.ManaCost, 2);
-            Assert.Equals(card.CardName, "Test");
-            Assert.Equals(card.Description, "Test Effect");
+            Assert.AreEqual(card.CardID, 1);
+            Assert.AreEqual(card.ManaCost, 2);
+            Assert.AreEqual(card.CardName, "Test");
+            Assert.AreEqual(card.Description, "Test Effect");
         }
 
         [TestMethod]
@@ -53,12 +53,12 @@ namespace HearthStone.Library.Test
             ServantCard card = new ServantCard(1, 2, "ServantCard", new List<Effect>(), 4, 5);
 
             Assert.IsNotNull(card);
-            Assert.Equals(card.CardID, 1);
-            Assert.Equals(card.ManaCost, 2);
-            Assert.Equals(card.CardName, "ServantCard");
-            Assert.Equals(card.Description, "");
-            Assert.Equals(card.Attack, 4);
-            Assert.Equals(card.Health, 5);
+            Assert.AreEqual(card.CardID, 1);
+            Assert.AreEqual(card.ManaCost, 2);
+            Assert.AreEqual(card.CardName, "ServantCard");
+            Assert.AreEqual(card.Description, "");
+            Assert.AreEqual(card.Attack, 4);
+            Assert.AreEqual(card.Health, 5);
         }
 
         [TestMethod]
@@ -67,10 +67,10 @@ namespace HearthStone.Library.Test
             SpellCard card = new SpellCard(1, 2, "SpellCard", new List<Effect>());
 
             Assert.IsNotNull(card);
-            Assert.Equals(card.CardID, 1);
-            Assert.Equals(card.ManaCost, 2);
-            Assert.Equals(card.CardName, "SpellCard");
-            Assert.Equals(card.Description, "");
+            Assert.AreEqual(card.CardID, 1);
+            Assert.AreEqual(card.ManaCost, 2);
+            Assert.AreEqual(card.CardName, "SpellCard");
+            Assert.AreEqual(card.Description, "");
         }
 
         [TestMethod]
@@ -79,12 +79,12 @@ namespace HearthStone.Library.Test
             WeaponCard card = new WeaponCard(1, 2, "WeaponCard", new List<Effect>(), 3, 2);
 
             Assert.IsNotNull(card);
-            Assert.Equals(card.CardID, 1);
-            Assert.Equals(card.ManaCost, 2);
-            Assert.Equals(card.CardName, "WeaponCard");
-            Assert.Equals(card.Description, "");
-            Assert.Equals(card.Attack, 3);
-            Assert.Equals(card.Durability, 2);
+            Assert.AreEqual(card.CardID, 1);
+            Assert.AreEqual(card.ManaCost, 2);
+            Assert.AreEqual(card.CardName, "WeaponCard");
+            Assert.AreEqual(card.Description, "");
+            Assert.AreEqual(card.Attack, 3);
+            Assert.AreEqual(card.Durability, 2);
         }
     }
 }

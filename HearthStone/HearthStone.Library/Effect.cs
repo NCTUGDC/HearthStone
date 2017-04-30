@@ -1,5 +1,4 @@
 ﻿using HearthStone.Protocol;
-using System;
 
 namespace HearthStone.Library
 {
@@ -11,7 +10,7 @@ namespace HearthStone.Library
 
         protected Effect(int effectID)
         {
-            throw new NotImplementedException("Effect Constructor");
+            EffectID = effectID;
         }
     }
 }

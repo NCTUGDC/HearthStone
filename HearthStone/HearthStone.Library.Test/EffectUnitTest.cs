@@ -36,9 +36,9 @@ namespace HearthStone.Library.Test
             Effect effect = new TestEffect(1);
 
             Assert.IsNotNull(effect);
-            Assert.Equals(effect.EffectID, 1);
-            Assert.Equals(effect.EffectType, EffectTypeCode.Test);
-            Assert.Equals(effect.Description, "Test Effect");
+            Assert.AreEqual(effect.EffectID, 1);
+            Assert.AreEqual(effect.EffectType, EffectTypeCode.Test);
+            Assert.AreEqual(effect.Description, "Test Effect");
         }
     }
 }

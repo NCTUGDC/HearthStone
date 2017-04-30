@@ -12,10 +12,10 @@ namespace HearthStone.Library.Test
             Deck deck = new Deck(1, "Test", 30);
 
             Assert.IsNotNull(deck);
-            Assert.Equals(deck.DeckID, 1);
-            Assert.Equals(deck.DeckName, "Test");
-            Assert.Equals(deck.MaxCardCount, "");
-            Assert.Equals(deck.CardCount, 0);
+            Assert.AreEqual(deck.DeckID, 1);
+            Assert.AreEqual(deck.DeckName, "Test");
+            Assert.AreEqual(deck.MaxCardCount, "");
+            Assert.AreEqual(deck.CardCount, 0);
         }
         [TestMethod]
         public void ConstructorTestMethod2()
@@ -23,10 +23,10 @@ namespace HearthStone.Library.Test
             Deck deck = new Deck(1, "Test", 30, new List<Card> { new TestCard(0, 0, "Test", new List<Effect>()) });
 
             Assert.IsNotNull(deck);
-            Assert.Equals(deck.DeckID, 1);
-            Assert.Equals(deck.DeckName, "Test");
-            Assert.Equals(deck.MaxCardCount, "");
-            Assert.Equals(deck.CardCount, 1);
+            Assert.AreEqual(deck.DeckID, 1);
+            Assert.AreEqual(deck.DeckName, "Test");
+            Assert.AreEqual(deck.MaxCardCount, "");
+            Assert.AreEqual(deck.CardCount, 1);
         }
     }
 }
