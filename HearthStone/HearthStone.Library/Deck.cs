@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using HearthStone.Protocol;
 
 namespace HearthStone.Library
 {
@@ -13,6 +14,10 @@ namespace HearthStone.Library
         public IEnumerable<Card> Cards { get { return cards; } }
         public int TotalCardCount { get { return cards.Count; } }
         public bool IsCompleted { get { return TotalCardCount == MaxCardCount; } }
+
+        public delegate void DeckCardChangedEventHandler(Card card, DataChangeCode changeCode);
+        private event DeckCardChangedEventHandler onCardChanged;
+        public event DeckCardChangedEventHandler OnCardChanged { add { onCardChanged += value; } remove { onCardChanged -= value; } }
 
         public Deck(int deckID, string deckName, int maxCardCount)
         {
@@ -42,6 +47,7 @@ namespace HearthStone.Library
                 else
                 {
                     cards.Add(card);
+                    onCardChanged?.Invoke(card, DataChangeCode.Add);
                     return true;
                 }
             }
@@ -54,6 +60,7 @@ namespace HearthStone.Library
                 else
                 {
                     cards.Add(card);
+                    onCardChanged?.Invoke(card, DataChangeCode.Add);
                     return true;
                 }
             }
@@ -62,7 +69,10 @@ namespace HearthStone.Library
         {
             if(CardCount(cardID) > 0)
             {
-                cards.RemoveAt(cards.FindIndex(x => x.CardID == cardID));
+                int index = cards.FindIndex(x => x.CardID == cardID);
+                Card card = cards[index];
+                cards.RemoveAt(index);
+                onCardChanged?.Invoke(card, DataChangeCode.Remove);
                 return true;
             }
             else
