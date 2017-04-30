@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using HearthStone.Library.Cards;
 using HearthStone.Protocol;
-using HearthStone.Library.Cards;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace HearthStone.Library.Test
 {

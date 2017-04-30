@@ -1,8 +1,5 @@
-﻿using System;
+﻿using HearthStone.Protocol;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using HearthStone.Protocol;
 
 namespace HearthStone.Library.Cards
 {
