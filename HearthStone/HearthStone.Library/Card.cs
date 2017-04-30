@@ -15,7 +15,14 @@ namespace HearthStone.Library
             get
             {
                 StringBuilder descriptionBuilder = new StringBuilder("");
-                effects.ForEach(x => descriptionBuilder.AppendLine(x.Description));
+                for(int i = 0; i < effects.Count; i++)
+                {
+                    descriptionBuilder.Append(effects[i].Description);
+                    if(i != effects.Count - 1)
+                    {
+                        descriptionBuilder.AppendLine();
+                    }
+                }
                 return descriptionBuilder.ToString();
             }
         }
