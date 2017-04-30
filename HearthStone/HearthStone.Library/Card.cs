@@ -1,6 +1,7 @@
 ﻿using HearthStone.Protocol;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace HearthStone.Library
 {
@@ -13,7 +14,9 @@ namespace HearthStone.Library
         {
             get
             {
-                throw new NotImplementedException("Card Description");
+                StringBuilder descriptionBuilder = new StringBuilder("");
+                effects.ForEach(x => descriptionBuilder.AppendLine(x.Description));
+                return descriptionBuilder.ToString();
             }
         }
         public abstract CardTypeCode CardType { get; }
@@ -21,7 +24,10 @@ namespace HearthStone.Library
 
         protected Card(int cardID, int manaCost, string cardName, List<Effect> effects)
         {
-            throw new NotImplementedException("Card Constructor");
+            CardID = cardID;
+            ManaCost = manaCost;
+            CardName = cardName;
+            this.effects = effects;
         }
     }
 }
