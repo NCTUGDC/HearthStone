@@ -2,6 +2,7 @@
 {
     public enum CardTypeCode : byte
     {
+        Test,
         Servant,
         Spell,
         Weapon

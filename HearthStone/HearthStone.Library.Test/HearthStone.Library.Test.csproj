@@ -45,13 +45,27 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="CardUnitTest.cs" />
+    <Compile Include="DeckUnitTest.cs" />
+    <Compile Include="EffectUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HearthStone.Library\HearthStone.Library.csproj">
+      <Project>{adcf3a1d-6023-4fba-bb3c-69256c730b59}</Project>
+      <Name>HearthStone.Library</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HearthStone.Protocol\HearthStone.Protocol.csproj">
+      <Project>{b58cae3f-3dfa-4a85-8789-de6a667b2f8e}</Project>
+      <Name>HearthStone.Protocol</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
