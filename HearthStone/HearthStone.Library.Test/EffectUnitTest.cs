@@ -33,6 +33,12 @@ namespace HearthStone.Library.Test
         [TestMethod]
         public void ConstructorTestMethod1()
         {
+            Effect effect = new TestEffect(1);
+
+            Assert.IsNotNull(effect);
+            Assert.Equals(effect.EffectID, 1);
+            Assert.Equals(effect.EffectType, EffectTypeCode.Test);
+            Assert.Equals(effect.Description, "Test Effect");
         }
     }
 }
