@@ -10,6 +10,7 @@ namespace HearthStone.Library
         public int MaxCardCount { get; private set; }
         private List<Card> cards;
         public IEnumerable<Card> Cards { get { throw new NotImplementedException("Deck Cards"); } }
+        public int CardCount { get { throw new NotImplementedException("Deck CardCount"); } }
         public bool IsCompleted { get { throw new NotImplementedException("Deck IsCompleted"); } }
 
         public Deck(int deckID, string deckName, int maxCardCount)
