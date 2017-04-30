@@ -13,7 +13,7 @@ namespace HearthStone.Library.Cards
             }
         }
 
-        public SpellCard(int cardID, int manaCost, string cardName, List<Effect> effects) : base(cardID, manaCost, cardName, effects)
+        public SpellCard(int cardID, int manaCost, string cardName, List<Effect> effects, RarityCode rarity) : base(cardID, manaCost, cardName, effects, rarity)
         {
             
         }

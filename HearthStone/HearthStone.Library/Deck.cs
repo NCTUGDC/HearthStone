@@ -10,8 +10,8 @@ namespace HearthStone.Library
         public int MaxCardCount { get; private set; }
         private List<Card> cards;
         public IEnumerable<Card> Cards { get { return cards; } }
-        public int CardCount { get { return cards.Count; } }
-        public bool IsCompleted { get { return CardCount == MaxCardCount; } }
+        public int TotalCardCount { get { return cards.Count; } }
+        public bool IsCompleted { get { return TotalCardCount == MaxCardCount; } }
 
         public Deck(int deckID, string deckName, int maxCardCount)
         {
@@ -36,7 +36,7 @@ namespace HearthStone.Library
         {
             throw new NotImplementedException("Deck RemoveCard");
         }
-        public int CradCount(int cardID)
+        public int CardCount(int cardID)
         {
             throw new NotImplementedException("Deck ContainsCrad");
         }
