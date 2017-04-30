@@ -9,17 +9,23 @@ namespace HearthStone.Library
         public string DeckName { get; private set; }
         public int MaxCardCount { get; private set; }
         private List<Card> cards;
-        public IEnumerable<Card> Cards { get { throw new NotImplementedException("Deck Cards"); } }
-        public int CardCount { get { throw new NotImplementedException("Deck CardCount"); } }
-        public bool IsCompleted { get { throw new NotImplementedException("Deck IsCompleted"); } }
+        public IEnumerable<Card> Cards { get { return cards; } }
+        public int CardCount { get { return cards.Count; } }
+        public bool IsCompleted { get { return CardCount == MaxCardCount; } }
 
         public Deck(int deckID, string deckName, int maxCardCount)
         {
-            throw new NotImplementedException("Deck Constructor");
+            DeckID = deckID;
+            DeckName = deckName;
+            MaxCardCount = maxCardCount;
+            cards = new List<Card>();
         }
         public Deck(int deckID, string deckName, int maxCardCount, List<Card> cards)
         {
-            throw new NotImplementedException("Deck Constructor");
+            DeckID = deckID;
+            DeckName = deckName;
+            MaxCardCount = maxCardCount;
+            this.cards = cards;
         }
 
         public bool AddCard(Card card)
