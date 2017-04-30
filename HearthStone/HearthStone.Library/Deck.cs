@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace HearthStone.Library
@@ -10,8 +11,8 @@ namespace HearthStone.Library
         public int MaxCardCount { get; private set; }
         private List<Card> cards;
         public IEnumerable<Card> Cards { get { return cards; } }
-        public int CardCount { get { return cards.Count; } }
-        public bool IsCompleted { get { return CardCount == MaxCardCount; } }
+        public int TotalCardCount { get { return cards.Count; } }
+        public bool IsCompleted { get { return TotalCardCount == MaxCardCount; } }
 
         public Deck(int deckID, string deckName, int maxCardCount)
         {
@@ -30,15 +31,48 @@ namespace HearthStone.Library
 
         public bool AddCard(Card card)
         {
-            throw new NotImplementedException("Deck AddCard");
+            if (card == null)
+                return false;
+            else if(card.Rarity == Protocol.RarityCode.Legendary)
+            {
+                if (CardCount(card.CardID) >= 1)
+                {
+                    return false;
+                }
+                else
+                {
+                    cards.Add(card);
+                    return true;
+                }
+            }
+            else
+            {
+                if (CardCount(card.CardID) >= 2)
+                {
+                    return false;
+                }
+                else
+                {
+                    cards.Add(card);
+                    return true;
+                }
+            }
         }
         public bool RemoveCard(int cardID)
         {
-            throw new NotImplementedException("Deck RemoveCard");
+            if(CardCount(cardID) > 0)
+            {
+                cards.RemoveAt(cards.FindIndex(x => x.CardID == cardID));
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
-        public int CradCount(int cardID)
+        public int CardCount(int cardID)
         {
-            throw new NotImplementedException("Deck ContainsCrad");
+            return cards.Count(x => x.CardID == cardID);
         }
     }
 }

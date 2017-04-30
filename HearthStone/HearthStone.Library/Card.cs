@@ -27,13 +27,15 @@ namespace HearthStone.Library
         }
         public abstract CardTypeCode CardType { get; }
         private List<Effect> effects;
+        public RarityCode Rarity { get; private set; }
 
-        protected Card(int cardID, int manaCost, string cardName, List<Effect> effects)
+        protected Card(int cardID, int manaCost, string cardName, List<Effect> effects, RarityCode rarity)
         {
             CardID = cardID;
             ManaCost = manaCost;
             CardName = cardName;
             this.effects = effects;
+            Rarity = rarity;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace HearthStone.Library.Cards
         public int Attack { get; private set; }
         public int Health { get; private set; }
 
-        public ServantCard(int cardID, int manaCost, string cardName, List<Effect> effects, int attack, int health) : base(cardID, manaCost, cardName, effects)
+        public ServantCard(int cardID, int manaCost, string cardName, List<Effect> effects, int attack, int health, RarityCode rarity) : base(cardID, manaCost, cardName, effects, rarity)
         {
             Attack = attack;
             Health = health;
