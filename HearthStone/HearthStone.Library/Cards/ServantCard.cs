@@ -12,7 +12,7 @@ namespace HearthStone.Library.Cards
         {
             get
             {
-                throw new NotImplementedException("ServantCard CardType");
+                return CardTypeCode.Servant;
             }
         }
         public int Attack { get; private set; }
@@ -20,7 +20,8 @@ namespace HearthStone.Library.Cards
 
         public ServantCard(int cardID, int manaCost, string cardName, List<Effect> effects, int attack, int health) : base(cardID, manaCost, cardName, effects)
         {
-            throw new NotImplementedException("ServantCard Constructor");
+            Attack = attack;
+            Health = health;
         }
     }
 }

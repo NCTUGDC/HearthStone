@@ -10,7 +10,7 @@ namespace HearthStone.Library.Cards
         {
             get
             {
-                throw new NotImplementedException("WeaponCard CardType");
+                return CardTypeCode.Weapon;
             }
         }
 
@@ -19,7 +19,8 @@ namespace HearthStone.Library.Cards
 
         public WeaponCard(int cardID, int manaCost, string cardName, List<Effect> effects, int attack, int durability) : base(cardID, manaCost, cardName, effects)
         {
-            throw new NotImplementedException("WeaponCard Constructor");
+            Attack = attack;
+            Durability = durability;
         }
     }
 }

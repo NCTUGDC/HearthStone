@@ -34,6 +34,7 @@ namespace HearthStone.Library.Test
             Assert.AreEqual(card.ManaCost, 2);
             Assert.AreEqual(card.CardName, "Test");
             Assert.AreEqual(card.Description, "");
+            Assert.AreEqual(card.CardType,  CardTypeCode.Test);
         }
         [TestMethod]
         public void ConstructorTestMethod2()
@@ -45,6 +46,7 @@ namespace HearthStone.Library.Test
             Assert.AreEqual(card.ManaCost, 2);
             Assert.AreEqual(card.CardName, "Test");
             Assert.AreEqual(card.Description, "Test Effect");
+            Assert.AreEqual(card.CardType, CardTypeCode.Test);
         }
 
         [TestMethod]
@@ -57,6 +59,7 @@ namespace HearthStone.Library.Test
             Assert.AreEqual(card.ManaCost, 2);
             Assert.AreEqual(card.CardName, "ServantCard");
             Assert.AreEqual(card.Description, "");
+            Assert.AreEqual(card.CardType, CardTypeCode.Servant);
             Assert.AreEqual(card.Attack, 4);
             Assert.AreEqual(card.Health, 5);
         }
@@ -71,6 +74,7 @@ namespace HearthStone.Library.Test
             Assert.AreEqual(card.ManaCost, 2);
             Assert.AreEqual(card.CardName, "SpellCard");
             Assert.AreEqual(card.Description, "");
+            Assert.AreEqual(card.CardType, CardTypeCode.Spell);
         }
 
         [TestMethod]
@@ -83,6 +87,7 @@ namespace HearthStone.Library.Test
             Assert.AreEqual(card.ManaCost, 2);
             Assert.AreEqual(card.CardName, "WeaponCard");
             Assert.AreEqual(card.Description, "");
+            Assert.AreEqual(card.CardType, CardTypeCode.Weapon);
             Assert.AreEqual(card.Attack, 3);
             Assert.AreEqual(card.Durability, 2);
         }
