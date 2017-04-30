@@ -50,6 +50,8 @@
     <Compile Include="MySQL_DatabaseService.cs" />
     <Compile Include="MySQL_RepositoryList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\MySQL_DeckCardRepository.cs" />
+    <Compile Include="Repositories\MySQL_DeckRepository.cs" />
     <Compile Include="Repositories\MySQL_PlayerRepository.cs" />
   </ItemGroup>
   <ItemGroup>

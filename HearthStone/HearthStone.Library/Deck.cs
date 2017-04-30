@@ -1,7 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using HearthStone.Protocol;
 using System.Collections.Generic;
-using HearthStone.Protocol;
+using System.Linq;
 
 namespace HearthStone.Library
 {

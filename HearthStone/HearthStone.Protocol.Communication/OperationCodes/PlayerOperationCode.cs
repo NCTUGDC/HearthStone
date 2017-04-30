@@ -2,6 +2,8 @@
 {
     public enum PlayerOperationCode : byte
     {
-        FetchData
+        FetchData,
+        CreateDeck,
+        AddCardToDeck
     }
 }

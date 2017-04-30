@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Card.cs" />
+    <Compile Include="CardManager.cs" />
     <Compile Include="CardRecord.cs" />
     <Compile Include="Cards\ServantCard.cs" />
     <Compile Include="Cards\SpellCard.cs" />
@@ -48,6 +49,8 @@
     <Compile Include="CommunicationInfrastructure\Event\Handlers\EndPointEventHandlers\PlayerEventBroker.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Handlers\EventHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Handlers\PlayerEventHandlers\PlayerSyncDataBroker.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\PlayerEventHandlers\Sync\SyncDeckCardChangedHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\PlayerEventHandlers\Sync\SyncDeckChangedHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Handlers\SyncDataBroker.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Handlers\SyncDataHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Managers\EndPointEventManager.cs" />
@@ -62,6 +65,8 @@
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\FetchDataHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\OperationHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\AddCardToDeckHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\CreateDeckHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\PlayerFetchDataBroker.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Managers\EndPointOperationManager.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Managers\PlayerOperationManager.cs" />

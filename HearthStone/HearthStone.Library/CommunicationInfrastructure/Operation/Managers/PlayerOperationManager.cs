@@ -3,6 +3,7 @@ using HearthStone.Library.CommunicationInfrastructure.Operation.Handlers.PlayerO
 using HearthStone.Protocol.Communication.FetchDataCodes;
 using HearthStone.Protocol.Communication.FetchDataParameters;
 using HearthStone.Protocol.Communication.OperationCodes;
+using HearthStone.Protocol.Communication.OperationParameters.PlayerParameterCodes;
 using System.Collections.Generic;
 
 namespace HearthStone.Library.CommunicationInfrastructure.Operation.Managers
@@ -19,6 +20,8 @@ namespace HearthStone.Library.CommunicationInfrastructure.Operation.Managers
             FetchDataBroker = new PlayerFetchDataBroker(player);
 
             operationTable.Add(PlayerOperationCode.FetchData, FetchDataBroker);
+            operationTable.Add(PlayerOperationCode.CreateDeck, new CreateDeckHandler(player));
+            operationTable.Add(PlayerOperationCode.AddCardToDeck, new AddCardToDeckHandler(player));
         }
         internal bool Operate(PlayerOperationCode operationCode, Dictionary<byte, object> parameters, out string errorMessage)
         {
@@ -53,6 +56,24 @@ namespace HearthStone.Library.CommunicationInfrastructure.Operation.Managers
                 { (byte)FetchDataParameterCode.Parameters, parameters }
             };
             SendOperation(PlayerOperationCode.FetchData, fetchDataParameters);
+        }
+
+        public void CreateDeck(string deckName)
+        {
+            Dictionary<byte, object> parameters = new Dictionary<byte, object>
+            {
+                { (byte)CreateDeckParameterCode.DeckName, deckName }
+            };
+            SendOperation(PlayerOperationCode.CreateDeck, parameters);
+        }
+        public void AddCardToDeck(int deckID, int cardID)
+        {
+            Dictionary<byte, object> parameters = new Dictionary<byte, object>
+            {
+                { (byte)AddCardToDeckParameterCode.DeckID, deckID },
+                { (byte)AddCardToDeckParameterCode.CardID, cardID }
+            };
+            SendOperation(PlayerOperationCode.AddCardToDeck, parameters);
         }
     }
 }

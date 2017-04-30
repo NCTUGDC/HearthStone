@@ -10,6 +10,38 @@ namespace HearthStone.Server
 {
     class ServerOperationInterface : OperationInterface
     {
+        public bool AddCardToDeck(int deckID, int cardID, out ReturnCode returnCode, out string errorMessage)
+        {
+            if (DatabaseService.RepositoryList.DeckCardRepository.Create(deckID, cardID))
+            {
+                returnCode = ReturnCode.Correct;
+                errorMessage = "";
+                return true;
+            }
+            else
+            {
+                returnCode = ReturnCode.DatabaseError;
+                errorMessage = "Database AddCardToDeck Fail";
+                return false;
+            }
+        }
+
+        public bool CreateDeck(int playerID, string deckName, out ReturnCode returnCode, out string errorMessage, out Deck deck)
+        {
+            if(DatabaseService.RepositoryList.DeckRepository.Create(playerID, deckName, out deck))
+            {
+                returnCode = ReturnCode.Correct;
+                errorMessage = "";
+                return true;
+            }
+            else
+            {
+                returnCode = ReturnCode.DatabaseError;
+                errorMessage = "Database Create Deck Fail";
+                return false;
+            }
+        }
+
         public bool Login(string account, string password, out ReturnCode returnCode, out string errorMessage, out Player player)
         {
             if(DatabaseService.RepositoryList.PlayerRepository.LoginCheck(account, password))
@@ -20,6 +52,7 @@ namespace HearthStone.Server
                 {
                     returnCode = ReturnCode.Correct;
                     errorMessage = "";
+                    AssemblyPlayer(player);
                     //save player 
                     return true;
                 }
@@ -67,6 +100,25 @@ namespace HearthStone.Server
                     return true;
                 }
             }
+        }
+
+        private void AssemblyPlayer(Player player)
+        {
+            player.OnDeckChanged += player.EventManager.SyncDataBroker.SyncDeckChanged;
+            player.OnDeckChanged += (deck, changeCode) => 
+            {
+                if(changeCode == DataChangeCode.Add)
+                {
+                    deck.OnCardChanged += (card, cardChangeCode) => 
+                    {
+                        if(cardChangeCode == DataChangeCode.Add)
+                        {
+                            DatabaseService.RepositoryList.DeckCardRepository.Create(deck.DeckID, card.CardID);
+                        }
+                        player.EventManager.SyncDataBroker.SyncDeckCardChanged(deck.DeckID, card.CardID, cardChangeCode);
+                    };
+                }
+            };
         }
     }
 }

@@ -50,11 +50,15 @@
     <Compile Include="OperationParameters\EndPointParameterCodes\LoginParameterCode.cs" />
     <Compile Include="OperationParameters\EndPointParameterCodes\PlayerOperationParameterCode.cs" />
     <Compile Include="OperationParameters\EndPointParameterCodes\RegisterParameterCode.cs" />
+    <Compile Include="OperationParameters\PlayerParameterCodes\AddCardToDeckParameterCode.cs" />
+    <Compile Include="OperationParameters\PlayerParameterCodes\CreateDeckParameterCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResponseParameters\EndPointResponseParameterCodes\LoginResponseParameterCode.cs" />
     <Compile Include="ResponseParameters\EndPointResponseParameterCodes\PlayerResponseParameterCode.cs" />
     <Compile Include="SyncDataCodes\EndPointSyncDataCode.cs" />
     <Compile Include="SyncDataCodes\PlayerSyncDataCode.cs" />
+    <Compile Include="SyncDataParameters\PlayerParameterCodes\SyncDeckCardChangedParameterCode.cs" />
+    <Compile Include="SyncDataParameters\PlayerParameterCodes\SyncDeckChangedParameterCode.cs" />
     <Compile Include="SyncDataParameters\SyncDataEventParameterCode.cs" />
   </ItemGroup>
   <ItemGroup />
