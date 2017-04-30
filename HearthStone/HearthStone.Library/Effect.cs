@@ -7,17 +7,11 @@ namespace HearthStone.Library
     {
         public int EffectID { get; private set; }
         public abstract EffectTypeCode EffectType { get; }
-        public string Description
-        {
-            get
-            {
-                throw new NotImplementedException("Effect Description");
-            }
-        }
+        public abstract string Description { get; }
 
         protected Effect(int effectID)
         {
-            EffectID = effectID;
+            throw new NotImplementedException("Effect Constructor");
         }
     }
 }
