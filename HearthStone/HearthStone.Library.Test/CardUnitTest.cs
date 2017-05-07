@@ -2,6 +2,7 @@
 using HearthStone.Protocol;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System;
 
 namespace HearthStone.Library.Test
 {
@@ -18,6 +19,11 @@ namespace HearthStone.Library.Test
         public TestCard(int cardID, int manaCost, string cardName, List<Effect> effects, RarityCode rarity) : base(cardID, manaCost, cardName, effects, rarity)
         {
         }
+
+        public override CardRecord CreateRecord(int cardRecordID)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     [TestClass]
@@ -32,7 +38,7 @@ namespace HearthStone.Library.Test
             Assert.AreEqual(card.CardID, 1);
             Assert.AreEqual(card.ManaCost, 2);
             Assert.AreEqual(card.CardName, "Test");
-            Assert.AreEqual(card.Description, "");
+            Assert.AreEqual(card.Description(null, 0), "");
             Assert.AreEqual(card.CardType,  CardTypeCode.Test);
             Assert.AreEqual(card.Rarity, RarityCode.Free);
         }
@@ -45,7 +51,7 @@ namespace HearthStone.Library.Test
             Assert.AreEqual(card.CardID, 1);
             Assert.AreEqual(card.ManaCost, 2);
             Assert.AreEqual(card.CardName, "Test");
-            Assert.AreEqual(card.Description, "Test Effect");
+            Assert.AreEqual(card.Description(null, 0), "Test Effect");
             Assert.AreEqual(card.CardType, CardTypeCode.Test);
             Assert.AreEqual(card.Rarity, RarityCode.Legendary);
         }
@@ -59,7 +65,7 @@ namespace HearthStone.Library.Test
             Assert.AreEqual(card.CardID, 1);
             Assert.AreEqual(card.ManaCost, 2);
             Assert.AreEqual(card.CardName, "ServantCard");
-            Assert.AreEqual(card.Description, "");
+            Assert.AreEqual(card.Description(null, 0), "");
             Assert.AreEqual(card.CardType, CardTypeCode.Servant);
             Assert.AreEqual(card.Attack, 4);
             Assert.AreEqual(card.Health, 5);
@@ -75,7 +81,7 @@ namespace HearthStone.Library.Test
             Assert.AreEqual(card.CardID, 1);
             Assert.AreEqual(card.ManaCost, 2);
             Assert.AreEqual(card.CardName, "SpellCard");
-            Assert.AreEqual(card.Description, "");
+            Assert.AreEqual(card.Description(null, 0), "");
             Assert.AreEqual(card.CardType, CardTypeCode.Spell);
             Assert.AreEqual(card.Rarity, RarityCode.Free);
         }
@@ -89,7 +95,7 @@ namespace HearthStone.Library.Test
             Assert.AreEqual(card.CardID, 1);
             Assert.AreEqual(card.ManaCost, 2);
             Assert.AreEqual(card.CardName, "WeaponCard");
-            Assert.AreEqual(card.Description, "");
+            Assert.AreEqual(card.Description(null, 0), "");
             Assert.AreEqual(card.CardType, CardTypeCode.Weapon);
             Assert.AreEqual(card.Attack, 3);
             Assert.AreEqual(card.Durability, 2);

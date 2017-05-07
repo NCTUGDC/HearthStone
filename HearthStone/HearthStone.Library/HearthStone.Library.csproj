@@ -41,6 +41,9 @@
     <Compile Include="Card.cs" />
     <Compile Include="CardManager.cs" />
     <Compile Include="CardRecord.cs" />
+    <Compile Include="CardRecords\ServantCardRecord.cs" />
+    <Compile Include="CardRecords\SpellCardRecord.cs" />
+    <Compile Include="CardRecords\WeaponCardRecord.cs" />
     <Compile Include="Cards\ServantCard.cs" />
     <Compile Include="Cards\SpellCard.cs" />
     <Compile Include="Cards\WeaponCard.cs" />
@@ -93,6 +96,8 @@
     <Compile Include="EndPoint.cs" />
     <Compile Include="Field.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="GameDeck.cs" />
+    <Compile Include="GamePlayer.cs" />
     <Compile Include="Hero.cs" />
     <Compile Include="LogService.cs" />
     <Compile Include="OperationInterface.cs" />

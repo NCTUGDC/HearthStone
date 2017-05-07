@@ -1,4 +1,5 @@
-﻿using HearthStone.Protocol;
+﻿using HearthStone.Library.CardRecords;
+using HearthStone.Protocol;
 using System.Collections.Generic;
 
 namespace HearthStone.Library.Cards
@@ -19,6 +20,11 @@ namespace HearthStone.Library.Cards
         {
             Attack = attack;
             Health = health;
+        }
+
+        public override CardRecord CreateRecord(int cardRecordID)
+        {
+            return new ServantCardRecord(cardRecordID, this);
         }
     }
 }

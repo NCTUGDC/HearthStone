@@ -1,4 +1,5 @@
-﻿using HearthStone.Protocol;
+﻿using HearthStone.Library.CardRecords;
+using HearthStone.Protocol;
 using System.Collections.Generic;
 
 namespace HearthStone.Library.Cards
@@ -20,6 +21,11 @@ namespace HearthStone.Library.Cards
         {
             Attack = attack;
             Durability = durability;
+        }
+
+        public override CardRecord CreateRecord(int cardRecordID)
+        {
+            return new WeaponCardRecord(cardRecordID, this);
         }
     }
 }
