@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using HearthStone.Library.Cards;
 using HearthStone.Protocol;
-using HearthStone.Library.Cards;
+using System.Collections.Generic;
 
 namespace HearthStone.Library
 {
@@ -40,14 +39,14 @@ namespace HearthStone.Library
                 new ServantCard(14, 4, "真銀勇士劍", new List<Effect>(), 4, 2, RarityCode.Free),
                 new ServantCard(15, 5, "利爪德魯伊", new List<Effect>(), 4, 4, RarityCode.Common),
                 new ServantCard(16, 2, "掠寶囤積者", new List<Effect>(), 2, 1, RarityCode.Common),
-                new ServantCard(17, 3, "血色十字軍", new List<Effect>(), 3, 1, RarityCode.Free),
-                new ServantCard(18, 2, "巫士的學徒", new List<Effect>(), 3, 2, RarityCode.Free),
-                new SpellCard(19, 3, "放狗", new List<Effect>(), RarityCode.Free),
+                new ServantCard(17, 3, "血色十字軍", new List<Effect>(), 3, 1, RarityCode.Common),
+                new ServantCard(18, 2, "巫士的學徒", new List<Effect>(), 3, 2, RarityCode.Common),
+                new SpellCard(19, 3, "放狗", new List<Effect>(), RarityCode.Common),
                 new ServantCard(20, 3, "冷光神諭者", new List<Effect>(), 2, 2, RarityCode.Rare),
                 new ServantCard(21, 4, "阿古斯防衛者", new List<Effect>(), 2, 3, RarityCode.Rare),
                 new WeaponCard(22, 3, "鷹角弓", new List<Effect>(), 3, 2, RarityCode.Rare),
                 new ServantCard(23, 6, "加基森拍賣師", new List<Effect>(), 4, 4, RarityCode.Rare),
-                new ServantCard(24, 3, "受傷的大劍師", new List<Effect>(), 4, 7, RarityCode.Free),
+                new ServantCard(24, 3, "受傷的大劍師", new List<Effect>(), 4, 7, RarityCode.Rare),
                 new ServantCard(25, 6, "綁匪", new List<Effect>(), 5, 3, RarityCode.Epic),
                 new SpellCard(26, 10, "炎爆術", new List<Effect>(), RarityCode.Epic),
                 new WeaponCard(27, 3, "正義之劍", new List<Effect>(), 1, 5, RarityCode.Epic),

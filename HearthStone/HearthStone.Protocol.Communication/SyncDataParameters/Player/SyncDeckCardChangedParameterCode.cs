@@ -1,4 +1,4 @@
-﻿namespace HearthStone.Protocol.Communication.SyncDataParameters.PlayerParameterCodes
+﻿namespace HearthStone.Protocol.Communication.SyncDataParameters.Player
 {
     public enum SyncDeckCardChangedParameterCode : byte
     {

@@ -67,7 +67,12 @@
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\AddCardToDeckHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\CreateDeckHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\DeleteDeckHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\Fetch\FetchAllDeckCardsHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\Fetch\FetchAllDecksHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\PlayerFetchDataBroker.cs" />
+    <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\PlayerFetchDataHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\RemoveCardFromDeckHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Managers\EndPointOperationManager.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Managers\PlayerOperationManager.cs" />
     <Compile Include="CommunicationInfrastructure\Response\Handlers\EndPointResponseHandlers\FetchDataResponseBroker.cs" />
@@ -77,6 +82,8 @@
     <Compile Include="CommunicationInfrastructure\Response\Handlers\FetchDataResponseHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Response\Handlers\FetchDataResponseResolver.cs" />
     <Compile Include="CommunicationInfrastructure\Response\Handlers\PlayerResponseHandlers\FetchDataResponseBroker.cs" />
+    <Compile Include="CommunicationInfrastructure\Response\Handlers\PlayerResponseHandlers\Fetch\FetchAllDeckCardsResponseHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Response\Handlers\PlayerResponseHandlers\Fetch\FetchAllDecksResponseHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Response\Handlers\ResponseHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Response\Managers\EndPointResponseManager.cs" />
     <Compile Include="CommunicationInfrastructure\Response\Managers\PlayerResponseManager.cs" />

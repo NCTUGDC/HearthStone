@@ -1,5 +1,5 @@
 ﻿using HearthStone.Protocol.Communication.EventCodes;
-using HearthStone.Protocol.Communication.EventParameters.EndPointEventParameterCodes;
+using HearthStone.Protocol.Communication.EventParameters.EndPoint;
 using System.Collections.Generic;
 
 namespace HearthStone.Library.CommunicationInfrastructure.Event.Handlers.EndPointEventHandlers

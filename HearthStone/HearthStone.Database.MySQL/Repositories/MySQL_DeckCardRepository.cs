@@ -29,14 +29,15 @@ namespace HearthStone.Database.MySQL.Repositories
             }
         }
 
-        public override bool Delete(int deckCardID)
+        public override bool Delete(int deckID, int cardID)
         {
             string sqlString = @"DELETE FROM DeckCardCollection 
-                WHERE DeckCardID = @deckCardID;";
+                WHERE DeckID = @deckID AND CardID = @cardID LIMIT 1;";
             lock (DatabaseService.ConnectionList.PlayerDataConnection)
                 using (MySqlCommand command = new MySqlCommand(sqlString, DatabaseService.ConnectionList.PlayerDataConnection.Connection as MySqlConnection))
                 {
-                    command.Parameters.AddWithValue("deckCardID", deckCardID);
+                    command.Parameters.AddWithValue("deckID", deckID);
+                    command.Parameters.AddWithValue("cardID", cardID);
                     return command.ExecuteNonQuery() > 0;
                 }
         }

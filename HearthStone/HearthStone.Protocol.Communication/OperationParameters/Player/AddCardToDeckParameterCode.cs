@@ -1,4 +1,4 @@
-﻿namespace HearthStone.Protocol.Communication.OperationParameters.PlayerParameterCodes
+﻿namespace HearthStone.Protocol.Communication.OperationParameters.Player
 {
     public enum AddCardToDeckParameterCode : byte
     {

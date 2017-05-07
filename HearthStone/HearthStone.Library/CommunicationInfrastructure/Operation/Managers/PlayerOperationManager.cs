@@ -3,7 +3,7 @@ using HearthStone.Library.CommunicationInfrastructure.Operation.Handlers.PlayerO
 using HearthStone.Protocol.Communication.FetchDataCodes;
 using HearthStone.Protocol.Communication.FetchDataParameters;
 using HearthStone.Protocol.Communication.OperationCodes;
-using HearthStone.Protocol.Communication.OperationParameters.PlayerParameterCodes;
+using HearthStone.Protocol.Communication.OperationParameters.Player;
 using System.Collections.Generic;
 
 namespace HearthStone.Library.CommunicationInfrastructure.Operation.Managers
@@ -21,7 +21,9 @@ namespace HearthStone.Library.CommunicationInfrastructure.Operation.Managers
 
             operationTable.Add(PlayerOperationCode.FetchData, FetchDataBroker);
             operationTable.Add(PlayerOperationCode.CreateDeck, new CreateDeckHandler(player));
+            operationTable.Add(PlayerOperationCode.DeleteDeck, new DeleteDeckHandler(player));
             operationTable.Add(PlayerOperationCode.AddCardToDeck, new AddCardToDeckHandler(player));
+            operationTable.Add(PlayerOperationCode.RemoveCardFromDeck, new RemoveCardFromDeckHandler(player));
         }
         internal bool Operate(PlayerOperationCode operationCode, Dictionary<byte, object> parameters, out string errorMessage)
         {
@@ -66,6 +68,14 @@ namespace HearthStone.Library.CommunicationInfrastructure.Operation.Managers
             };
             SendOperation(PlayerOperationCode.CreateDeck, parameters);
         }
+        public void DeleteDeck(int deckID)
+        {
+            Dictionary<byte, object> parameters = new Dictionary<byte, object>
+            {
+                { (byte)DeleteDeckParameterCode.DeckID, deckID }
+            };
+            SendOperation(PlayerOperationCode.DeleteDeck, parameters);
+        }
         public void AddCardToDeck(int deckID, int cardID)
         {
             Dictionary<byte, object> parameters = new Dictionary<byte, object>
@@ -74,6 +84,15 @@ namespace HearthStone.Library.CommunicationInfrastructure.Operation.Managers
                 { (byte)AddCardToDeckParameterCode.CardID, cardID }
             };
             SendOperation(PlayerOperationCode.AddCardToDeck, parameters);
+        }
+        public void RemoveCardFromDeck(int deckID, int cardID)
+        {
+            Dictionary<byte, object> parameters = new Dictionary<byte, object>
+            {
+                { (byte)RemoveCardFromDeckParameterCode.DeckID, deckID },
+                { (byte)RemoveCardFromDeckParameterCode.CardID, cardID }
+            };
+            SendOperation(PlayerOperationCode.RemoveCardFromDeck, parameters);
         }
     }
 }

@@ -101,6 +101,8 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\DeckManagePanelScripts\AllCardPanel.cs" />
     <Compile Include="Assets\Scripts\DeckManagePanelScripts\AllDeckPanel.cs" />
+    <Compile Include="Assets\Scripts\DeckManagePanelScripts\CardBlock.cs" />
+    <Compile Include="Assets\Scripts\DeckManagePanelScripts\DeckCardPanel.cs" />
     <Compile Include="Assets\Scripts\DeckManagePanelScripts\ServantCardBlock.cs" />
     <Compile Include="Assets\Scripts\DeckManagePanelScripts\SpellCardBlock.cs" />
     <Compile Include="Assets\Scripts\DeckManagePanelScripts\WeaponCardBlock.cs" />

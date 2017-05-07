@@ -2,6 +2,7 @@
 using HearthStone.Library.Cards;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AllCardPanel : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class AllCardPanel : MonoBehaviour
     public SpellCardBlock spellCardBlockPrefab;
     public WeaponCardBlock weaponCardBlockPrefab;
     public RectTransform content;
+    public DeckCardPanel deckCardPanel;
 
     private void Start()
     {
@@ -21,12 +23,14 @@ public class AllCardPanel : MonoBehaviour
         }
         foreach (Card card in CardManager.Instance.Cards)
         {
+            Button button = null;
             if (card is ServantCard)
             {
                 ServantCardBlock block = Instantiate(servantCardBlockPrefab);
                 block.SetCard(card as ServantCard);
                 block.transform.SetParent(content);
                 block.transform.localScale = Vector3.one;
+                button = block.GetComponent<Button>();
             }
             else if (card is SpellCard)
             {
@@ -34,6 +38,7 @@ public class AllCardPanel : MonoBehaviour
                 block.SetCard(card as SpellCard);
                 block.transform.SetParent(content);
                 block.transform.localScale = Vector3.one;
+                button = block.GetComponent<Button>();
             }
             else if(card is WeaponCard)
             {
@@ -41,7 +46,16 @@ public class AllCardPanel : MonoBehaviour
                 block.SetCard(card as WeaponCard);
                 block.transform.SetParent(content);
                 block.transform.localScale = Vector3.one;
+                button = block.GetComponent<Button>();
             }
+            int cardID = card.CardID;
+            button.onClick.AddListener(() => 
+            {
+                if(deckCardPanel.IsUnderBuildDeck)
+                {
+                    deckCardPanel.AddCardToDeck(cardID);
+                }
+            });
         }
     }
 }

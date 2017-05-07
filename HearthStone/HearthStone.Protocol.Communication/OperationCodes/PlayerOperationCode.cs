@@ -4,6 +4,8 @@
     {
         FetchData,
         CreateDeck,
-        AddCardToDeck
+        DeleteDeck,
+        AddCardToDeck,
+        RemoveCardFromDeck
     }
 }

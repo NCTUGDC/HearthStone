@@ -52,6 +52,7 @@ namespace HearthStone.Library
         public void PlayerOnline(Player player)
         {
             Player = player;
+            player.BindEndPoint(this);
             onPlayerOnline?.Invoke(player);
         }
     }

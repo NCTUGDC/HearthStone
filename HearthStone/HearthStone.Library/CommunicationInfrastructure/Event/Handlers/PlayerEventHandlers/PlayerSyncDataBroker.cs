@@ -1,6 +1,6 @@
 ﻿using HearthStone.Protocol;
 using HearthStone.Protocol.Communication.EventCodes;
-using HearthStone.Protocol.Communication.SyncDataParameters.PlayerParameterCodes;
+using HearthStone.Protocol.Communication.SyncDataParameters.Player;
 using HearthStone.Protocol.Communication.SyncDataCodes;
 using HearthStone.Library.CommunicationInfrastructure.Event.Handlers.PlayerEventHandlers.Sync;
 using System.Collections.Generic;

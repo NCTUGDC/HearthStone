@@ -1,7 +1,7 @@
 ﻿using HearthStone.Library.CommunicationInfrastructure.Event.Handlers;
 using HearthStone.Library.CommunicationInfrastructure.Event.Handlers.EndPointEventHandlers;
 using HearthStone.Protocol.Communication.EventCodes;
-using HearthStone.Protocol.Communication.EventParameters.EndPointEventParameterCodes;
+using HearthStone.Protocol.Communication.EventParameters.EndPoint;
 using HearthStone.Protocol.Communication.SyncDataCodes;
 using HearthStone.Protocol.Communication.SyncDataParameters;
 using System.Collections.Generic;

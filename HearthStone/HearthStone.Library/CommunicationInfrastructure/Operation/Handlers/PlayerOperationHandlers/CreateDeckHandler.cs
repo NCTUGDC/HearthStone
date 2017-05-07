@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using HearthStone.Protocol;
-using HearthStone.Protocol.Communication.OperationParameters.PlayerParameterCodes;
+using HearthStone.Protocol.Communication.OperationParameters.Player;
 using HearthStone.Protocol.Communication.OperationCodes;
 
 namespace HearthStone.Library.CommunicationInfrastructure.Operation.Handlers.PlayerOperationHandlers

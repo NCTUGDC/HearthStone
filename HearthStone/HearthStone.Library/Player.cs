@@ -37,6 +37,10 @@ namespace HearthStone.Library
             OperationManager = new PlayerOperationManager(this);
             ResponseManager = new PlayerResponseManager(this);
         }
+        public void BindEndPoint(EndPoint endPoint)
+        {
+            EndPoint = endPoint;
+        }
         public override string ToString()
         {
             return $"PlayerID: {PlayerID}";

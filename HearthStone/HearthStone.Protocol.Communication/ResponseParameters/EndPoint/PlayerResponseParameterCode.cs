@@ -1,4 +1,4 @@
-﻿namespace HearthStone.Protocol.Communication.ResponseParameters.EndPointResponseParameterCodes
+﻿namespace HearthStone.Protocol.Communication.ResponseParameters.EndPoint
 {
     public enum PlayerResponseParameterCode : byte
     {

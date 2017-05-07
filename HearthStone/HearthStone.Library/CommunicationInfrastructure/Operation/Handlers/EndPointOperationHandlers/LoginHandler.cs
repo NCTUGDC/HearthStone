@@ -1,7 +1,7 @@
 ﻿using HearthStone.Protocol;
 using HearthStone.Protocol.Communication.OperationCodes;
-using HearthStone.Protocol.Communication.OperationParameters.EndPointParameterCodes;
-using HearthStone.Protocol.Communication.ResponseParameters.EndPointResponseParameterCodes;
+using HearthStone.Protocol.Communication.OperationParameters.EndPoint;
+using HearthStone.Protocol.Communication.ResponseParameters.EndPoint;
 using System.Collections.Generic;
 
 namespace HearthStone.Library.CommunicationInfrastructure.Operation.Handlers.EndPointOperationHandlers
@@ -22,6 +22,7 @@ namespace HearthStone.Library.CommunicationInfrastructure.Operation.Handlers.End
                 Player player;
                 if (subject.OperationInterface.Login(account, password,out returnCode, out errorMessage, out player))
                 {
+                    subject.PlayerOnline(player);
                     Dictionary<byte, object> responseParameter = new Dictionary<byte, object>
                     {
                         { (byte)LoginResponseParameterCode.PlayerID, player.PlayerID },

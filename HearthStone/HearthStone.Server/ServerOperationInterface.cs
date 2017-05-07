@@ -42,6 +42,22 @@ namespace HearthStone.Server
             }
         }
 
+        public bool DeleteDeck(int deckID, out ReturnCode returnCode, out string errorMessage)
+        {
+            if (DatabaseService.RepositoryList.DeckRepository.Delete(deckID))
+            {
+                returnCode = ReturnCode.Correct;
+                errorMessage = "";
+                return true;
+            }
+            else
+            {
+                returnCode = ReturnCode.DatabaseError;
+                errorMessage = "Database Delete Deck Fail";
+                return false;
+            }
+        }
+
         public bool Login(string account, string password, out ReturnCode returnCode, out string errorMessage, out Player player)
         {
             if(DatabaseService.RepositoryList.PlayerRepository.LoginCheck(account, password))
@@ -53,7 +69,6 @@ namespace HearthStone.Server
                     returnCode = ReturnCode.Correct;
                     errorMessage = "";
                     AssemblyPlayer(player);
-                    //save player 
                     return true;
                 }
                 else
@@ -104,6 +119,8 @@ namespace HearthStone.Server
 
         private void AssemblyPlayer(Player player)
         {
+            DatabaseService.RepositoryList.DeckRepository.ListOfPlayer(player.PlayerID).ForEach(x => player.LoadDeck(x));
+
             player.OnDeckChanged += player.EventManager.SyncDataBroker.SyncDeckChanged;
             player.OnDeckChanged += (deck, changeCode) => 
             {
@@ -111,9 +128,14 @@ namespace HearthStone.Server
                 {
                     deck.OnCardChanged += (card, cardChangeCode) => 
                     {
-                        if(cardChangeCode == DataChangeCode.Add)
+                        switch(cardChangeCode)
                         {
-                            DatabaseService.RepositoryList.DeckCardRepository.Create(deck.DeckID, card.CardID);
+                            case DataChangeCode.Add:
+                                DatabaseService.RepositoryList.DeckCardRepository.Create(deck.DeckID, card.CardID);
+                                break;
+                            case DataChangeCode.Remove:
+                                DatabaseService.RepositoryList.DeckCardRepository.Delete(deck.DeckID, card.CardID);
+                                break;
                         }
                         player.EventManager.SyncDataBroker.SyncDeckCardChanged(deck.DeckID, card.CardID, cardChangeCode);
                     };

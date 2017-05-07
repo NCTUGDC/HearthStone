@@ -1,4 +1,4 @@
-﻿namespace HearthStone.Protocol.Communication.OperationParameters.EndPointParameterCodes
+﻿namespace HearthStone.Protocol.Communication.OperationParameters.EndPoint
 {
     public enum LoginParameterCode : byte
     {

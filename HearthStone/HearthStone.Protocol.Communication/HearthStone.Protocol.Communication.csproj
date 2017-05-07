@@ -40,25 +40,30 @@
   <ItemGroup>
     <Compile Include="EventCodes\EndPointEventCode.cs" />
     <Compile Include="EventCodes\PlayerEventCode.cs" />
-    <Compile Include="EventParameters\EndPointEventParameterCodes\PlayerEventParameterCode.cs" />
+    <Compile Include="EventParameters\EndPoint\PlayerEventParameterCode.cs" />
     <Compile Include="FetchDataCodes\EndPointFetchDataCode.cs" />
     <Compile Include="FetchDataCodes\PlayerFetchDataCode.cs" />
     <Compile Include="FetchDataParameters\FetchDataParameterCode.cs" />
+    <Compile Include="FetchDataParameters\Player\FetchAllDeckCardsParameterCode.cs" />
     <Compile Include="FetchDataResponseParameters\FetchDataResponseParameterCode.cs" />
+    <Compile Include="FetchDataResponseParameters\Player\FetchAllDeckCardsResponseParameterCode.cs" />
+    <Compile Include="FetchDataResponseParameters\Player\FetchAllDecksResponseParameterCode.cs" />
     <Compile Include="OperationCodes\EndPointOperationCode.cs" />
     <Compile Include="OperationCodes\PlayerOperationCode.cs" />
-    <Compile Include="OperationParameters\EndPointParameterCodes\LoginParameterCode.cs" />
-    <Compile Include="OperationParameters\EndPointParameterCodes\PlayerOperationParameterCode.cs" />
-    <Compile Include="OperationParameters\EndPointParameterCodes\RegisterParameterCode.cs" />
-    <Compile Include="OperationParameters\PlayerParameterCodes\AddCardToDeckParameterCode.cs" />
-    <Compile Include="OperationParameters\PlayerParameterCodes\CreateDeckParameterCode.cs" />
+    <Compile Include="OperationParameters\EndPoint\LoginParameterCode.cs" />
+    <Compile Include="OperationParameters\EndPoint\PlayerOperationParameterCode.cs" />
+    <Compile Include="OperationParameters\EndPoint\RegisterParameterCode.cs" />
+    <Compile Include="OperationParameters\Player\AddCardToDeckParameterCode.cs" />
+    <Compile Include="OperationParameters\Player\CreateDeckParameterCode.cs" />
+    <Compile Include="OperationParameters\Player\DeleteDeckParameterCode.cs" />
+    <Compile Include="OperationParameters\Player\RemoveCardFromDeckParameterCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResponseParameters\EndPointResponseParameterCodes\LoginResponseParameterCode.cs" />
-    <Compile Include="ResponseParameters\EndPointResponseParameterCodes\PlayerResponseParameterCode.cs" />
+    <Compile Include="ResponseParameters\EndPoint\LoginResponseParameterCode.cs" />
+    <Compile Include="ResponseParameters\EndPoint\PlayerResponseParameterCode.cs" />
     <Compile Include="SyncDataCodes\EndPointSyncDataCode.cs" />
     <Compile Include="SyncDataCodes\PlayerSyncDataCode.cs" />
-    <Compile Include="SyncDataParameters\PlayerParameterCodes\SyncDeckCardChangedParameterCode.cs" />
-    <Compile Include="SyncDataParameters\PlayerParameterCodes\SyncDeckChangedParameterCode.cs" />
+    <Compile Include="SyncDataParameters\Player\SyncDeckCardChangedParameterCode.cs" />
+    <Compile Include="SyncDataParameters\Player\SyncDeckChangedParameterCode.cs" />
     <Compile Include="SyncDataParameters\SyncDataEventParameterCode.cs" />
   </ItemGroup>
   <ItemGroup />

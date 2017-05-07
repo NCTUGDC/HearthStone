@@ -35,7 +35,7 @@ namespace HearthStone.Library
 
         public bool AddCard(Card card)
         {
-            if (card == null)
+            if (card == null || TotalCardCount >= MaxCardCount)
                 return false;
             else if(card.Rarity == Protocol.RarityCode.Legendary)
             {

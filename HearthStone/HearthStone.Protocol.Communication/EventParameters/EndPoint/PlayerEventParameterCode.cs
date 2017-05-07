@@ -1,4 +1,4 @@
-﻿namespace HearthStone.Protocol.Communication.EventParameters.EndPointEventParameterCodes
+﻿namespace HearthStone.Protocol.Communication.EventParameters.EndPoint
 {
     public enum PlayerEventParameterCode : byte
     {
