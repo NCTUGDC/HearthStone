@@ -1,15 +1,13 @@
 ﻿using ExitGames.Logging;
 using ExitGames.Logging.Log4Net;
-using log4net.Config;
-using Photon.SocketServer;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using HearthStone.Server;
-using HearthStone.Server.Configurations;
-using HearthStone.Library;
 using HearthStone.Database;
 using HearthStone.Database.MySQL;
+using HearthStone.Library;
+using HearthStone.Server;
+using HearthStone.Server.Configurations;
+using log4net.Config;
+using Photon.SocketServer;
+using System.IO;
 
 namespace HearthStone.PhotonServerEnvironment
 {

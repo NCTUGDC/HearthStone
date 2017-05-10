@@ -79,6 +79,20 @@ namespace HearthStone.Library.Test
             Assert.AreEqual(eventCallCounter, 2);
         }
         [TestMethod]
+        public void AddCardTestMethod3()
+        {
+            var card = new TestCard(0, 0, "Test", new List<Effect>(), Protocol.RarityCode.Free);
+            Deck deck = new Deck(1, "Test", 30, new List<Card>());
+
+            for(int i = 0; i < 30; i++)
+            {
+                Assert.AreEqual(deck.TotalCardCount, i);
+                Assert.IsTrue(deck.AddCard(new TestCard(i, 0, "Test", new List<Effect>(), Protocol.RarityCode.Free)));
+            }
+            Assert.IsFalse(deck.AddCard(new TestCard(30, 0, "Test", new List<Effect>(), Protocol.RarityCode.Free)));
+            Assert.AreEqual(deck.TotalCardCount, 30);
+        }
+        [TestMethod]
         public void RemoveCardTestMethod1()
         {
             var card = new TestCard(0, 0, "Test", new List<Effect>(), Protocol.RarityCode.Free);

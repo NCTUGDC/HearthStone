@@ -43,6 +43,6 @@ public abstract class CardBlock : MonoBehaviour
                 rarityImage.color = Color.gray;
                 break;
         }
-        descriptionText.text = card.Description;
+        descriptionText.text = card.Description(null, 0);
     }
 }

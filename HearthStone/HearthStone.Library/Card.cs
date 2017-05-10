@@ -34,6 +34,7 @@ namespace HearthStone.Library
             this.effects = effects;
             Rarity = rarity;
         }
+
         public abstract CardRecord CreateRecord(int cardRecordID);
     }
 }

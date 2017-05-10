@@ -45,6 +45,7 @@ namespace HearthStone.Library.CommunicationInfrastructure.Response.Handlers.Play
                 int maxCardCount = (int)parameters[(byte)FetchAllDecksResponseParameterCode.MaxCardCount];
 
                 subject.LoadDeck(new Deck(deckID, deckName, maxCardCount));
+                subject.OperationManager.FetchDataBroker.FetchAllDeckCards(deckID);
                 return true;
             }
             else

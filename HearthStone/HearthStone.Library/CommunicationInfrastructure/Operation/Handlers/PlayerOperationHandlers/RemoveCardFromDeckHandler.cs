@@ -16,16 +16,16 @@ namespace HearthStone.Library.CommunicationInfrastructure.Operation.Handlers.Pla
             {
                 int deckID = (int)parameters[(byte)RemoveCardFromDeckParameterCode.DeckID];
                 int cardID = (int)parameters[(byte)RemoveCardFromDeckParameterCode.CardID];
-
+                
                 Deck deck;
                 Card card;
-                if (subject.FindDeck(deckID, out deck) && CardManager.Instance.FindCard(cardID, out card))
+                if (subject.FindDeck(deckID, out deck) && CardManager.Instance.FindCard(cardID, out card) && deck.CardCount(card.CardID) > 0)
                 {
-                    deck.RemoveCard(card.CardID);
-                    return true;
+                    return deck.RemoveCard(card.CardID); ;
                 }
                 else
                 {
+                    errorMessage = "Deck or Card Not Exist";
                     return false;
                 }
             }

@@ -35,7 +35,7 @@ namespace HearthStone.Library.CommunicationInfrastructure.Operation.Handlers.Pla
             {
                 { (byte)FetchAllDeckCardsParameterCode.DeckID, deckID }
             };
-            SendOperation(PlayerFetchDataCode.AllDecks, parameters);
+            SendOperation(PlayerFetchDataCode.AllDeckCards, parameters);
         }
     }
 }

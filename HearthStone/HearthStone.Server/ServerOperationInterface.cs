@@ -119,9 +119,6 @@ namespace HearthStone.Server
 
         private void AssemblyPlayer(Player player)
         {
-            DatabaseService.RepositoryList.DeckRepository.ListOfPlayer(player.PlayerID).ForEach(x => player.LoadDeck(x));
-
-            player.OnDeckChanged += player.EventManager.SyncDataBroker.SyncDeckChanged;
             player.OnDeckChanged += (deck, changeCode) => 
             {
                 if(changeCode == DataChangeCode.Add)
@@ -141,6 +138,8 @@ namespace HearthStone.Server
                     };
                 }
             };
+            DatabaseService.RepositoryList.DeckRepository.ListOfPlayer(player.PlayerID).ForEach(x => player.LoadDeck(x));
+            player.OnDeckChanged += player.EventManager.SyncDataBroker.SyncDeckChanged;
         }
     }
 }
