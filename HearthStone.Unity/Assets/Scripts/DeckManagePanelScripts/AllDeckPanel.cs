@@ -16,6 +16,10 @@ public class AllDeckPanel : MonoBehaviour
         RenderAllDeck();
         EndPointManager.EndPoint.Player.OnDeckChanged += OnDeckChanged;
     }
+    private void OnDestroy()
+    {
+        EndPointManager.EndPoint.Player.OnDeckChanged -= OnDeckChanged;
+    }
 
     private void OnDeckChanged(Deck deck, DataChangeCode changeCode)
     {
@@ -23,9 +27,9 @@ public class AllDeckPanel : MonoBehaviour
     }
     private void RenderAllDeck()
     {
-        int cardCount = EndPointManager.EndPoint.Player.Decks.Count();
+        int deckCount = EndPointManager.EndPoint.Player.Decks.Count();
 
-        content.sizeDelta = new Vector2(230, 60 * cardCount);
+        content.sizeDelta = new Vector2(230, 60 * deckCount);
         lock(this)
         {
             foreach (RectTransform child in content)

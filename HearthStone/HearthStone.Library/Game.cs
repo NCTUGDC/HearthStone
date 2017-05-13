@@ -1,6 +1,6 @@
-﻿using System;
+﻿using HearthStone.Library.CommunicationInfrastructure.Event.Managers;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace HearthStone.Library
 {
@@ -39,10 +39,13 @@ namespace HearthStone.Library
         private event Action<Game> onRoundEnd;
         public event Action<Game> OnRoundEnd { add { onRoundEnd += value; } remove { onRoundEnd -= value; } }
 
+        public GameEventManager EventManager { get; private set; }
+
         public Game(int gameID, Player player1, Player player2, Deck player1Deck, Deck player2Deck)
         {
-            GamePlayer1 = new GamePlayer(player1, new Hero(1, 30), CreateGameDeck(1, player1Deck));
-            GamePlayer2 = new GamePlayer(player2, new Hero(2, 30), CreateGameDeck(2, player2Deck));
+            GameID = gameID;
+            GamePlayer1 = new GamePlayer(player1, new Hero(1, 30, 30, false), CreateGameDeck(1, player1Deck));
+            GamePlayer2 = new GamePlayer(player2, new Hero(2, 30, 30, false), CreateGameDeck(2, player2Deck));
             RoundCount = 0;
             Random randomGenerator = new Random();
             if(randomGenerator.NextDouble() > 0.5)
@@ -60,23 +63,28 @@ namespace HearthStone.Library
 
             GamePlayer1.OnHasChangedHandChanged += DetectGamePlayerChangeHand;
             GamePlayer2.OnHasChangedHandChanged += DetectGamePlayerChangeHand;
+
+            EventManager = new GameEventManager(this);
+        }
+        public Game(int gameID, GamePlayer gamePlayer1, GamePlayer gamePlayer2, int roundCount, int currentGamePlayerID)
+        {
+            GameID = gameID;
+            GamePlayer1 = gamePlayer1;
+            GamePlayer2 = gamePlayer2;
+            RoundCount = roundCount;
+            CurrentGamePlayerID = currentGamePlayerID;
+            EventManager = new GameEventManager(this);
         }
         public GameDeck CreateGameDeck(int gameDeckID, Deck deck)
         {
-            Random randomGenerator = new Random();
             List<CardRecord> cardRecords = new List<CardRecord>();
             foreach (Card card in deck.Cards)
             {
                 cardRecords.Add(card.CreateRecord(NewCardRecordID));
             }
-            for(int i = 0; i < 100; i++)
-            {
-                int index1 = randomGenerator.Next(cardRecords.Count), index2 = randomGenerator.Next(cardRecords.Count);
-                CardRecord record1 = cardRecords[index1], record2 = cardRecords[index2];
-                cardRecords[index1] = record2;
-                cardRecords[index2] = record1;
-            }
-            return new GameDeck(gameDeckID, cardRecords);
+            GameDeck gameDeck = new GameDeck(gameDeckID, cardRecords);
+            gameDeck.Shuffle(100);
+            return gameDeck;
         }
         private void DetectGamePlayerChangeHand(GamePlayer gamePlayer)
         {

@@ -3,11 +3,11 @@ using HearthStone.Protocol.Communication.SyncDataCodes;
 using HearthStone.Protocol.Communication.SyncDataParameters.Player;
 using System.Collections.Generic;
 
-namespace HearthStone.Library.CommunicationInfrastructure.Event.Handlers.PlayerEventHandlers.Sync
+namespace HearthStone.Library.CommunicationInfrastructure.Event.Handlers.Player.Sync
 {
-    class SyncDeckChangedHandler : SyncDataHandler<Player, PlayerSyncDataCode>
+    class SyncDeckChangedHandler : SyncDataHandler<Library.Player, PlayerSyncDataCode>
     {
-        public SyncDeckChangedHandler(Player subject) : base(subject, 4)
+        public SyncDeckChangedHandler(Library.Player subject) : base(subject, 4)
         {
         }
         internal override bool Handle(PlayerSyncDataCode syncCode, Dictionary<byte, object> parameters, out string errorMessage)

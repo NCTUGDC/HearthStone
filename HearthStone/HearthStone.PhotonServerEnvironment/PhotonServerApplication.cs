@@ -48,6 +48,8 @@ namespace HearthStone.PhotonServerEnvironment
         private void SetupFactories()
         {
             EndPointFactory.Initial();
+            PlayerMatchManager.Initial();
+            GameManager.Initial(new GameFactory());
         }
 
         private void SetupLog()

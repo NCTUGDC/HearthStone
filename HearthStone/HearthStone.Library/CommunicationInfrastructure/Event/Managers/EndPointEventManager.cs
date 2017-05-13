@@ -1,5 +1,5 @@
 ﻿using HearthStone.Library.CommunicationInfrastructure.Event.Handlers;
-using HearthStone.Library.CommunicationInfrastructure.Event.Handlers.EndPointEventHandlers;
+using HearthStone.Library.CommunicationInfrastructure.Event.Handlers.EndPoint;
 using HearthStone.Protocol.Communication.EventCodes;
 using HearthStone.Protocol.Communication.EventParameters.EndPoint;
 using HearthStone.Protocol.Communication.SyncDataCodes;
@@ -21,6 +21,7 @@ namespace HearthStone.Library.CommunicationInfrastructure.Event.Managers
 
             eventTable.Add(EndPointEventCode.SyncData, SyncDataBroker);
             eventTable.Add(EndPointEventCode.PlayerEvent, new PlayerEventBroker(endPoint));
+            eventTable.Add(EndPointEventCode.GameEvent, new GameEventBroker(endPoint));
         }
         public bool Operate(EndPointEventCode eventCode, Dictionary<byte, object> parameters, out string errorMessage)
         {
@@ -64,6 +65,16 @@ namespace HearthStone.Library.CommunicationInfrastructure.Event.Managers
                 { (byte)PlayerEventParameterCode.Parameters, parameters }
             };
             SendEvent(EndPointEventCode.PlayerEvent, eventData);
+        }
+        internal void SendGameEvent(Game game, GameEventCode eventCode, Dictionary<byte, object> parameters)
+        {
+            Dictionary<byte, object> eventData = new Dictionary<byte, object>
+            {
+                { (byte)GameEventParameterCode.GameID, game.GameID },
+                { (byte)GameEventParameterCode.EventCode, (byte)eventCode },
+                { (byte)GameEventParameterCode.Parameters, parameters }
+            };
+            SendEvent(EndPointEventCode.GameEvent, eventData);
         }
     }
 }

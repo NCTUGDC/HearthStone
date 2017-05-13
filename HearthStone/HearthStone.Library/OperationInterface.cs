@@ -9,5 +9,6 @@ namespace HearthStone.Library
         bool Login(string account, string password, out ReturnCode returnCode, out string errorMessage, out Player player);
         bool CreateDeck(int playerID, string deckName, out ReturnCode returnCode, out string errorMessage, out Deck deck);
         bool DeleteDeck(int deckID, out ReturnCode returnCode, out string errorMessage);
+        void FindOpponent(Player player, Deck deck);
     }
 }

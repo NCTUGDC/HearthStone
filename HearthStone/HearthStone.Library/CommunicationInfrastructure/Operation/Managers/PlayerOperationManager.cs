@@ -24,6 +24,7 @@ namespace HearthStone.Library.CommunicationInfrastructure.Operation.Managers
             operationTable.Add(PlayerOperationCode.DeleteDeck, new DeleteDeckHandler(player));
             operationTable.Add(PlayerOperationCode.AddCardToDeck, new AddCardToDeckHandler(player));
             operationTable.Add(PlayerOperationCode.RemoveCardFromDeck, new RemoveCardFromDeckHandler(player));
+            operationTable.Add(PlayerOperationCode.FindOpponent, new FindOpponentHandler(player));
         }
         internal bool Operate(PlayerOperationCode operationCode, Dictionary<byte, object> parameters, out string errorMessage)
         {
@@ -93,6 +94,14 @@ namespace HearthStone.Library.CommunicationInfrastructure.Operation.Managers
                 { (byte)RemoveCardFromDeckParameterCode.CardID, cardID }
             };
             SendOperation(PlayerOperationCode.RemoveCardFromDeck, parameters);
+        }
+        public void FindOpponent(int deckID)
+        {
+            Dictionary<byte, object> parameters = new Dictionary<byte, object>
+            {
+                { (byte)FindOpponentParameterCode.DeckID, deckID }
+            };
+            SendOperation(PlayerOperationCode.FindOpponent, parameters);
         }
     }
 }

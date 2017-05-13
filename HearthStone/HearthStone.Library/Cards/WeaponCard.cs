@@ -17,6 +17,7 @@ namespace HearthStone.Library.Cards
         public int Attack { get; private set; }
         public int Durability { get; private set; }
 
+        public WeaponCard() { }
         public WeaponCard(int cardID, int manaCost, string cardName, List<Effect> effects, int attack, int durability, RarityCode rarity) : base(cardID, manaCost, cardName, effects, rarity)
         {
             Attack = attack;

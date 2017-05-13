@@ -2,15 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using HearthStone.Protocol;
+using MsgPack.Serialization;
 
 namespace HearthStone.Library
 {
     public class GamePlayer
     {
+        [MessagePackIgnore]
         public Player Player { get; private set; }
+        [MessagePackMember(id: 0)]
         public Hero Hero { get; private set; }
 
+        [MessagePackMember(id: 1)]
         private bool hasChangedHand;
+        [MessagePackIgnore]
         public bool HasChangedHand
         {
             get { return hasChangedHand; }
@@ -21,7 +26,9 @@ namespace HearthStone.Library
             }
         }
 
+        [MessagePackMember(id: 2)]
         private int remainedManaCrystal;
+        [MessagePackIgnore]
         public int RemainedManaCrystal
         {
             get { return remainedManaCrystal; }
@@ -33,7 +40,9 @@ namespace HearthStone.Library
             }
         }
 
+        [MessagePackMember(id: 3)]
         private int manaCrystal;
+        [MessagePackIgnore]
         public int ManaCrystal
         {
             get { return manaCrystal; }
@@ -44,9 +53,12 @@ namespace HearthStone.Library
             }
         }
 
-
+        [MessagePackMember(id: 4)]
+        [MessagePackRuntimeCollectionItemType]
         private List<CardRecord> handCards = new List<CardRecord>();
-        public IEnumerable<CardRecord> HandCards { get { throw new NotImplementedException(); } }
+        [MessagePackIgnore]
+        public IEnumerable<CardRecord> HandCards { get { return handCards; } }
+        [MessagePackMember(id: 5)]
         public GameDeck Deck { get; private set; }
 
         private event Action<GamePlayer> onHasChangedHandChanged;
@@ -61,6 +73,7 @@ namespace HearthStone.Library
         private event Action<GamePlayer> onManaCrystalChanged;
         public event Action<GamePlayer> OnManaCrystalChanged { add { onManaCrystalChanged += value; } remove { onManaCrystalChanged -= value; } }
 
+        public GamePlayer() { }
         public GamePlayer(Player player, Hero hero, GameDeck deck)
         {
             Player = player;
@@ -75,7 +88,7 @@ namespace HearthStone.Library
             handCards.Add(record);
             onHandCardsChanged?.Invoke(record, DataChangeCode.Add);
         }
-        public void RemoveCard(CardRecord record)
+        public void RemoveHandCard(CardRecord record)
         {
             handCards.Remove(record);
             onHandCardsChanged?.Invoke(record, DataChangeCode.Remove);
@@ -93,8 +106,9 @@ namespace HearthStone.Library
             Draw(cardRecordIDs.Count);
             foreach(CardRecord record in HandCards.Where(x => cardRecordIDs.Any(y => (y == x.CardRecordID))))
             {
-                AddHandCard(record);
+                Deck.AddCard(record);
             }
+            Deck.Shuffle(100);
             HasChangedHand = true;
         }
     }

@@ -19,6 +19,7 @@ namespace HearthStone.Server
             {
                 Guid = Guid.NewGuid();
             }
+            WaitingPlayerCounter.OnWaitingPlayerCountUpdated += EventManager.SyncDataBroker.SyncWaitingPlayerCount;
         }
     }
 }

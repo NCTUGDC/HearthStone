@@ -10,7 +10,7 @@ namespace HearthStone.Library
 {
     public class Player
     {
-        public EndPoint EndPoint { get; private set; }
+        public EndPoint EndPoint { get; set; }
         public int PlayerID { get; private set; }
         public IPAddress LastConnectedIPAddress { get; set; }
         public string Account { get; private set; }
@@ -37,9 +37,10 @@ namespace HearthStone.Library
             OperationManager = new PlayerOperationManager(this);
             ResponseManager = new PlayerResponseManager(this);
         }
-        public void BindEndPoint(EndPoint endPoint)
+        public Player(int playerID, string nickname)
         {
-            EndPoint = endPoint;
+            PlayerID = playerID;
+            Nickname = nickname;
         }
         public override string ToString()
         {

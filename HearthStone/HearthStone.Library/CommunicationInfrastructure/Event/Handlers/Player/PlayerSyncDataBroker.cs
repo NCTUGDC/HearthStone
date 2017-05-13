@@ -2,14 +2,14 @@
 using HearthStone.Protocol.Communication.EventCodes;
 using HearthStone.Protocol.Communication.SyncDataParameters.Player;
 using HearthStone.Protocol.Communication.SyncDataCodes;
-using HearthStone.Library.CommunicationInfrastructure.Event.Handlers.PlayerEventHandlers.Sync;
+using HearthStone.Library.CommunicationInfrastructure.Event.Handlers.Player.Sync;
 using System.Collections.Generic;
 
-namespace HearthStone.Library.CommunicationInfrastructure.Event.Handlers.PlayerEventHandlers
+namespace HearthStone.Library.CommunicationInfrastructure.Event.Handlers.Player
 {
-    public class PlayerSyncDataBroker : SyncDataResolver<Player, PlayerEventCode, PlayerSyncDataCode>
+    public class PlayerSyncDataBroker : SyncDataResolver<Library.Player, PlayerEventCode, PlayerSyncDataCode>
     {
-        internal PlayerSyncDataBroker(Player subject) : base(subject)
+        internal PlayerSyncDataBroker(Library.Player subject) : base(subject)
         {
             syncTable.Add(PlayerSyncDataCode.DeckChanged, new SyncDeckChangedHandler(subject));
             syncTable.Add(PlayerSyncDataCode.DeckCardChanged, new SyncDeckCardChangedHandler(subject));

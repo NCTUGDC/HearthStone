@@ -2,11 +2,11 @@
 using HearthStone.Protocol.Communication.EventParameters.EndPoint;
 using System.Collections.Generic;
 
-namespace HearthStone.Library.CommunicationInfrastructure.Event.Handlers.EndPointEventHandlers
+namespace HearthStone.Library.CommunicationInfrastructure.Event.Handlers.EndPoint
 {
-    public class PlayerEventBroker : EventHandler<EndPoint, EndPointEventCode>
+    public class PlayerEventBroker : EventHandler<Library.EndPoint, EndPointEventCode>
     {
-        internal PlayerEventBroker(EndPoint subject) : base(subject, 3)
+        internal PlayerEventBroker(Library.EndPoint subject) : base(subject, 3)
         {
         }
         internal override bool Handle(EndPointEventCode eventCode, Dictionary<byte, object> parameters, out string errorMessage)

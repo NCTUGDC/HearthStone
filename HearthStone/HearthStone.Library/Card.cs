@@ -26,6 +26,7 @@ namespace HearthStone.Library
         private List<Effect> effects;
         public RarityCode Rarity { get; private set; }
 
+        public Card() { }
         protected Card(int cardID, int manaCost, string cardName, List<Effect> effects, RarityCode rarity)
         {
             CardID = cardID;

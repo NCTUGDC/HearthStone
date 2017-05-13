@@ -42,6 +42,7 @@ namespace HearthStone.Server
             {
                 connectedEndPoints.Remove(endPoint.Guid);
                 LogService.InfoFormat($"EndPoint Guid: {endPoint.Guid} Connect from {endPoint.LastConnectedIPAddress}");
+                endPoint.PlayerOffline();
             }
         }
     }

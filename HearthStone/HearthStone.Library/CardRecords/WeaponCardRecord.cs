@@ -36,6 +36,7 @@ namespace HearthStone.Library.CardRecords
         private event Action<WeaponCardRecord> onDurabilityChanged;
         public event Action<WeaponCardRecord> OnDurabilityChanged { add { onDurabilityChanged += value; } remove { onDurabilityChanged -= value; } }
 
+        public WeaponCardRecord() { }
         public WeaponCardRecord(int cardRecordID, Card card) : base(cardRecordID, card)
         {
             if(card is WeaponCard)

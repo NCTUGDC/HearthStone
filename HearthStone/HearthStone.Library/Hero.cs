@@ -1,16 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace HearthStone.Library
+﻿namespace HearthStone.Library
 {
     public class Hero
     {
         public int HeroID { get; private set; }
-        public int HP { get; private set; }
+        public int HP { get; set; }
+        public int MaxHP { get; set; }
+        public bool IsFrozen { get; set; }
 
-        public Hero(int heroID, int hp)
+
+        public Hero() { }
+        public Hero(int heroID, int hp, int maxHP, bool isFrozen)
         {
-            throw new NotImplementedException();
+            HeroID = heroID;
+            HP = hp;
+            MaxHP = maxHP;
+            IsFrozen = isFrozen;
         }
     }
 }

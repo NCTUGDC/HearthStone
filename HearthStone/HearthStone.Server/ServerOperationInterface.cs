@@ -58,6 +58,11 @@ namespace HearthStone.Server
             }
         }
 
+        public void FindOpponent(Player player, Deck deck)
+        {
+            PlayerMatchManager.Instance.AddPlayer(player, deck);
+        }
+
         public bool Login(string account, string password, out ReturnCode returnCode, out string errorMessage, out Player player)
         {
             if(DatabaseService.RepositoryList.PlayerRepository.LoginCheck(account, password))

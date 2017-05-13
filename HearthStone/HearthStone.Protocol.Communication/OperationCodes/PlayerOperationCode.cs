@@ -6,6 +6,7 @@
         CreateDeck,
         DeleteDeck,
         AddCardToDeck,
-        RemoveCardFromDeck
+        RemoveCardFromDeck,
+        FindOpponent
     }
 }

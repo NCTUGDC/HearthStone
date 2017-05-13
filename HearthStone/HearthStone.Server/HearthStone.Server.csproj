@@ -43,7 +43,7 @@
   <ItemGroup>
     <Compile Include="Configurations\DatabaseConfiguration.cs" />
     <Compile Include="EndPointFactory.cs" />
-    <Compile Include="GameManager.cs" />
+    <Compile Include="GameFactory.cs" />
     <Compile Include="PlayerMatchManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerEndPoint.cs" />

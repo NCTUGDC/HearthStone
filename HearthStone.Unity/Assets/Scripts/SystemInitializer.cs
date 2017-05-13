@@ -14,5 +14,6 @@ public class SystemInitializer : MonoBehaviour
             errorFormatMethod: Debug.LogWarningFormat,
             fatalMethod: Debug.LogError,
             fatalFormatMethod: Debug.LogErrorFormat);
+        GameManager.Initial(new GameManager());
     }
 }

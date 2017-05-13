@@ -36,6 +36,7 @@ namespace HearthStone.Library.CardRecords
         private event Action<ServantCardRecord> onHealthChanged;
         public event Action<ServantCardRecord> OnHealthChanged { add { onHealthChanged += value; } remove { onHealthChanged -= value; } }
 
+        public ServantCardRecord() { }
         public ServantCardRecord(int cardRecordID, Card card) : base(cardRecordID, card)
         {
             if (card is ServantCard)
