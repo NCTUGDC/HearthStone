@@ -23,6 +23,10 @@ namespace HearthStone.Library.CommunicationInfrastructure.Event.Handlers.Player
                 GamePlayer gamePlayer2 = SerializationHelper.Deserialize<GamePlayer>((byte[])parameters[(byte)GameStartParameterCode.GamePlayer2DataByteArray]);
                 int roundCount = (int)parameters[(byte)GameStartParameterCode.RoundCount];
                 int currentGamePlayerID = (int)parameters[(byte)GameStartParameterCode.CurrentGamePlayerID];
+
+                gamePlayer1.Player = new Library.Player(player1ID, player1Nickname);
+                gamePlayer2.Player = new Library.Player(player2ID, player2Nickname);
+
                 GameManager.Instance.AddGame(new Library.Game
                     (
                         gameID: gameID,

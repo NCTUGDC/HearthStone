@@ -1,6 +1,7 @@
 ﻿using HearthStone.Protocol;
 using System.Collections.Generic;
 using System.Text;
+using MsgPack.Serialization;
 
 namespace HearthStone.Library
 {
@@ -23,6 +24,7 @@ namespace HearthStone.Library
             return descriptionBuilder.ToString();
         }
         public abstract CardTypeCode CardType { get; }
+        [MessagePackRuntimeCollectionItemType]
         private List<Effect> effects;
         public RarityCode Rarity { get; private set; }
 

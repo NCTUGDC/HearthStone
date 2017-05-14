@@ -88,15 +88,16 @@
     <Reference Include="HearthStone.Protocol">
       <HintPath>Assets\Plugins\DLLs\HearthStone.Protocol.dll</HintPath>
     </Reference>
-    <Reference Include="Photon3Unity3D">
-      <HintPath>Assets\Plugins\DLLs\Photon3Unity3D.dll</HintPath>
-    </Reference>
     <Reference Include="MsgPack">
       <HintPath>Assets\Plugins\DLLs\MsgPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Photon3Unity3D">
+      <HintPath>Assets\Plugins\DLLs\Photon3Unity3D.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Plugins\EndPointManager.cs" />
+    <Compile Include="Assets\Plugins\GameInsatnce.cs" />
     <Compile Include="Assets\Plugins\PhotonService.cs" />
     <Compile Include="Assets\Plugins\PhotonUnityCommunicationInterface.cs" />
   </ItemGroup>

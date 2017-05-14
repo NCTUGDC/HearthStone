@@ -88,11 +88,11 @@
     <Reference Include="HearthStone.Protocol">
       <HintPath>Assets\Plugins\DLLs\HearthStone.Protocol.dll</HintPath>
     </Reference>
-    <Reference Include="Photon3Unity3D">
-      <HintPath>Assets\Plugins\DLLs\Photon3Unity3D.dll</HintPath>
-    </Reference>
     <Reference Include="MsgPack">
       <HintPath>Assets\Plugins\DLLs\MsgPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Photon3Unity3D">
+      <HintPath>Assets\Plugins\DLLs\Photon3Unity3D.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +112,11 @@
     <Compile Include="Assets\Scripts\DeckManagePanelScripts\SpellCardBlock.cs" />
     <Compile Include="Assets\Scripts\DeckManagePanelScripts\WeaponCardBlock.cs" />
     <Compile Include="Assets\Scripts\EternalObject.cs" />
+    <Compile Include="Assets\Scripts\GameSceneScripts\GameController.cs" />
+    <Compile Include="Assets\Scripts\GameSceneScripts\GamePlayerController.cs" />
+    <Compile Include="Assets\Scripts\GameSceneScripts\HandCardBlock.cs" />
+    <Compile Include="Assets\Scripts\GameSceneScripts\HandController.cs" />
+    <Compile Include="Assets\Scripts\GameSceneScripts\ManaCrystalBlock.cs" />
     <Compile Include="Assets\Scripts\LoginController.cs" />
     <Compile Include="Assets\Scripts\MainSceneScript.cs" />
     <Compile Include="Assets\Scripts\PhotonServiceController.cs" />

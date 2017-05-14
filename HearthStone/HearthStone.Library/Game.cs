@@ -48,7 +48,7 @@ namespace HearthStone.Library
             GamePlayer2 = new GamePlayer(player2, new Hero(2, 30, 30, false), CreateGameDeck(2, player2Deck));
             RoundCount = 0;
             Random randomGenerator = new Random();
-            if(randomGenerator.NextDouble() > 0.5)
+            if (randomGenerator.NextDouble() > 0.5)
             {
                 CurrentGamePlayerID = 1;
                 GamePlayer1.Draw(3);

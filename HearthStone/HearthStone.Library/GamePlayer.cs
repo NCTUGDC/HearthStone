@@ -9,7 +9,9 @@ namespace HearthStone.Library
     public class GamePlayer
     {
         [MessagePackIgnore]
-        public Player Player { get; private set; }
+        public Player Player { get; set; }
+        [MessagePackIgnore]
+        public int GamePlayerID { get { return Hero.HeroID; } }
         [MessagePackMember(id: 0)]
         public Hero Hero { get; private set; }
 
