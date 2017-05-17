@@ -57,7 +57,7 @@ public class BattleModeScene : MonoBehaviour
     {
         if(changeCode == DataChangeCode.Add)
         {
-            GameInsatnce.Game = game;
+            GameInstance.Game = game;
             SceneManager.LoadScene("Game");
         }
     }

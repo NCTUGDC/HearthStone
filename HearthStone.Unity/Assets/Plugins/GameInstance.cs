@@ -1,6 +1,6 @@
 ﻿using HearthStone.Library;
 
-public static class GameInsatnce
+public static class GameInstance
 {
     public static Game Game { get; set; }
 }

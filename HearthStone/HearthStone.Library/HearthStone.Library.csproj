@@ -105,7 +105,6 @@
     <Compile Include="Effect.cs" />
     <Compile Include="Effector.cs" />
     <Compile Include="EndPoint.cs" />
-    <Compile Include="Field.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameDeck.cs" />
     <Compile Include="GameManager.cs" />
@@ -133,6 +132,7 @@
     <Folder Include="Effectors\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

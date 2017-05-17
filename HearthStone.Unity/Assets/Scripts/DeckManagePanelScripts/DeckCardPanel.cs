@@ -1,6 +1,5 @@
 ﻿using HearthStone.Library;
 using HearthStone.Protocol;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 

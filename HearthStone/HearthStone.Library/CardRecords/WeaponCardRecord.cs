@@ -1,24 +1,23 @@
 ﻿using HearthStone.Library.Cards;
 using System;
+using MsgPack.Serialization;
 
 namespace HearthStone.Library.CardRecords
 {
     public class WeaponCardRecord : CardRecord
     {
+        [MessagePackMember(id: 4)]
         private int attack;
         public int Attack
         {
             get { return attack; }
             set
             {
-                attack = value;
-                if(attack < 0)
-                {
-                    attack = 0;
-                }
+                attack = Math.Max(value, 0);
                 onAttackChanged?.Invoke(this);
             }
         }
+        [MessagePackMember(id: 5)]
         private int durability;
         public int Durability
         {

@@ -1,4 +1,6 @@
 ﻿using HearthStone.Library;
+using HearthStone.Library.Cards;
+using HearthStone.Library.CardRecords;
 using HearthStone.Protocol;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -40,38 +42,53 @@ public class HandCardBlock : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         manaCostText.text = "NotImpl.";
         nameText.text = record.Card.CardName;
-        switch (record.Card.Rarity)
-        {
-            case RarityCode.Common:
-                rarityImage.color = Color.white;
-                break;
-            case RarityCode.Rare:
-                rarityImage.color = Color.blue;
-                break;
-            case RarityCode.Epic:
-                rarityImage.color = new Color(155f / 255, 94f / 255, 246f / 255);
-                break;
-            case RarityCode.Legendary:
-                rarityImage.color = new Color(255f / 255, 193f / 255, 58f / 255);
-                break;
-            default:
-                rarityImage.color = Color.gray;
-                break;
-        }
-        descriptionText.text = "NotImpl.";
+        rarityImage.color = RarityColorSelector.RarityToColor(record.Card.Rarity);
+        descriptionText.text = record.Card.Description(GameInstance.Game, gamePlayerID);
         switch (record.Card.CardType)
         {
             case CardTypeCode.Servant:
-                leftNumberText.text = "?";
-                rightNumberText.text = "?";
+                {
+                    ServantCardRecord servantCard = record as ServantCardRecord;
+                    leftNumberText.text = servantCard.Attack.ToString();
+                    rightNumberText.text = servantCard.Health.ToString();
+
+                    if(servantCard.Attack > (servantCard.Card as ServantCard).Attack)
+                    {
+                        leftNumberText.color = Color.green;
+                    }
+
+                    if(servantCard.RemainedHealth == servantCard.Health)
+                    {
+                        if(servantCard.Health > (servantCard.Card as ServantCard).Health)
+                        {
+                            rightNumberText.color = Color.green;
+                        }
+                    }
+                    else
+                    {
+                        rightNumberText.color = Color.red;
+                    }
+                }
                 break;
             case CardTypeCode.Spell:
-                leftNumberText.gameObject.SetActive(false);
-                rightNumberText.gameObject.SetActive(false);
+                leftNumberText.transform.parent.gameObject.SetActive(false);
+                rightNumberText.transform.parent.gameObject.SetActive(false);
                 break;
             case CardTypeCode.Weapon:
-                leftNumberText.text = "?";
-                rightNumberText.text = "?";
+                {
+                    WeaponCardRecord weaponCard = record as WeaponCardRecord;
+                    leftNumberText.text = weaponCard.Attack.ToString();
+                    rightNumberText.text = weaponCard.Durability.ToString();
+
+                    if (weaponCard.Attack > (weaponCard.Card as WeaponCard).Attack)
+                    {
+                        leftNumberText.color = Color.green;
+                    }
+                    if (weaponCard.Durability > (weaponCard.Card as WeaponCard).Durability)
+                    {
+                        rightNumberText.color = Color.green;
+                    }
+                }
                 break;
         }
     }

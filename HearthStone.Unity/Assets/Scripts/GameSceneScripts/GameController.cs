@@ -10,7 +10,7 @@ public class GameController : MonoBehaviour
 
 	void Start ()
     {
-        Game game = GameInsatnce.Game;
+        Game game = GameInstance.Game;
         if(game.GamePlayer1.Player.PlayerID == EndPointManager.EndPoint.Player.PlayerID)
         {
             self.InitialGamePlayer(game.GamePlayer1, false);
