@@ -2,6 +2,7 @@
 using HearthStone.Library.CommunicationInfrastructure.Response.Handlers.PlayerResponseHandlers;
 using HearthStone.Protocol;
 using HearthStone.Protocol.Communication.OperationCodes;
+using System;
 using System.Collections.Generic;
 
 namespace HearthStone.Library.CommunicationInfrastructure.Response.Managers
@@ -11,11 +12,15 @@ namespace HearthStone.Library.CommunicationInfrastructure.Response.Managers
         private readonly Player player;
         protected readonly Dictionary<PlayerOperationCode, ResponseHandler<Player, PlayerOperationCode>> operationTable = new Dictionary<PlayerOperationCode, ResponseHandler<Player, PlayerOperationCode>>();
 
+        private event Action onFindOpponentFailed;
+        public event Action OnFindOpponentFailed { add { onFindOpponentFailed += value; } remove { onFindOpponentFailed -= value; } }
+
         internal PlayerResponseManager(Player player)
         {
             this.player = player;
 
             operationTable.Add(PlayerOperationCode.FetchData, new FetchDataResponseBroker(player));
+            operationTable.Add(PlayerOperationCode.FindOpponent, new FindOpponentResponseHandler(player));
         }
         public bool Operate(PlayerOperationCode operationCode, ReturnCode returnCode, string operationMessage, Dictionary<byte, object> parameters, out string errorMessage)
         {
@@ -40,6 +45,11 @@ namespace HearthStone.Library.CommunicationInfrastructure.Response.Managers
         internal void SendResponse(PlayerOperationCode operationCode, ReturnCode errorCode, string operationMessage, Dictionary<byte, object> parameters)
         {
             player.EndPoint.ResponseManager.SendPlayerResponse(player, operationCode, errorCode, operationMessage, parameters);
+        }
+
+        public void FindOpponentFailed()
+        {
+            onFindOpponentFailed?.Invoke();
         }
     }
 }

@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="HearthStone.Library.Card" Collapsed="true">
+    <Position X="14.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAkAAAAAAAAAAAEAAgAQAAAAAAAAggAAAQ=</HashCode>
+      <FileName>Card.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="effects" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="HearthStone.Library.CardManager" Collapsed="true">
+    <Position X="18.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAEAAEAAAAAAAAAAIAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>CardManager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Cards" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="HearthStone.Library.CardRecord" Collapsed="true">
+    <Position X="6.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAIAAAAAADAAAAAAAAAAEAAIAAAACgAAAAgAAAAA=</HashCode>
+      <FileName>CardRecord.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Card" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="effects" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="HearthStone.Library.Deck" Collapsed="true">
+    <Position X="11.25" Y="5.25" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="HearthStone.Library.Deck.DeckCardChangedEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Deck.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAABIAAAAAAAAAQCAAiAEAAIAAAAABFAAAAAAAAAAEA=</HashCode>
+      <FileName>Deck.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Cards" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="HearthStone.Library.Effect" Collapsed="true">
+    <Position X="14.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAgAAAAAAAAAACAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Effect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effector" Collapsed="true">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Game" Collapsed="true">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AADCABAQUAAAABAAMAMACAACEAgBAAAQgIAAAAAAgAA=</HashCode>
+      <FileName>Game.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="GamePlayer1" />
+      <Property Name="GamePlayer2" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Field1Cards" />
+      <Property Name="Field2Cards" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="HearthStone.Library.GameDeck" Collapsed="true">
+    <Position X="2.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAIAAAAAAAAgAAAAAAAAAAAAAAAIAAAAAAAAAAkAA=</HashCode>
+      <FileName>GameDeck.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="CardRecords" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="HearthStone.Library.GamePlayer" Collapsed="true">
+    <Position X="2.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQIAiAAAEIAAgBAAAABQCAAAQAAAAggAAHASQQAwAA=</HashCode>
+      <FileName>GamePlayer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Deck" />
+      <Property Name="Hero" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="HandCards" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="HearthStone.Library.Hero" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAQAAAQAAAAAAAAACAAAA=</HashCode>
+      <FileName>Hero.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.SerializationHelper" Collapsed="true">
+    <Position X="0.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACBAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SerializationHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.CardRecords.ServantCardRecord" Collapsed="true">
+    <Position X="4.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAEABAQBAAAEAAAAAMAAAADAAABAAAAAQAg=</HashCode>
+      <FileName>CardRecords\ServantCardRecord.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.CardRecords.SpellCardRecord" Collapsed="true">
+    <Position X="6.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CardRecords\SpellCardRecord.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.CardRecords.WeaponCardRecord" Collapsed="true">
+    <Position X="9.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABBAAAAAQAAAAAMAAAADAEAAAABAAAAA=</HashCode>
+      <FileName>CardRecords\WeaponCardRecord.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Cards.ServantCard" Collapsed="true">
+    <Position X="12" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAEAAAAAAAAAAAAAIgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Cards\ServantCard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Cards.SpellCard" Collapsed="true">
+    <Position X="14.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Cards\SpellCard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Cards.WeaponCard" Collapsed="true">
+    <Position X="16.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAAAAAAIgAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Cards\WeaponCard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Microsoft JhengHei UI" Size="9" />
+</ClassDiagram>

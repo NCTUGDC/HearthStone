@@ -32,7 +32,7 @@ public class LoginController : MonoBehaviour
         switch(returnCode)
         {
             case ReturnCode.Correct:
-                SceneManager.LoadScene("MainScene");
+                SceneManager.LoadScene("Main");
                 break;
             default:
                 Debug.LogFormat("{0}, {1}", returnCode, operationMessage);

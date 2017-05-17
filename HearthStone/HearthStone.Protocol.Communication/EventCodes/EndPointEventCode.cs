@@ -3,6 +3,7 @@
     public enum EndPointEventCode : byte
     {
         SyncData,
-        PlayerEvent
+        PlayerEvent,
+        GameEvent
     }
 }

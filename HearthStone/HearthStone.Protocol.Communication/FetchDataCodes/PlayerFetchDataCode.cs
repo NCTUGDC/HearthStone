@@ -2,5 +2,7 @@
 {
     public enum PlayerFetchDataCode : byte
     {
+        AllDecks,
+        AllDeckCards
     }
 }

@@ -6,11 +6,12 @@ namespace HearthStone.Library
     {
         public int EffectID { get; private set; }
         public abstract EffectTypeCode EffectType { get; }
-        public abstract string Description { get; }
+        public abstract string Description(Game game, int selfGamePlayerID);
 
         protected Effect(int effectID)
         {
             EffectID = effectID;
         }
+        public abstract void Affect(object target);
     }
 }

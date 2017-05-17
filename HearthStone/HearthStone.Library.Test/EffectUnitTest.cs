@@ -1,4 +1,5 @@
-﻿using HearthStone.Protocol;
+﻿using System;
+using HearthStone.Protocol;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace HearthStone.Library.Test
@@ -10,20 +11,22 @@ namespace HearthStone.Library.Test
 
         }
 
-        public override string Description
-        {
-            get
-            {
-                return "Test Effect";
-            }
-        }
-
         public override EffectTypeCode EffectType
         {
             get
             {
                 return EffectTypeCode.Test;
             }
+        }
+
+        public override void Affect(object target)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string Description(Game game, int selfGamePlayerID)
+        {
+            return "Test Effect";
         }
     }
 
@@ -38,7 +41,7 @@ namespace HearthStone.Library.Test
             Assert.IsNotNull(effect);
             Assert.AreEqual(effect.EffectID, 1);
             Assert.AreEqual(effect.EffectType, EffectTypeCode.Test);
-            Assert.AreEqual(effect.Description, "Test Effect");
+            Assert.AreEqual(effect.Description(null, 0), "Test Effect");
         }
     }
 }

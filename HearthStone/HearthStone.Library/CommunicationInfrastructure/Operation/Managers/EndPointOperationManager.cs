@@ -3,7 +3,7 @@ using HearthStone.Library.CommunicationInfrastructure.Operation.Handlers.EndPoin
 using HearthStone.Protocol.Communication.FetchDataCodes;
 using HearthStone.Protocol.Communication.FetchDataParameters;
 using HearthStone.Protocol.Communication.OperationCodes;
-using HearthStone.Protocol.Communication.OperationParameters.EndPointParameterCodes;
+using HearthStone.Protocol.Communication.OperationParameters.EndPoint;
 using System.Collections.Generic;
 
 namespace HearthStone.Library.CommunicationInfrastructure.Operation.Managers

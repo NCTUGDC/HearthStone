@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MsgPack, Version=0.8.0.0, Culture=neutral, PublicKeyToken=a2625990d5dc0167, processorArchitecture=MSIL">
+      <HintPath>..\packages\MsgPack.Cli.0.8.1\lib\net35-client\MsgPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,18 +43,29 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Card.cs" />
+    <Compile Include="CardManager.cs" />
     <Compile Include="CardRecord.cs" />
+    <Compile Include="CardRecords\ServantCardRecord.cs" />
+    <Compile Include="CardRecords\SpellCardRecord.cs" />
+    <Compile Include="CardRecords\WeaponCardRecord.cs" />
     <Compile Include="Cards\ServantCard.cs" />
     <Compile Include="Cards\SpellCard.cs" />
     <Compile Include="Cards\WeaponCard.cs" />
     <Compile Include="CommunicationInfrastructure\CommunicationInterface.cs" />
-    <Compile Include="CommunicationInfrastructure\Event\Handlers\EndPointEventHandlers\EndPointSyncDataBroker.cs" />
-    <Compile Include="CommunicationInfrastructure\Event\Handlers\EndPointEventHandlers\PlayerEventBroker.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\EndPoint\EndPointSyncDataBroker.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\EndPoint\GameEventBroker.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\EndPoint\PlayerEventBroker.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\EndPoint\Sync\SyncWaitingPlayerCountHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Handlers\EventHandler.cs" />
-    <Compile Include="CommunicationInfrastructure\Event\Handlers\PlayerEventHandlers\PlayerSyncDataBroker.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\Game\GameSyncDataBroker.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\Player\GameStartHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\Player\PlayerSyncDataBroker.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\Player\Sync\SyncDeckCardChangedHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\Player\Sync\SyncDeckChangedHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Handlers\SyncDataBroker.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Handlers\SyncDataHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Managers\EndPointEventManager.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Managers\GameEventManager.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Managers\PlayerEventManager.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\EndPointOperationHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\EndPointOperationHandlers\EndPointFetchDataBroker.cs" />
@@ -62,7 +77,15 @@
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\FetchDataHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\OperationHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\AddCardToDeckHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\CreateDeckHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\DeleteDeckHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\Fetch\FetchAllDeckCardsHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\Fetch\FetchAllDecksHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\FindOpponentHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\PlayerFetchDataBroker.cs" />
+    <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\PlayerFetchDataHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\RemoveCardFromDeckHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Managers\EndPointOperationManager.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Managers\PlayerOperationManager.cs" />
     <Compile Include="CommunicationInfrastructure\Response\Handlers\EndPointResponseHandlers\FetchDataResponseBroker.cs" />
@@ -72,6 +95,9 @@
     <Compile Include="CommunicationInfrastructure\Response\Handlers\FetchDataResponseHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Response\Handlers\FetchDataResponseResolver.cs" />
     <Compile Include="CommunicationInfrastructure\Response\Handlers\PlayerResponseHandlers\FetchDataResponseBroker.cs" />
+    <Compile Include="CommunicationInfrastructure\Response\Handlers\PlayerResponseHandlers\Fetch\FetchAllDeckCardsResponseHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Response\Handlers\PlayerResponseHandlers\Fetch\FetchAllDecksResponseHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Response\Handlers\PlayerResponseHandlers\FindOpponentResponseHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Response\Handlers\ResponseHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Response\Managers\EndPointResponseManager.cs" />
     <Compile Include="CommunicationInfrastructure\Response\Managers\PlayerResponseManager.cs" />
@@ -79,13 +105,17 @@
     <Compile Include="Effect.cs" />
     <Compile Include="Effector.cs" />
     <Compile Include="EndPoint.cs" />
-    <Compile Include="Field.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="GameDeck.cs" />
+    <Compile Include="GameManager.cs" />
+    <Compile Include="GamePlayer.cs" />
     <Compile Include="Hero.cs" />
     <Compile Include="LogService.cs" />
     <Compile Include="OperationInterface.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SerializationHelper.cs" />
+    <Compile Include="WaitingPlayerCounter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HearthStone.Protocol.Communication\HearthStone.Protocol.Communication.csproj">
@@ -98,7 +128,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="CommunicationInfrastructure\Event\Handlers\Game\Sync\" />
     <Folder Include="Effectors\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

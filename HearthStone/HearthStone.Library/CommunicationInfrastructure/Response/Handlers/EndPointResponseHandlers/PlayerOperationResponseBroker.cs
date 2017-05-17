@@ -1,6 +1,6 @@
 ﻿using HearthStone.Protocol;
 using HearthStone.Protocol.Communication.OperationCodes;
-using HearthStone.Protocol.Communication.ResponseParameters.EndPointResponseParameterCodes;
+using HearthStone.Protocol.Communication.ResponseParameters.EndPoint;
 using System.Collections.Generic;
 
 namespace HearthStone.Library.CommunicationInfrastructure.Response.Handlers.EndPointResponseHandlers

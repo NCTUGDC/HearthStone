@@ -12,7 +12,7 @@
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
     <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>GamePlugins:3</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
@@ -82,20 +82,25 @@
     <Reference Include="HearthStone.Library">
       <HintPath>Assets\Plugins\DLLs\HearthStone.Library.dll</HintPath>
     </Reference>
-    <Reference Include="Photon3Unity3D">
-      <HintPath>Assets\Plugins\DLLs\Photon3Unity3D.dll</HintPath>
+    <Reference Include="HearthStone.Protocol.Communication">
+      <HintPath>Assets\Plugins\DLLs\HearthStone.Protocol.Communication.dll</HintPath>
     </Reference>
     <Reference Include="HearthStone.Protocol">
       <HintPath>Assets\Plugins\DLLs\HearthStone.Protocol.dll</HintPath>
     </Reference>
-    <Reference Include="HearthStone.Protocol.Communication">
-      <HintPath>Assets\Plugins\DLLs\HearthStone.Protocol.Communication.dll</HintPath>
+    <Reference Include="MsgPack">
+      <HintPath>Assets\Plugins\DLLs\MsgPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Photon3Unity3D">
+      <HintPath>Assets\Plugins\DLLs\Photon3Unity3D.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Plugins\EndPointManager.cs" />
+    <Compile Include="Assets\Plugins\GameInstance.cs" />
     <Compile Include="Assets\Plugins\PhotonService.cs" />
     <Compile Include="Assets\Plugins\PhotonUnityCommunicationInterface.cs" />
+    <Compile Include="Assets\Plugins\RarityColorSelector.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

@@ -3,7 +3,6 @@ using HearthStone.Library;
 using MySql.Data.MySqlClient;
 using System;
 using System.Net;
-using System;
 using System.Security.Cryptography;
 using System.Text;
 

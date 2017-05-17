@@ -2,7 +2,7 @@
 using HearthStone.Library.CommunicationInfrastructure.Response.Handlers.EndPointResponseHandlers;
 using HearthStone.Protocol;
 using HearthStone.Protocol.Communication.OperationCodes;
-using HearthStone.Protocol.Communication.ResponseParameters.EndPointResponseParameterCodes;
+using HearthStone.Protocol.Communication.ResponseParameters.EndPoint;
 using System;
 using System.Collections.Generic;
 

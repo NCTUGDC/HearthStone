@@ -1,6 +1,6 @@
 ﻿using HearthStone.Protocol;
 using HearthStone.Protocol.Communication.OperationCodes;
-using HearthStone.Protocol.Communication.ResponseParameters.EndPointResponseParameterCodes;
+using HearthStone.Protocol.Communication.ResponseParameters.EndPoint;
 using System.Collections.Generic;
 using System.Net;
 
@@ -22,6 +22,7 @@ namespace HearthStone.Library.CommunicationInfrastructure.Response.Handlers.EndP
                 string nickname = (string)parameters[(byte)LoginResponseParameterCode.Nickname];
 
                 subject.PlayerOnline(new Player(playerID, lastConnectedIPAddress, account, nickname));
+                subject.Player.OperationManager.FetchDataBroker.FetchAllDecks();
 
                 return true;
             }

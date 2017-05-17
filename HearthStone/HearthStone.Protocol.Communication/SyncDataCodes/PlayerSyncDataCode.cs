@@ -2,6 +2,7 @@
 {
     public enum PlayerSyncDataCode : byte
     {
-
+        DeckChanged,
+        DeckCardChanged,
     }
 }

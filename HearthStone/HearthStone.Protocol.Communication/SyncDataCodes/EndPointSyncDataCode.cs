@@ -2,5 +2,6 @@
 {
     public enum EndPointSyncDataCode : byte
     {
+        WaitingPlayerCount
     }
 }

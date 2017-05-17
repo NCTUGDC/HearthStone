@@ -1,6 +1,7 @@
 ﻿using HearthStone.Protocol;
 using System.Collections.Generic;
 using System.Text;
+using MsgPack.Serialization;
 
 namespace HearthStone.Library
 {
@@ -9,26 +10,25 @@ namespace HearthStone.Library
         public int CardID { get; private set; }
         public int ManaCost { get; private set; }
         public string CardName { get; private set; }
-        public string Description
+        public string Description(Game game, int selfGamePlayerID)
         {
-            get
+            StringBuilder descriptionBuilder = new StringBuilder("");
+            for (int i = 0; i < effects.Count; i++)
             {
-                StringBuilder descriptionBuilder = new StringBuilder("");
-                for(int i = 0; i < effects.Count; i++)
+                descriptionBuilder.Append(effects[i].Description(game, selfGamePlayerID));
+                if (i != effects.Count - 1)
                 {
-                    descriptionBuilder.Append(effects[i].Description);
-                    if(i != effects.Count - 1)
-                    {
-                        descriptionBuilder.AppendLine();
-                    }
+                    descriptionBuilder.AppendLine();
                 }
-                return descriptionBuilder.ToString();
             }
+            return descriptionBuilder.ToString();
         }
         public abstract CardTypeCode CardType { get; }
-        private List<Effect> effects;
+        [MessagePackRuntimeCollectionItemType]
+        private List<Effect> effects = new List<Effect>();
         public RarityCode Rarity { get; private set; }
 
+        public Card() { }
         protected Card(int cardID, int manaCost, string cardName, List<Effect> effects, RarityCode rarity)
         {
             CardID = cardID;
@@ -37,5 +37,7 @@ namespace HearthStone.Library
             this.effects = effects;
             Rarity = rarity;
         }
+
+        public abstract CardRecord CreateRecord(int cardRecordID);
     }
 }

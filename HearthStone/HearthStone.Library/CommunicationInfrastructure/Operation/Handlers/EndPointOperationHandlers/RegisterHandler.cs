@@ -1,6 +1,6 @@
 ﻿using HearthStone.Protocol;
 using HearthStone.Protocol.Communication.OperationCodes;
-using HearthStone.Protocol.Communication.OperationParameters.EndPointParameterCodes;
+using HearthStone.Protocol.Communication.OperationParameters.EndPoint;
 using System.Collections.Generic;
 
 namespace HearthStone.Library.CommunicationInfrastructure.Operation.Handlers.EndPointOperationHandlers

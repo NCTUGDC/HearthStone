@@ -39,6 +39,9 @@ namespace HearthStone.Library
         private event Action<Player> onPlayerOnline;
         public event Action<Player> OnPlayerOnline { add { onPlayerOnline += value; } remove { onPlayerOnline -= value; } }
 
+        private event Action<Player> onPlayerOffline;
+        public event Action<Player> OnPlayerOffline { add { onPlayerOffline += value; } remove { onPlayerOffline -= value; } }
+
         public EndPoint(CommunicationInterface communicationInterface, OperationInterface operationInterface)
         {
             CommunicationInterface = communicationInterface;
@@ -52,7 +55,13 @@ namespace HearthStone.Library
         public void PlayerOnline(Player player)
         {
             Player = player;
+            player.EndPoint = this;
             onPlayerOnline?.Invoke(player);
+        }
+        public void PlayerOffline()
+        {
+            onPlayerOffline?.Invoke(Player);
+            Player = null;
         }
     }
 }

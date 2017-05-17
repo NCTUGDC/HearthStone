@@ -9,6 +9,7 @@
         AlreadyExisted,
         InvalidParameter,
         PermissionDeny,
-        NotExisted
+        NotExisted,
+        DatabaseError
     }
 }

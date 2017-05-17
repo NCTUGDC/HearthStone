@@ -10,6 +10,59 @@ namespace HearthStone.Server
 {
     class ServerOperationInterface : OperationInterface
     {
+        public bool AddCardToDeck(int deckID, int cardID, out ReturnCode returnCode, out string errorMessage)
+        {
+            if (DatabaseService.RepositoryList.DeckCardRepository.Create(deckID, cardID))
+            {
+                returnCode = ReturnCode.Correct;
+                errorMessage = "";
+                return true;
+            }
+            else
+            {
+                returnCode = ReturnCode.DatabaseError;
+                errorMessage = "Database AddCardToDeck Fail";
+                return false;
+            }
+        }
+
+        public bool CreateDeck(int playerID, string deckName, out ReturnCode returnCode, out string errorMessage, out Deck deck)
+        {
+            if(DatabaseService.RepositoryList.DeckRepository.Create(playerID, deckName, out deck))
+            {
+                returnCode = ReturnCode.Correct;
+                errorMessage = "";
+                return true;
+            }
+            else
+            {
+                returnCode = ReturnCode.DatabaseError;
+                errorMessage = "Database Create Deck Fail";
+                return false;
+            }
+        }
+
+        public bool DeleteDeck(int deckID, out ReturnCode returnCode, out string errorMessage)
+        {
+            if (DatabaseService.RepositoryList.DeckRepository.Delete(deckID))
+            {
+                returnCode = ReturnCode.Correct;
+                errorMessage = "";
+                return true;
+            }
+            else
+            {
+                returnCode = ReturnCode.DatabaseError;
+                errorMessage = "Database Delete Deck Fail";
+                return false;
+            }
+        }
+
+        public void FindOpponent(Player player, Deck deck)
+        {
+            PlayerMatchManager.Instance.AddPlayer(player, deck);
+        }
+
         public bool Login(string account, string password, out ReturnCode returnCode, out string errorMessage, out Player player)
         {
             if(DatabaseService.RepositoryList.PlayerRepository.LoginCheck(account, password))
@@ -20,7 +73,7 @@ namespace HearthStone.Server
                 {
                     returnCode = ReturnCode.Correct;
                     errorMessage = "";
-                    //save player 
+                    AssemblyPlayer(player);
                     return true;
                 }
                 else
@@ -67,6 +120,31 @@ namespace HearthStone.Server
                     return true;
                 }
             }
+        }
+
+        private void AssemblyPlayer(Player player)
+        {
+            player.OnDeckChanged += (deck, changeCode) => 
+            {
+                if(changeCode == DataChangeCode.Add)
+                {
+                    deck.OnCardChanged += (card, cardChangeCode) => 
+                    {
+                        switch(cardChangeCode)
+                        {
+                            case DataChangeCode.Add:
+                                DatabaseService.RepositoryList.DeckCardRepository.Create(deck.DeckID, card.CardID);
+                                break;
+                            case DataChangeCode.Remove:
+                                DatabaseService.RepositoryList.DeckCardRepository.Delete(deck.DeckID, card.CardID);
+                                break;
+                        }
+                        player.EventManager.SyncDataBroker.SyncDeckCardChanged(deck.DeckID, card.CardID, cardChangeCode);
+                    };
+                }
+            };
+            DatabaseService.RepositoryList.DeckRepository.ListOfPlayer(player.PlayerID).ForEach(x => player.LoadDeck(x));
+            player.OnDeckChanged += player.EventManager.SyncDataBroker.SyncDeckChanged;
         }
     }
 }
