@@ -8,7 +8,7 @@ public class PhotonServiceController : MonoBehaviour
     }
     private void Start()
     {
-        PhotonService.Instance.Connect("HearthStone.DevelopmentServer", "127.0.0.1", 30000);
+        PhotonService.Instance.Connect("HearthStone.DevelopmentServer", "140.113.123.134", 30000);
     }
     void Update()
     {
