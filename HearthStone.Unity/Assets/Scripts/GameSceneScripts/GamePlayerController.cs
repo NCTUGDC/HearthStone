@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class GamePlayerController : MonoBehaviour
 {
-    private bool isOpponent;
     private ManaCrystalBlock manaCrystalBlock;
     private Text nicknameText;
     private HandController hand;
@@ -18,7 +17,6 @@ public class GamePlayerController : MonoBehaviour
 
     public void InitialGamePlayer(GamePlayer gamePlayer, bool isOpponent)
     {
-        this.isOpponent = isOpponent;
         manaCrystalBlock.ObserveGamePlayer(gamePlayer);
         nicknameText.text = gamePlayer.Player.Nickname;
         hand.RenderHand(gamePlayer, isOpponent);

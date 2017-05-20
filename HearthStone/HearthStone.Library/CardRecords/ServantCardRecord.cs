@@ -73,10 +73,9 @@ namespace HearthStone.Library.CardRecords
             if (Card is ServantCard)
             {
                 ServantCard servantCard = Card as ServantCard;
-                if (Attack > servantCard.Attack)
-                    Attack = servantCard.Attack;
-                if (Health > servantCard.Health)
-                    Health = servantCard.Health;
+                Attack = servantCard.Attack;
+                Health = servantCard.Health;
+                RemainedHealth = Health;
             }
             else
             {

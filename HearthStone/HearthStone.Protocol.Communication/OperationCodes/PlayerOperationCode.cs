@@ -7,6 +7,18 @@
         DeleteDeck,
         AddCardToDeck,
         RemoveCardFromDeck,
-        FindOpponent
+        FindOpponent,
+
+        SwapHands,
+        TargetDisplayServant,
+        NonTargetDisplayServant,
+        TargetCastSpell,
+        NonTargeCasttSpell,
+        EquipWeapon,
+        ServantAttackHero,
+        ServantAttackServant,
+        HeroAttackHero,
+        HeroAttackServant,
+        EndTurn
     }
 }

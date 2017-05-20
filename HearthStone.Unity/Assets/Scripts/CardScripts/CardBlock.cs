@@ -2,12 +2,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class CardBlock : MonoBehaviour
+public class CardBlock : MonoBehaviour
 {
-    private Text manaCostText;
-    private Text nameText;
-    private Image rarityImage;
-    private Text descriptionText;
+    protected Text manaCostText;
+    protected Text nameText;
+    protected Image rarityImage;
+    protected Text descriptionText;
 
     public Card Card { get; private set; }
 

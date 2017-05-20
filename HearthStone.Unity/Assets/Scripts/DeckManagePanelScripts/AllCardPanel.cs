@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class AllCardPanel : MonoBehaviour
 {
     public ServantCardBlock servantCardBlockPrefab;
-    public SpellCardBlock spellCardBlockPrefab;
+    public CardBlock spellCardBlockPrefab;
     public WeaponCardBlock weaponCardBlockPrefab;
     public RectTransform content;
     public DeckCardPanel deckCardPanel;
@@ -34,7 +34,7 @@ public class AllCardPanel : MonoBehaviour
             }
             else if (card is SpellCard)
             {
-                SpellCardBlock block = Instantiate(spellCardBlockPrefab);
+                CardBlock block = Instantiate(spellCardBlockPrefab);
                 block.SetCard(card as SpellCard);
                 block.transform.SetParent(content);
                 block.transform.localScale = Vector3.one;

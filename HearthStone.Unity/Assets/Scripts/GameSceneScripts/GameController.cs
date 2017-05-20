@@ -7,8 +7,11 @@ public class GameController : MonoBehaviour
     private GamePlayerController self;
     [SerializeField]
     private GamePlayerController opponent;
+    [SerializeField]
+    private SwapHandPanel swapHandPanel;
 
-	void Start ()
+
+    void Start ()
     {
         Game game = GameInstance.Game;
         if(game.GamePlayer1.Player.PlayerID == EndPointManager.EndPoint.Player.PlayerID)
