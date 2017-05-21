@@ -14,11 +14,10 @@ namespace HearthStone.Library
             set
             {
                 waitingPlayerCount = value;
-                onWaitingPlayerCountUpdated?.Invoke(waitingPlayerCount);
+                OnWaitingPlayerCountUpdated?.Invoke(waitingPlayerCount);
             }
         }
 
-        private static event Action<int> onWaitingPlayerCountUpdated;
-        public static event Action<int> OnWaitingPlayerCountUpdated { add { onWaitingPlayerCountUpdated += value; } remove { onWaitingPlayerCountUpdated -= value; } }
+        public static event Action<int> OnWaitingPlayerCountUpdated;
     }
 }

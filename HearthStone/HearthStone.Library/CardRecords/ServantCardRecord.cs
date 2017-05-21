@@ -14,7 +14,7 @@ namespace HearthStone.Library.CardRecords
             set
             {
                 attack = Math.Max(value, 0);
-                onAttackChanged?.Invoke(this);
+                OnAttackChanged?.Invoke(this);
             }
         }
 
@@ -26,7 +26,7 @@ namespace HearthStone.Library.CardRecords
             set
             {
                 health = Math.Max(value, 0);
-                onHealthChanged?.Invoke(this);
+                OnHealthChanged?.Invoke(this);
             }
         }
 
@@ -38,19 +38,14 @@ namespace HearthStone.Library.CardRecords
             set
             {
                 remainedHealth = Math.Min(value, Health);
-                onRemainedHealthChanged?.Invoke(this);
+                OnRemainedHealthChanged?.Invoke(this);
             }
         }
 
-
-        private event Action<ServantCardRecord> onAttackChanged;
-        public event Action<ServantCardRecord> OnAttackChanged { add { onAttackChanged += value; } remove { onAttackChanged -= value; } }
-
-        private event Action<ServantCardRecord> onHealthChanged;
-        public event Action<ServantCardRecord> OnHealthChanged { add { onHealthChanged += value; } remove { onHealthChanged -= value; } }
-
-        private event Action<ServantCardRecord> onRemainedHealthChanged;
-        public event Action<ServantCardRecord> OnRemainedHealthChanged { add { onRemainedHealthChanged += value; } remove { onRemainedHealthChanged -= value; } }
+        public event Action<ServantCardRecord> OnAttackChanged;
+        public event Action<ServantCardRecord> OnHealthChanged;
+        public event Action<ServantCardRecord> OnRemainedHealthChanged;
+        public event Action<ServantCardRecord> OnDead;
 
         public ServantCardRecord() { }
         public ServantCardRecord(int cardRecordID, Card card) : base(cardRecordID, card)

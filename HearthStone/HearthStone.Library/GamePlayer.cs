@@ -24,7 +24,7 @@ namespace HearthStone.Library
             private set
             {
                 hasChangedHand = value;
-                onHasChangedHandChanged?.Invoke(this);
+                OnHasChangedHandChanged?.Invoke(this);
             }
         }
 
@@ -38,7 +38,7 @@ namespace HearthStone.Library
             {
                 remainedManaCrystal = value;
                 remainedManaCrystal = Math.Max(value, 0);
-                onRemainedManaCrystalChanged?.Invoke(this);
+                OnRemainedManaCrystalChanged?.Invoke(this);
             }
         }
 
@@ -51,7 +51,7 @@ namespace HearthStone.Library
             set
             {
                 manaCrystal = Math.Min(value, 10);
-                onManaCrystalChanged?.Invoke(this);
+                OnManaCrystalChanged?.Invoke(this);
             }
         }
 
@@ -63,17 +63,10 @@ namespace HearthStone.Library
         [MessagePackMember(id: 5)]
         public GameDeck Deck { get; private set; }
 
-        private event Action<GamePlayer> onHasChangedHandChanged;
-        public event Action<GamePlayer> OnHasChangedHandChanged { add { onHasChangedHandChanged += value; } remove { onHasChangedHandChanged -= value; } }
-
-        private event Action<CardRecord, DataChangeCode> onHandCardsChanged;
-        public event Action<CardRecord, DataChangeCode> OnHandCardsChanged { add { onHandCardsChanged += value; } remove { onHandCardsChanged -= value; } }
-
-        private event Action<GamePlayer> onRemainedManaCrystalChanged;
-        public event Action<GamePlayer> OnRemainedManaCrystalChanged { add { onRemainedManaCrystalChanged += value; } remove { onRemainedManaCrystalChanged -= value; } }
-
-        private event Action<GamePlayer> onManaCrystalChanged;
-        public event Action<GamePlayer> OnManaCrystalChanged { add { onManaCrystalChanged += value; } remove { onManaCrystalChanged -= value; } }
+        public event Action<GamePlayer> OnHasChangedHandChanged;
+        public event Action<CardRecord, DataChangeCode> OnHandCardsChanged;
+        public event Action<GamePlayer> OnRemainedManaCrystalChanged;
+        public event Action<GamePlayer> OnManaCrystalChanged;
 
         public GamePlayer() { }
         public GamePlayer(Player player, Hero hero, GameDeck deck)
@@ -88,12 +81,12 @@ namespace HearthStone.Library
         public void AddHandCard(CardRecord record)
         {
             handCards.Add(record);
-            onHandCardsChanged?.Invoke(record, DataChangeCode.Add);
+            OnHandCardsChanged?.Invoke(record, DataChangeCode.Add);
         }
         public void RemoveHandCard(CardRecord record)
         {
             handCards.Remove(record);
-            onHandCardsChanged?.Invoke(record, DataChangeCode.Remove);
+            OnHandCardsChanged?.Invoke(record, DataChangeCode.Remove);
         }
         public void Draw(int count)
         {

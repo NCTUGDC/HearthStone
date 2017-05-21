@@ -17,40 +17,29 @@ namespace HearthStone.Library
             private set
             {
                 roundCount = value;
-                onRoundCountChanged?.Invoke(this);
+                OnRoundCountChanged?.Invoke(this);
             }
         }
 
         private int cardRecordID_Generator = 1;
         public int NewCardRecordID { get { return cardRecordID_Generator++; } }
 
-        private List<CardRecord> field1Cards = new List<CardRecord>();
-        private List<CardRecord> field2Cards = new List<CardRecord>();
-        public IEnumerable<CardRecord> Field1Cards { get { throw new NotImplementedException(); } }
-        public IEnumerable<CardRecord> Field2Cards { get { throw new NotImplementedException(); } }
+        public Field Field1 { get; private set; }
+        public Field Field2 { get; private set; }
 
         public int CurrentGamePlayerID { get; private set; }
 
-        private event Action<Game> onRoundCountChanged;
-        public event Action<Game> OnRoundCountChanged { add { onRoundCountChanged += value; } remove { onRoundCountChanged -= value; } }
-
-        private event Action<Game> onField1CardChanged;
-        public event Action<Game> OnField1CardChanged { add { onField1CardChanged += value; } remove { onField1CardChanged -= value; } }
-        private event Action<Game> onField2CardChanged;
-        public event Action<Game> OnField2CardChanged { add { onField2CardChanged += value; } remove { onField2CardChanged -= value; } }
-
-        private event Action<Game> onRoundStart;
-        public event Action<Game> OnRoundStart { add { onRoundStart += value; } remove { onRoundStart -= value; } }
-        private event Action<Game> onRoundEnd;
-        public event Action<Game> OnRoundEnd { add { onRoundEnd += value; } remove { onRoundEnd -= value; } }
+        public event Action<Game> OnRoundCountChanged;
+        public event Action<Game> OnRoundStart;
+        public event Action<Game> OnRoundEnd;
 
         public GameEventManager EventManager { get; private set; }
 
         public Game(int gameID, Player player1, Player player2, Deck player1Deck, Deck player2Deck)
         {
             GameID = gameID;
-            GamePlayer1 = new GamePlayer(player1, new Hero(1, 30, 30, false), CreateGameDeck(1, player1Deck));
-            GamePlayer2 = new GamePlayer(player2, new Hero(2, 30, 30, false), CreateGameDeck(2, player2Deck));
+            GamePlayer1 = new GamePlayer(player1, new Hero(1, 30, 30), CreateGameDeck(1, player1Deck));
+            GamePlayer2 = new GamePlayer(player2, new Hero(2, 30, 30), CreateGameDeck(2, player2Deck));
             RoundCount = 0;
             Random randomGenerator = new Random();
             if (randomGenerator.NextDouble() > 0.5)
@@ -65,6 +54,8 @@ namespace HearthStone.Library
                 GamePlayer1.Draw(4);
                 GamePlayer2.Draw(3);
             }
+            Field1 = new Field();
+            Field2 = new Field();
 
             GamePlayer1.OnHasChangedHandChanged += DetectGamePlayerChangeHand;
             GamePlayer2.OnHasChangedHandChanged += DetectGamePlayerChangeHand;
@@ -78,6 +69,9 @@ namespace HearthStone.Library
             GamePlayer2 = gamePlayer2;
             RoundCount = roundCount;
             CurrentGamePlayerID = currentGamePlayerID;
+            Field1 = new Field();
+            Field2 = new Field();
+
             EventManager = new GameEventManager(this);
         }
         public GameDeck CreateGameDeck(int gameDeckID, Deck deck)
@@ -101,7 +95,7 @@ namespace HearthStone.Library
 
         public void EndRound()
         {
-            onRoundEnd?.Invoke(this);
+            OnRoundEnd?.Invoke(this);
             if(CurrentGamePlayerID == 1)
             {
                 CurrentGamePlayerID = 2;
@@ -117,8 +111,23 @@ namespace HearthStone.Library
             GamePlayer player = (CurrentGamePlayerID == 1) ? GamePlayer1 : GamePlayer2;
             player.ManaCrystal++;
             player.RemainedManaCrystal = player.ManaCrystal;
-            onRoundStart?.Invoke(this);
+            OnRoundStart?.Invoke(this);
             player.Draw(1);
+        }
+        public int SelectGamePlayerID(int playerID)
+        {
+            if(GamePlayer1.Player.PlayerID == playerID)
+            {
+                return 1;
+            }
+            else if(GamePlayer2.Player.PlayerID == playerID)
+            {
+                return 2;
+            }
+            else
+            {
+                return -1;
+            }
         }
     }
 }

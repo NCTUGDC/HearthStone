@@ -14,7 +14,7 @@ namespace HearthStone.Library.CardRecords
             set
             {
                 attack = Math.Max(value, 0);
-                onAttackChanged?.Invoke(this);
+                OnAttackChanged?.Invoke(this);
             }
         }
         [MessagePackMember(id: 5)]
@@ -25,7 +25,7 @@ namespace HearthStone.Library.CardRecords
             set
             {
                 durability = value;
-                onDurabilityChanged?.Invoke(this);
+                OnDurabilityChanged?.Invoke(this);
             }
         }
         [MessagePackMember(id: 6)]
@@ -36,18 +36,14 @@ namespace HearthStone.Library.CardRecords
             set
             {
                 remainedDurability = Math.Min(value, Durability);
-                onRemainedDurabilityChanged?.Invoke(this);
+                OnRemainedDurabilityChanged?.Invoke(this);
             }
         }
 
-        private event Action<WeaponCardRecord> onAttackChanged;
-        public event Action<WeaponCardRecord> OnAttackChanged { add { onAttackChanged += value; } remove { onAttackChanged -= value; } }
+        public event Action<WeaponCardRecord> OnAttackChanged;
+        public event Action<WeaponCardRecord> OnDurabilityChanged;
+        public event Action<WeaponCardRecord> OnRemainedDurabilityChanged;
 
-        private event Action<WeaponCardRecord> onDurabilityChanged;
-        public event Action<WeaponCardRecord> OnDurabilityChanged { add { onDurabilityChanged += value; } remove { onDurabilityChanged -= value; } }
-
-        private event Action<WeaponCardRecord> onRemainedDurabilityChanged;
-        public event Action<WeaponCardRecord> OnRemainedDurabilityChanged { add { onRemainedDurabilityChanged += value; } remove { onRemainedDurabilityChanged -= value; } }
         public WeaponCardRecord() { }
         public WeaponCardRecord(int cardRecordID, Card card) : base(cardRecordID, card)
         {

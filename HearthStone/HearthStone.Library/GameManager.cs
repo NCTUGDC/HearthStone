@@ -15,8 +15,7 @@ namespace HearthStone.Library
         private Dictionary<int, Game> gameDictionary = new Dictionary<int, Game>();
 
         public delegate void GameChangeEventHandler(Game game, DataChangeCode changeCode);
-        private event GameChangeEventHandler onGameChanged;
-        public event GameChangeEventHandler OnGameChanged { add { onGameChanged += value; } remove { onGameChanged -= value; } }
+        public event GameChangeEventHandler OnGameChanged;
 
         public GameManager()
         {
@@ -40,7 +39,7 @@ namespace HearthStone.Library
             if (!gameDictionary.ContainsKey(game.GameID))
             {
                 gameDictionary.Add(game.GameID, game);
-                onGameChanged?.Invoke(game, DataChangeCode.Add);
+                OnGameChanged?.Invoke(game, DataChangeCode.Add);
                 return true;
             }
             else
@@ -53,7 +52,7 @@ namespace HearthStone.Library
             if (gameDictionary.ContainsKey(gameID))
             {
                 Game game = gameDictionary[gameID];
-                onGameChanged?.Invoke(game, DataChangeCode.Remove);
+                OnGameChanged?.Invoke(game, DataChangeCode.Remove);
                 return gameDictionary.Remove(gameID);
             }
             else

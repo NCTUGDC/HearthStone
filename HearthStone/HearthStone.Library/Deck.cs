@@ -15,8 +15,7 @@ namespace HearthStone.Library
         public bool IsCompleted { get { return TotalCardCount == MaxCardCount; } }
 
         public delegate void DeckCardChangedEventHandler(Card card, DataChangeCode changeCode);
-        private event DeckCardChangedEventHandler onCardChanged;
-        public event DeckCardChangedEventHandler OnCardChanged { add { onCardChanged += value; } remove { onCardChanged -= value; } }
+        public event DeckCardChangedEventHandler OnCardChanged;
 
         public Deck(int deckID, string deckName, int maxCardCount)
         {
@@ -46,7 +45,7 @@ namespace HearthStone.Library
                 else
                 {
                     cards.Add(card);
-                    onCardChanged?.Invoke(card, DataChangeCode.Add);
+                    OnCardChanged?.Invoke(card, DataChangeCode.Add);
                     return true;
                 }
             }
@@ -59,7 +58,7 @@ namespace HearthStone.Library
                 else
                 {
                     cards.Add(card);
-                    onCardChanged?.Invoke(card, DataChangeCode.Add);
+                    OnCardChanged?.Invoke(card, DataChangeCode.Add);
                     return true;
                 }
             }
@@ -71,7 +70,7 @@ namespace HearthStone.Library
                 int index = cards.FindIndex(x => x.CardID == cardID);
                 Card card = cards[index];
                 cards.RemoveAt(index);
-                onCardChanged?.Invoke(card, DataChangeCode.Remove);
+                OnCardChanged?.Invoke(card, DataChangeCode.Remove);
                 return true;
             }
             else

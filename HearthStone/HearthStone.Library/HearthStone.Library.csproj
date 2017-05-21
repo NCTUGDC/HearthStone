@@ -116,6 +116,7 @@
     <Compile Include="Effect.cs" />
     <Compile Include="Effector.cs" />
     <Compile Include="EndPoint.cs" />
+    <Compile Include="Field.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameDeck.cs" />
     <Compile Include="GameManager.cs" />

@@ -31,18 +31,15 @@ namespace HearthStone.Library
                 {
                     manaCost = 0;
                 }
-                onManaCostChanged?.Invoke(this);
+                OnManaCostChanged?.Invoke(this);
             }
         }
 
         public bool IsDisplayInThisTurn { get; set; }
         public bool HasAttacked { get; set; }
 
-        private event Action<CardRecord> onManaCostChanged;
-        public event Action<CardRecord> OnManaCostChanged { add { onManaCostChanged += value; } remove { onManaCostChanged -= value; } }
-
-        private event Action<CardRecord> onEffectorChanged;
-        public event Action<CardRecord> OnEffectorChanged { add { onEffectorChanged += value; } remove { onEffectorChanged -= value; } }
+        public event Action<CardRecord> OnManaCostChanged;
+        public event Action<CardRecord> OnEffectorChanged;
 
         public CardRecord() { }
         protected CardRecord(int cardRecordID, Card card)
@@ -55,6 +52,7 @@ namespace HearthStone.Library
         public void AddEffector(Effector effector)
         {
             effectors.Add(effector);
+            OnEffectorChanged?.Invoke(this);
         }
         public virtual void  Reset()
         {
