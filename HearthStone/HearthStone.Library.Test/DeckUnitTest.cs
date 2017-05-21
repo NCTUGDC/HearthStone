@@ -56,7 +56,7 @@ namespace HearthStone.Library.Test
             var card = new TestCard(0, 0, "Test", new List<Effect>(), Protocol.RarityCode.Free);
             Deck deck = new Deck(1, "Test", 30, new List<Card>());
             int eventCallCounter = 0;
-            deck.OnCardChanged += (targetCard, code) => 
+            deck.OnCardChanged += (eventDeck, targetCard, code) => 
             {
                 Assert.AreEqual(code, Protocol.DataChangeCode.Add);
                 eventCallCounter++;
@@ -115,7 +115,7 @@ namespace HearthStone.Library.Test
             Deck deck = new Deck(1, "Test", 30, new List<Card> { card, card });
 
             int eventCallCounter = 0;
-            deck.OnCardChanged += (targetCard, code) =>
+            deck.OnCardChanged += (eventDeck, targetCard, code) =>
             {
                 Assert.AreEqual(code, Protocol.DataChangeCode.Remove);
                 eventCallCounter++;

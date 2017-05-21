@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using HearthStone.Library.CommunicationInfrastructure.Event.Managers;
 using HearthStone.Protocol;
 using MsgPack.Serialization;
+using System;
+using System.Collections.Generic;
 
 namespace HearthStone.Library
 {
     public class GamePlayer
     {
+        const int maxHandCardCount = 10;
+
         [MessagePackIgnore]
         public Player Player { get; set; }
         [MessagePackIgnore]
@@ -21,7 +23,7 @@ namespace HearthStone.Library
         public bool HasChangedHand
         {
             get { return hasChangedHand; }
-            private set
+            set
             {
                 hasChangedHand = value;
                 OnHasChangedHandChanged?.Invoke(this);
@@ -56,19 +58,27 @@ namespace HearthStone.Library
         }
 
         [MessagePackMember(id: 4)]
-        [MessagePackRuntimeCollectionItemType]
-        private List<CardRecord> handCards = new List<CardRecord>();
+        private List<int> handCardIDs = new List<int>();
         [MessagePackIgnore]
-        public IEnumerable<CardRecord> HandCards { get { return handCards; } }
+        public IEnumerable<int> HandCardIDs { get { return handCardIDs; } }
+
         [MessagePackMember(id: 5)]
         public GameDeck Deck { get; private set; }
 
+        [MessagePackIgnore]
+        public GamePlayerEventManager EventManager { get; private set; }
+        [MessagePackIgnore]
+        public Game Game { get; private set; }
+
         public event Action<GamePlayer> OnHasChangedHandChanged;
-        public event Action<CardRecord, DataChangeCode> OnHandCardsChanged;
+        public event Action<GamePlayer, int, DataChangeCode> OnHandCardsChanged;
         public event Action<GamePlayer> OnRemainedManaCrystalChanged;
         public event Action<GamePlayer> OnManaCrystalChanged;
 
-        public GamePlayer() { }
+        public GamePlayer()
+        {
+            EventManager = new GamePlayerEventManager(this);
+        }
         public GamePlayer(Player player, Hero hero, GameDeck deck)
         {
             Player = player;
@@ -77,31 +87,65 @@ namespace HearthStone.Library
             RemainedManaCrystal = 0;
             ManaCrystal = 0;
             Deck = deck;
+            EventManager = new GamePlayerEventManager(this);
         }
-        public void AddHandCard(CardRecord record)
+        public void BindGame(Game game)
         {
-            handCards.Add(record);
-            OnHandCardsChanged?.Invoke(record, DataChangeCode.Add);
+            Game = game;
         }
-        public void RemoveHandCard(CardRecord record)
+        public bool AddHandCard(int cardRecordID)
         {
-            handCards.Remove(record);
-            OnHandCardsChanged?.Invoke(record, DataChangeCode.Remove);
+            if(handCardIDs.Contains(cardRecordID))
+            {
+                return false;
+            }
+            else
+            {
+                if(handCardIDs.Count < maxHandCardCount)
+                {
+                    handCardIDs.Add(cardRecordID);
+                    OnHandCardsChanged?.Invoke(this, cardRecordID, DataChangeCode.Add);
+                    return true;
+                }
+                else
+                {
+                    CardRecord cardRecord;
+                    if(Game.GameCardManager.FindCard(cardRecordID, out cardRecord))
+                    {
+                        cardRecord.Destroy();
+                    }
+                    return false;
+                }
+            }
+        }
+        public bool RemoveHandCard(int cardRecordID)
+        {
+            if (handCardIDs.Contains(cardRecordID))
+            {
+                handCardIDs.Remove(cardRecordID);
+                OnHandCardsChanged?.Invoke(this, cardRecordID, DataChangeCode.Remove);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public void Draw(int count)
         {
             for(int i = 0; i < count; i++)
             {
-                CardRecord card = Deck.Draw();
-                AddHandCard(card);
+                int cardRecordID = Deck.Draw();
+                AddHandCard(cardRecordID);
             }
         }
-        public void ChangeHand(List<int> cardRecordIDs)
+        public void ChangeHand(int[] cardRecordIDs)
         {
-            Draw(cardRecordIDs.Count);
-            foreach(CardRecord record in HandCards.Where(x => cardRecordIDs.Any(y => (y == x.CardRecordID))))
+            Draw(cardRecordIDs.Length);
+            foreach(int selecteCardRecordID in cardRecordIDs)
             {
-                Deck.AddCard(record);
+                RemoveHandCard(selecteCardRecordID);
+                Deck.AddCard(selecteCardRecordID);
             }
             Deck.Shuffle(100);
             HasChangedHand = true;

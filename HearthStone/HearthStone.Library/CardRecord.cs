@@ -1,4 +1,5 @@
-﻿using MsgPack.Serialization;
+﻿using HearthStone.Protocol;
+using MsgPack.Serialization;
 using System;
 using System.Collections.Generic;
 
@@ -10,14 +11,25 @@ namespace HearthStone.Library
         public int CardRecordID { get; private set; }
 
         [MessagePackMember(id: 1)]
-        [MessagePackRuntimeType]
-        public Card Card { get; private set; }
+        public int CardID { get; private set; }
+
+        [MessagePackIgnore]
+        public Card Card
+        {
+            get
+            {
+                Card card;
+                if (CardManager.Instance.FindCard(CardID, out card))
+                    return card;
+                else
+                    return null;
+            }
+        }
 
         [MessagePackMember(id: 2)]
-        [MessagePackRuntimeCollectionItemType]
-        private List<Effector> effectors = new List<Effector>();
+        private List<int> effectorIDs = new List<int>();
         [MessagePackIgnore]
-        public IEnumerable<Effector> Effectors { get { return effectors; } }
+        public IEnumerable<int> EffectorIDs { get { return effectorIDs; } }
 
         [MessagePackMember(id: 3)]
         private int manaCost;
@@ -35,28 +47,54 @@ namespace HearthStone.Library
             }
         }
 
-        public bool IsDisplayInThisTurn { get; set; }
-        public bool HasAttacked { get; set; }
-
         public event Action<CardRecord> OnManaCostChanged;
-        public event Action<CardRecord> OnEffectorChanged;
+        public event Action<CardRecord, int, DataChangeCode> OnEffectorChanged;
+        public event Action<CardRecord> OnDestroyed;
 
         public CardRecord() { }
-        protected CardRecord(int cardRecordID, Card card)
+        protected CardRecord(int cardRecordID, int cardID)
         {
             CardRecordID = cardRecordID;
-            Card = card;
-            ManaCost = card.ManaCost;
+            CardID = cardID;
+            ManaCost = Card.ManaCost;
         }
 
-        public void AddEffector(Effector effector)
+        public bool AddEffector(int effectorID)
         {
-            effectors.Add(effector);
-            OnEffectorChanged?.Invoke(this);
+            if(effectorIDs.Contains(effectorID))
+            {
+                return false;
+            }
+            else
+            {
+                effectorIDs.Add(effectorID);
+                OnEffectorChanged?.Invoke(this, effectorID, DataChangeCode.Add);
+                return true;
+            }
+        }
+        public bool RemoveEffector(int effectorID)
+        {
+            if (effectorIDs.Contains(effectorID))
+            {
+                effectorIDs.Remove(effectorID);
+                OnEffectorChanged?.Invoke(this, effectorID, DataChangeCode.Remove);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public virtual void  Reset()
         {
-            effectors.Clear();
+            while(effectorIDs.Count > 0)
+            {
+                RemoveEffector(effectorIDs[0]);
+            }
+        }
+        public void Destroy()
+        {
+            OnDestroyed?.Invoke(this);
         }
     }
 }

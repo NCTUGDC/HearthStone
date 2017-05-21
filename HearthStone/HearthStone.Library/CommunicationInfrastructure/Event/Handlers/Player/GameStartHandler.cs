@@ -6,7 +6,7 @@ namespace HearthStone.Library.CommunicationInfrastructure.Event.Handlers.Player
 {
     class GameStartHandler : EventHandler<Library.Player, PlayerEventCode>
     {
-        public GameStartHandler(Library.Player subject) : base(subject, 9)
+        public GameStartHandler(Library.Player subject) : base(subject, 10)
         {
         }
 
@@ -17,24 +17,30 @@ namespace HearthStone.Library.CommunicationInfrastructure.Event.Handlers.Player
                 int gameID = (int)parameters[(byte)GameStartParameterCode.GameID];
                 int player1ID = (int)parameters[(byte)GameStartParameterCode.Player1ID];
                 string player1Nickname = (string)parameters[(byte)GameStartParameterCode.Player1Nickname];
-                GamePlayer gamePlayer1 = SerializationHelper.Deserialize<GamePlayer>((byte[])parameters[(byte)GameStartParameterCode.GamePlayer1DataByteArray]);
+                Library.GamePlayer gamePlayer1 = SerializationHelper.Deserialize<Library.GamePlayer>((byte[])parameters[(byte)GameStartParameterCode.GamePlayer1DataByteArray]);
                 int player2ID = (int)parameters[(byte)GameStartParameterCode.Player2ID];
                 string player2Nickname = (string)parameters[(byte)GameStartParameterCode.Player2Nickname];
-                GamePlayer gamePlayer2 = SerializationHelper.Deserialize<GamePlayer>((byte[])parameters[(byte)GameStartParameterCode.GamePlayer2DataByteArray]);
+                Library.GamePlayer gamePlayer2 = SerializationHelper.Deserialize<Library.GamePlayer>((byte[])parameters[(byte)GameStartParameterCode.GamePlayer2DataByteArray]);
                 int roundCount = (int)parameters[(byte)GameStartParameterCode.RoundCount];
                 int currentGamePlayerID = (int)parameters[(byte)GameStartParameterCode.CurrentGamePlayerID];
+                GameCardManager gameCardManager = SerializationHelper.Deserialize<GameCardManager>((byte[])parameters[(byte)GameStartParameterCode.GameCardManagerByteArray]);
 
                 gamePlayer1.Player = new Library.Player(player1ID, player1Nickname);
                 gamePlayer2.Player = new Library.Player(player2ID, player2Nickname);
 
-                GameManager.Instance.AddGame(new Library.Game
-                    (
-                        gameID: gameID,
-                        gamePlayer1: gamePlayer1,
-                        gamePlayer2: gamePlayer2,
-                        roundCount: roundCount,
-                        currentGamePlayerID: currentGamePlayerID
-                    ));
+                Library.Game game = new Library.Game
+                (
+                    gameID: gameID,
+                    gamePlayer1: gamePlayer1,
+                    gamePlayer2: gamePlayer2,
+                    roundCount: roundCount,
+                    currentGamePlayerID: currentGamePlayerID,
+                    gameCardManager: gameCardManager
+                );
+                GameManager.Instance.AddGame(game);
+                gamePlayer1.BindGame(game);
+                gamePlayer2.BindGame(game);
+                gameCardManager.BindGame(game);
                 return true;
             }
             else

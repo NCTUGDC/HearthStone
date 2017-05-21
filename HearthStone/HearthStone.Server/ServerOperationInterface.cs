@@ -128,18 +128,18 @@ namespace HearthStone.Server
             {
                 if(changeCode == DataChangeCode.Add)
                 {
-                    deck.OnCardChanged += (card, cardChangeCode) => 
+                    deck.OnCardChanged += (eventDeck, card, cardChangeCode) => 
                     {
                         switch(cardChangeCode)
                         {
                             case DataChangeCode.Add:
-                                DatabaseService.RepositoryList.DeckCardRepository.Create(deck.DeckID, card.CardID);
+                                DatabaseService.RepositoryList.DeckCardRepository.Create(eventDeck.DeckID, card.CardID);
                                 break;
                             case DataChangeCode.Remove:
-                                DatabaseService.RepositoryList.DeckCardRepository.Delete(deck.DeckID, card.CardID);
+                                DatabaseService.RepositoryList.DeckCardRepository.Delete(eventDeck.DeckID, card.CardID);
                                 break;
                         }
-                        player.EventManager.SyncDataBroker.SyncDeckCardChanged(deck.DeckID, card.CardID, cardChangeCode);
+                        player.EventManager.SyncDataBroker.SyncDeckCardChanged(eventDeck.DeckID, card.CardID, cardChangeCode);
                     };
                 }
             };

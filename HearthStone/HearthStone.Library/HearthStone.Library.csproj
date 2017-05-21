@@ -57,7 +57,23 @@
     <Compile Include="CommunicationInfrastructure\Event\Handlers\EndPoint\PlayerEventBroker.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Handlers\EndPoint\Sync\SyncWaitingPlayerCountHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Handlers\EventHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\Field\FieldSyncDataBroker.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\Field\Sync\SyncCardChangedHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\GamePlayer\DrawCardHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\GamePlayer\GamePlayerSyncDataBroker.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\GamePlayer\Sync\SyncDeckCardsChangedHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\GamePlayer\Sync\SyncHandCardsChangedHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\GamePlayer\Sync\SyncHasChangedHandChangedHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\GamePlayer\Sync\SyncManaCrystalChangedHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\GamePlayer\Sync\SyncRemainedManaCrystalChangedHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\Game\FieldEventBroker.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\Game\GameOverHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\Game\GamePlayerEventBroker.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Handlers\Game\GameSyncDataBroker.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\Game\RoundEndHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\Game\RoundStartHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\Game\Sync\SyncCurrentGamePlayerID_ChangedHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\Game\Sync\SyncRoundCountChangedHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Handlers\Player\GameStartHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Handlers\Player\PlayerSyncDataBroker.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Handlers\Player\Sync\SyncDeckCardChangedHandler.cs" />
@@ -65,7 +81,9 @@
     <Compile Include="CommunicationInfrastructure\Event\Handlers\SyncDataBroker.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Handlers\SyncDataHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Managers\EndPointEventManager.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Managers\FieldEventManager.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Managers\GameEventManager.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Managers\GamePlayerEventManager.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Managers\PlayerEventManager.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\EndPointOperationHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\EndPointOperationHandlers\EndPointFetchDataBroker.cs" />
@@ -118,6 +136,7 @@
     <Compile Include="EndPoint.cs" />
     <Compile Include="Field.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="GameCardManager.cs" />
     <Compile Include="GameDeck.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="GamePlayer.cs" />
@@ -140,7 +159,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CommunicationInfrastructure\Event\Handlers\Game\Sync\" />
     <Folder Include="Effectors\" />
   </ItemGroup>
   <ItemGroup>

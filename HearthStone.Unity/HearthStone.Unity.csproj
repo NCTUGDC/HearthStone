@@ -115,6 +115,7 @@
     <Compile Include="Assets\Scripts\DeckManagePanelScripts\DeckCardPanel.cs" />
     <Compile Include="Assets\Scripts\EternalObject.cs" />
     <Compile Include="Assets\Scripts\GameSceneScripts\AutoZoomHandCardBlock.cs" />
+    <Compile Include="Assets\Scripts\GameSceneScripts\DeckBlock.cs" />
     <Compile Include="Assets\Scripts\GameSceneScripts\GameController.cs" />
     <Compile Include="Assets\Scripts\GameSceneScripts\GamePlayerController.cs" />
     <Compile Include="Assets\Scripts\GameSceneScripts\HandController.cs" />

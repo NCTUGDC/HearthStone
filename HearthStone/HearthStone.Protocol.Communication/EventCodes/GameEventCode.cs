@@ -3,5 +3,13 @@
     public enum GameEventCode : byte
     {
         SyncData,
+        GamePlayerEvent,
+        FieldEvent,
+
+        RoundStart,
+        RoundEnd,
+        GameOver,
+
+        CardRecordDestroyed
     }
 }

@@ -45,18 +45,18 @@ namespace HearthStone.Library.CardRecords
         public event Action<WeaponCardRecord> OnRemainedDurabilityChanged;
 
         public WeaponCardRecord() { }
-        public WeaponCardRecord(int cardRecordID, Card card) : base(cardRecordID, card)
+        public WeaponCardRecord(int cardRecordID, int cardID) : base(cardRecordID, cardID)
         {
-            if (card is WeaponCard)
+            if (Card is WeaponCard)
             {
-                WeaponCard weaponCard = card as WeaponCard;
+                WeaponCard weaponCard = Card as WeaponCard;
                 Attack = weaponCard.Attack;
                 Durability = weaponCard.Durability;
                 RemainedDurability = Durability;
             }
             else
             {
-                LogService.Fatal($"CradID: {card.CardID} is used to create WeaponCardRecord");
+                LogService.Fatal($"CradID: {cardID} is used to create WeaponCardRecord");
             }
         }
         public override void Reset()

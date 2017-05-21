@@ -10,8 +10,8 @@ namespace HearthStone.Library.Test
         [TestMethod]
         public void SerializationTestMethod1()
         {
-            int recordID = 0;
-            GamePlayer gamePlayer = new GamePlayer(null, new Hero(1, 25, 30, true), new GameDeck(1, CardManager.Instance.Cards.Select(x => x.CreateRecord(recordID++)).ToList()));
+            GameCardManager gameCardManager = new GameCardManager();
+            GamePlayer gamePlayer = new GamePlayer(null, new Hero(1, 25, 30), new GameDeck(1, CardManager.Instance.Cards.Select(x => gameCardManager.CreateCard(x)).ToList()));
             byte[] serializedData = SerializationHelper.Serialize(gamePlayer);
             GamePlayer deserializedGamePlayer = SerializationHelper.Deserialize<GamePlayer>(serializedData);
             Assert.IsNotNull(deserializedGamePlayer);
@@ -19,22 +19,23 @@ namespace HearthStone.Library.Test
             Hero hero = deserializedGamePlayer.Hero;
             Assert.IsNotNull(hero);
             Assert.AreEqual(1, hero.HeroID);
-            Assert.AreEqual(25, hero.HP);
-            Assert.AreEqual(30, hero.MaxHP);
-            Assert.AreEqual(true, hero.IsFrozen);
+            Assert.AreEqual(25, hero.RemainedHP);
+            Assert.AreEqual(30, hero.HP);
 
-            deserializedGamePlayer.ChangeHand(new List<int>());
+            deserializedGamePlayer.ChangeHand(new int[0]);
             Assert.AreEqual(true, deserializedGamePlayer.HasChangedHand);
 
             GameDeck deck = deserializedGamePlayer.Deck;
             Assert.IsNotNull(deck);
-            Assert.AreEqual(28, deck.CardRecords.Count());
-            foreach(var card in deck.CardRecords)
+            Assert.AreEqual(28, deck.CardRecordIDs.Count());
+            foreach(var cardRecordID in deck.CardRecordIDs)
             {
+                CardRecord record;
+                Assert.IsTrue(gameCardManager.FindCard(cardRecordID, out record));
                 Card settingCard;
-                Assert.IsTrue(CardManager.Instance.FindCard(card.Card.CardID, out settingCard));
-                Assert.AreEqual(settingCard.CardID, card.Card.CardID);
-                Assert.AreEqual(settingCard.CardName, card.Card.CardName);
+                Assert.IsTrue(CardManager.Instance.FindCard(record.Card.CardID, out settingCard));
+                Assert.AreEqual(settingCard.CardID, record.Card.CardID);
+                Assert.AreEqual(settingCard.CardName, record.Card.CardName);
             }
         }
     }

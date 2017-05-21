@@ -10,6 +10,7 @@
         Player2Nickname,
         GamePlayer2DataByteArray,
         RoundCount,
-        CurrentGamePlayerID
+        CurrentGamePlayerID,
+        GameCardManagerByteArray
     }
 }

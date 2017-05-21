@@ -12,6 +12,6 @@ namespace HearthStone.Library
         {
             EffectID = effectID;
         }
-        public abstract void Affect(object target);
+        public abstract Effector CreateEffector(int effectorID);
     }
 }

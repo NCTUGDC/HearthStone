@@ -41,25 +41,48 @@ namespace HearthStone.Library.CardRecords
                 OnRemainedHealthChanged?.Invoke(this);
             }
         }
+        [MessagePackMember(id: 7)]
+        private bool isDisplayInThisTurn;
+        public bool IsDisplayInThisTurn
+        {
+            get { return isDisplayInThisTurn; }
+            set
+            {
+                isDisplayInThisTurn = value;
+                OnIsDisplayInThisTurnChanged?.Invoke(this);
+            }
+        }
+        [MessagePackMember(id: 8)]
+        private int attackCountInThisTurn;
+        public int AttackCountInThisTurn
+        {
+            get { return attackCountInThisTurn; }
+            set
+            {
+                attackCountInThisTurn = value;
+                OnAttackCountInThisTurnChanged?.Invoke(this);
+            }
+        }
 
         public event Action<ServantCardRecord> OnAttackChanged;
         public event Action<ServantCardRecord> OnHealthChanged;
         public event Action<ServantCardRecord> OnRemainedHealthChanged;
-        public event Action<ServantCardRecord> OnDead;
+        public event Action<CardRecord> OnIsDisplayInThisTurnChanged;
+        public event Action<CardRecord> OnAttackCountInThisTurnChanged;
 
         public ServantCardRecord() { }
-        public ServantCardRecord(int cardRecordID, Card card) : base(cardRecordID, card)
+        public ServantCardRecord(int cardRecordID, int cardID) : base(cardRecordID, cardID)
         {
-            if (card is ServantCard)
+            if (Card is ServantCard)
             {
-                ServantCard servantCard = card as ServantCard;
+                ServantCard servantCard = Card as ServantCard;
                 Attack = servantCard.Attack;
                 Health = servantCard.Health;
                 RemainedHealth = Health;
             }
             else
             {
-                LogService.Fatal($"CradID: {card.CardID} is used to create ServantCardRecord");
+                LogService.Fatal($"CradID: {cardID} is used to create ServantCardRecord");
             }
         }
         public override void Reset()

@@ -115,12 +115,12 @@ namespace HearthStone.Library.CommunicationInfrastructure.Operation.Managers
             };
             SendOperation(PlayerOperationCode.FindOpponent, parameters);
         }
-        public void SwapHands(int gameID, int[] swapCardRecordIDs)
+        public void SwapHands(int gameID, int[] swapCardRecordID_Array)
         {
             Dictionary<byte, object> parameters = new Dictionary<byte, object>
             {
                 { (byte)SwapHandsParameterCode.GameID, gameID },
-                { (byte)SwapHandsParameterCode.SwapCardRecordID_Array, swapCardRecordIDs }
+                { (byte)SwapHandsParameterCode.SwapCardRecordID_Array, swapCardRecordID_Array }
             };
             SendOperation(PlayerOperationCode.SwapHands, parameters);
         }

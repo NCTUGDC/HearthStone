@@ -22,7 +22,7 @@ namespace HearthStone.Library.Cards
 
         public override CardRecord CreateRecord(int cardRecordID)
         {
-            return new SpellCardRecord(cardRecordID, this);
+            return new SpellCardRecord(cardRecordID, CardID);
         }
     }
 }

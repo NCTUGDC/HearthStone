@@ -55,7 +55,7 @@ public class DeckCardPanel : MonoBehaviour
         EndPointManager.EndPoint.Player.OperationManager.RemoveCardFromDeck(DeckID, cardID);
     }
 
-    private void OnDeckCardChanged(Card card, DataChangeCode changeCode)
+    private void OnDeckCardChanged(Deck deck, Card card, DataChangeCode changeCode)
     {
         RenderAllDeckCards();
     }

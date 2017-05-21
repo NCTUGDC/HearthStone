@@ -39,10 +39,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EventCodes\EndPointEventCode.cs" />
+    <Compile Include="EventCodes\FieldEventCode.cs" />
     <Compile Include="EventCodes\GameEventCode.cs" />
+    <Compile Include="EventCodes\GamePlayerEventCode.cs" />
     <Compile Include="EventCodes\PlayerEventCode.cs" />
     <Compile Include="EventParameters\EndPoint\GameEventParameterCode.cs" />
     <Compile Include="EventParameters\EndPoint\PlayerEventParameterCode.cs" />
+    <Compile Include="EventParameters\Game\FieldEventParameterCode.cs" />
+    <Compile Include="EventParameters\Game\GameOverParameterCode.cs" />
+    <Compile Include="EventParameters\Game\GamePlayerEventParameterCode.cs" />
     <Compile Include="EventParameters\Player\GameStartParameterCode.cs" />
     <Compile Include="FetchDataCodes\EndPointFetchDataCode.cs" />
     <Compile Include="FetchDataCodes\PlayerFetchDataCode.cs" />
@@ -77,17 +82,33 @@
     <Compile Include="ResponseParameters\EndPoint\LoginResponseParameterCode.cs" />
     <Compile Include="ResponseParameters\EndPoint\PlayerResponseParameterCode.cs" />
     <Compile Include="SyncDataCodes\EndPointSyncDataCode.cs" />
+    <Compile Include="SyncDataCodes\FieldSyncDataCode.cs" />
+    <Compile Include="SyncDataCodes\GamePlayerSyncDataCode.cs" />
     <Compile Include="SyncDataCodes\GameSyncDataCode.cs" />
     <Compile Include="SyncDataCodes\PlayerSyncDataCode.cs" />
     <Compile Include="SyncDataParameters\EndPoint\SyncWaitingPlayerCountParameterCode.cs" />
+    <Compile Include="SyncDataParameters\Field\SyncCardChangedParameterCode.cs" />
+    <Compile Include="SyncDataParameters\GamePlayer\SyncDeckCardsChangedParameterCode.cs" />
+    <Compile Include="SyncDataParameters\GamePlayer\SyncHandCardsChangedParameterCode.cs" />
+    <Compile Include="SyncDataParameters\GamePlayer\SyncHasChangedHandChangedParameterCode.cs" />
+    <Compile Include="SyncDataParameters\GamePlayer\SyncHeroAttackChangedParameterCode.cs" />
+    <Compile Include="SyncDataParameters\GamePlayer\SyncHeroAttackCountInThisTurnChangedParameterCode.cs" />
+    <Compile Include="SyncDataParameters\GamePlayer\SyncHeroEffectorChangedParameterCode.cs" />
+    <Compile Include="SyncDataParameters\GamePlayer\SyncHeroHP_ChangedParameterCode.cs" />
+    <Compile Include="SyncDataParameters\GamePlayer\SyncHeroRemainedHP_ChangedParameterCode.cs" />
+    <Compile Include="SyncDataParameters\GamePlayer\SyncHeroWeaponChangedParameterCode.cs" />
+    <Compile Include="SyncDataParameters\GamePlayer\SyncManaCrystalChangedParameterCode.cs" />
+    <Compile Include="SyncDataParameters\GamePlayer\SyncRemainedManaCrystalChangedParameterCode.cs" />
+    <Compile Include="SyncDataParameters\Game\SyncCurrentGamePlayerID_ChangedParameterCode.cs" />
+    <Compile Include="SyncDataParameters\Game\SyncRoundCountChangedParameterCode.cs" />
     <Compile Include="SyncDataParameters\Player\SyncDeckCardChangedParameterCode.cs" />
     <Compile Include="SyncDataParameters\Player\SyncDeckChangedParameterCode.cs" />
     <Compile Include="SyncDataParameters\SyncDataEventParameterCode.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="EventParameters\Game\" />
+    <Folder Include="EventParameters\Field\" />
+    <Folder Include="EventParameters\GamePlayer\" />
     <Folder Include="ResponseParameters\Player\" />
-    <Folder Include="SyncDataParameters\Game\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

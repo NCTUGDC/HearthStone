@@ -2,6 +2,7 @@
 using HearthStone.Protocol;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class SwapHandPanel : MonoBehaviour
 {
@@ -14,20 +15,20 @@ public class SwapHandPanel : MonoBehaviour
 
     private void Start()
     {
-        selfSelectPanel.RenderCards(GameInstance.SelfGamePlayer.HandCards, false);
-        opponentSelectPanel.RenderCards(GameInstance.OpponentGamePlayer.HandCards, true);
+        selfSelectPanel.RenderCards(GameInstance.SelfGamePlayer.HandCardIDs, false);
+        opponentSelectPanel.RenderCards(GameInstance.OpponentGamePlayer.HandCardIDs, true);
         GameInstance.SelfGamePlayer.OnHandCardsChanged += OnSelfHandCardsChanged;
         GameInstance.OpponentGamePlayer.OnHandCardsChanged += OnOpponentHandCardsChanged;
         GameInstance.SelfGamePlayer.OnHasChangedHandChanged += OnSelfHandChanged;
         GameInstance.Game.OnRoundCountChanged += OnGameStart;
     }
-    private void OnOpponentHandCardsChanged(CardRecord card, DataChangeCode changeCode)
+    private void OnOpponentHandCardsChanged(GamePlayer gamePlayer, int cardRecordID, DataChangeCode changeCode)
     {
-        opponentSelectPanel.RenderCards(GameInstance.OpponentGamePlayer.HandCards, true);
+        opponentSelectPanel.RenderCards(GameInstance.OpponentGamePlayer.HandCardIDs, true);
     }
-    private void OnSelfHandCardsChanged(CardRecord card, DataChangeCode changeCode)
+    private void OnSelfHandCardsChanged(GamePlayer gamePlayer, int cardRecordID, DataChangeCode changeCode)
     {
-        selfSelectPanel.RenderCards(GameInstance.SelfGamePlayer.HandCards, false);
+        selfSelectPanel.RenderCards(GameInstance.SelfGamePlayer.HandCardIDs, false);
     }
     private void OnSelfHandChanged(GamePlayer gamePlayer)
     {
@@ -47,6 +48,7 @@ public class SwapHandPanel : MonoBehaviour
 
     public void SwapCards()
     {
-
+        PlayerManager.Player.OperationManager.SwapHands(GameInstance.Game.GameID, selfSelectPanel.SelectedCardRecordIDs);
+        confirmButton.interactable = false;
     }
 }

@@ -100,6 +100,7 @@
     <Compile Include="Assets\Plugins\GameInstance.cs" />
     <Compile Include="Assets\Plugins\PhotonService.cs" />
     <Compile Include="Assets\Plugins\PhotonUnityCommunicationInterface.cs" />
+    <Compile Include="Assets\Plugins\PlayerManager.cs" />
     <Compile Include="Assets\Plugins\RarityColorSelector.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

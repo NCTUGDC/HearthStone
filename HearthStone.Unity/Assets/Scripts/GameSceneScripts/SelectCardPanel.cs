@@ -16,31 +16,37 @@ public class SelectCardPanel : MonoBehaviour
     [SerializeField]
     private GameObject cardBackBlockPrefab;
 
-    public IEnumerable<int> SelectedCardRecordIDs
+    public int[] SelectedCardRecordIDs
     {
         get
         {
-            ToggleGroup group = GetComponent<ToggleGroup>();
-            return group.ActiveToggles().Select(x => x.GetComponent<CardRecordBlock>().Card.CardRecordID);
+            List<int> cardRecordIDs = new List<int>();
+            foreach(Transform child in transform)
+            {
+                if(child.GetComponent<Toggle>().isOn)
+                    cardRecordIDs.Add(child.GetComponent<CardRecordBlock>().Card.CardRecordID);
+            }
+            return cardRecordIDs.ToArray();
         }
     }
 
-    public void RenderCards(IEnumerable<CardRecord> cards, bool isOpponent)
+    public void RenderCards(IEnumerable<int> cardIDs, bool isOpponent)
     {
-        foreach (GameObject child in transform)
+        foreach (Transform child in transform)
         {
-            Destroy(child);
+            Destroy(child.gameObject);
         }
-        int cardCount = cards.Count();
+        int cardCount = cardIDs.Count();
         int index = 0;
-        foreach (var card in cards)
+        foreach (var cardID in cardIDs)
         {
+            CardRecord card;
             if (isOpponent)
             {
                 GameObject handCard = Instantiate(cardBackBlockPrefab, transform);
                 handCard.GetComponent<RectTransform>().anchoredPosition = new Vector2(-130 * cardCount / 2 + index * 130, 0);
             }
-            else
+            else if(GameInstance.Game.GameCardManager.FindCard(cardID, out card))
             {
                 CardRecordBlock handCard = null;
                 switch (card.Card.CardType)
@@ -57,7 +63,6 @@ public class SelectCardPanel : MonoBehaviour
                 }
                 handCard.SetCard(card, GameInstance.SelfGamePlayer.GamePlayerID);
                 handCard.GetComponent<RectTransform>().anchoredPosition = new Vector2(-130 * cardCount / 2 + index * 130, 0);
-                handCard.GetComponent<Toggle>().group = GetComponent<ToggleGroup>();
             }
             index++;
         }

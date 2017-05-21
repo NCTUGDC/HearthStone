@@ -16,20 +16,21 @@ public class HandController : MonoBehaviour
 
     public void RenderHand(GamePlayer gamePlayer, bool isOpponent)
     {
-        foreach (GameObject child in transform)
+        foreach (Transform child in transform)
         {
-            Destroy(child);
+            Destroy(child.gameObject);
         }
-        int handCardCount = gamePlayer.HandCards.Count();
+        int handCardCount = gamePlayer.HandCardIDs.Count();
         int index = 0;
-        foreach (var card in gamePlayer.HandCards)
+        foreach (var cardRecordID in gamePlayer.HandCardIDs)
         {
-            if(isOpponent)
+            CardRecord card;
+            if (isOpponent)
             {
                 GameObject handCard = Instantiate(emptyHandCardBlockPrefab, transform);
-                handCard.GetComponent<RectTransform>().anchoredPosition = new Vector2(-100 * handCardCount / 2 + index * 100, 10);
+                handCard.GetComponent<RectTransform>().anchoredPosition = new Vector2(-95 * handCardCount / 2 + index * 95, 10);
             }
-            else
+            else if(GameInstance.Game.GameCardManager.FindCard(cardRecordID, out card))
             {
                 CardRecordBlock handCard = null;
                 switch(card.Card.CardType)
@@ -45,7 +46,7 @@ public class HandController : MonoBehaviour
                         break;
                 }
                 handCard.SetCard(card, gamePlayer.GamePlayerID);
-                handCard.GetComponent<RectTransform>().anchoredPosition = new Vector2(-100 * handCardCount / 2 + index * 100, 10);
+                handCard.GetComponent<RectTransform>().anchoredPosition = new Vector2(-95 * handCardCount / 2 + index * 95, 10);
             }
             index++;
         }

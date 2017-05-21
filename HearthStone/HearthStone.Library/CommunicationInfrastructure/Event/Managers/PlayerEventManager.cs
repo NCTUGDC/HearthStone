@@ -70,6 +70,7 @@ namespace HearthStone.Library.CommunicationInfrastructure.Event.Managers
                 { (byte)GameStartParameterCode.GamePlayer2DataByteArray, SerializationHelper.Serialize(game.GamePlayer2) },
                 { (byte)GameStartParameterCode.RoundCount, game.RoundCount },
                 { (byte)GameStartParameterCode.CurrentGamePlayerID, game.CurrentGamePlayerID },
+                { (byte)GameStartParameterCode.GameCardManagerByteArray, SerializationHelper.Serialize(game.GameCardManager) },
             };
             SendEvent(PlayerEventCode.GameStart, syncDataParameters);
         }

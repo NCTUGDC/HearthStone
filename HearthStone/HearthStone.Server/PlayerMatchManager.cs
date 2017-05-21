@@ -33,10 +33,13 @@ namespace HearthStone.Server
             {
                 while(true)
                 {
-                    Tuple<Player, Deck> playerDeckPair1, playerDeckPair2;
-                    if(MatchTwoPlayer(out playerDeckPair1, out playerDeckPair2))
+                    lock(waitingPlayerDictionary)
                     {
-                        (GameManager.Instance as GameFactory).CreateGame(playerDeckPair1, playerDeckPair2);
+                        Tuple<Player, Deck> playerDeckPair1, playerDeckPair2;
+                        if (MatchTwoPlayer(out playerDeckPair1, out playerDeckPair2))
+                        {
+                            (GameManager.Instance as GameFactory).CreateGame(playerDeckPair1, playerDeckPair2);
+                        }
                     }
                     Thread.Sleep(100);
                 }

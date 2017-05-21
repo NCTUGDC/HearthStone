@@ -19,7 +19,7 @@ namespace HearthStone.Library.Test
             }
         }
 
-        public override void Affect(object target)
+        public override Effector CreateEffector(int effectorID)
         {
             throw new NotImplementedException();
         }

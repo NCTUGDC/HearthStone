@@ -26,7 +26,7 @@ namespace HearthStone.Library.Cards
 
         public override CardRecord CreateRecord(int cardRecordID)
         {
-            return new WeaponCardRecord(cardRecordID, this);
+            return new WeaponCardRecord(cardRecordID, CardID);
         }
     }
 }
