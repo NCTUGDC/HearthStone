@@ -34,6 +34,11 @@ namespace HearthStone.Library
         private event Action<Game> onRoundCountChanged;
         public event Action<Game> OnRoundCountChanged { add { onRoundCountChanged += value; } remove { onRoundCountChanged -= value; } }
 
+        private event Action<Game> onField1CardChanged;
+        public event Action<Game> OnField1CardChanged { add { onField1CardChanged += value; } remove { onField1CardChanged -= value; } }
+        private event Action<Game> onField2CardChanged;
+        public event Action<Game> OnField2CardChanged { add { onField2CardChanged += value; } remove { onField2CardChanged -= value; } }
+
         private event Action<Game> onRoundStart;
         public event Action<Game> OnRoundStart { add { onRoundStart += value; } remove { onRoundStart -= value; } }
         private event Action<Game> onRoundEnd;
