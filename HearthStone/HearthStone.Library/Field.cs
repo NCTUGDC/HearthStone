@@ -23,6 +23,8 @@ namespace HearthStone.Library
         [MessagePackMember(id: 1)]
         private Dictionary<int, FieldCardRecord> cardDictionary = new Dictionary<int, FieldCardRecord>();
         public IEnumerable<FieldCardRecord> Cards { get { return cardDictionary.Values; } }
+        [MessagePackIgnore]
+        public int ServantCount { get { return cardDictionary.Count; } }
 
         [MessagePackIgnore]
         public FieldEventManager EventManager { get; private set; }
@@ -101,6 +103,15 @@ namespace HearthStone.Library
         public void BindGame(Game game)
         {
             Game = game;
+        }
+        public bool DisplayCheck(int positionIndex)
+        {
+            if (ServantCount >= maxServantCount)
+                return false;
+            else if (positionIndex < 0 || positionIndex >= ServantCount)
+                return false;
+            else
+                return true;
         }
     }
 }

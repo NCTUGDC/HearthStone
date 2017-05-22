@@ -15,10 +15,8 @@
         TargetCastSpell,
         NonTargeCasttSpell,
         EquipWeapon,
-        ServantAttackHero,
-        ServantAttackServant,
-        HeroAttackHero,
-        HeroAttackServant,
+        ServantAttack,
+        HeroAttack,
         EndTurn
     }
 }

@@ -96,5 +96,18 @@ namespace HearthStone.Library
         {
             OnDestroyed?.Invoke(this);
         }
+        public IEnumerable<Effector> Effectors(GameCardManager gameCardManager)
+        {
+            List<Effector> efffectors = new List<Effector>();
+            foreach(var effectorID in EffectorIDs)
+            {
+                Effector efffector;
+                if (gameCardManager.FindEffector(effectorID, out efffector))
+                {
+                    efffectors.Add(efffector);
+                }
+            }
+            return efffectors;
+        }
     }
 }

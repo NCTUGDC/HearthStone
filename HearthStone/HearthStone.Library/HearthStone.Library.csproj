@@ -103,15 +103,13 @@
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\Fetch\FetchAllDeckCardsHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\Fetch\FetchAllDecksHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\FindOpponentHandler.cs" />
-    <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\HeroAttackHeroHandler.cs" />
-    <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\HeroAttackServantHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\HeroAttackHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\NonTargeCasttSpellHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\NonTargetDisplayServantHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\PlayerFetchDataBroker.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\PlayerFetchDataHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\RemoveCardFromDeckHandler.cs" />
-    <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\ServantAttackHeroHandler.cs" />
-    <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\ServantAttackServantHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\ServantAttackHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\SwapHandsHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\TargetCastSpellHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Operation\Handlers\PlayerOperationHandlers\TargetDisplayServantHandler.cs" />
@@ -133,6 +131,9 @@
     <Compile Include="Deck.cs" />
     <Compile Include="Effect.cs" />
     <Compile Include="Effector.cs" />
+    <Compile Include="Effectors\AutoExecutetEffector.cs" />
+    <Compile Include="Effectors\StatusEffector.cs" />
+    <Compile Include="Effectors\TargetEffector.cs" />
     <Compile Include="EndPoint.cs" />
     <Compile Include="Field.cs" />
     <Compile Include="Game.cs" />
@@ -158,9 +159,7 @@
       <Name>HearthStone.Protocol</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Effectors\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />

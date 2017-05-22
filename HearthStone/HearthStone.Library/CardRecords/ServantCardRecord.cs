@@ -100,5 +100,31 @@ namespace HearthStone.Library.CardRecords
                 LogService.Fatal($"CradID: {Card.CardID} is used to Reset ServantCardRecord");
             }
         }
+        public bool AttackServant(ServantCardRecord target, GamePlayer user)
+        {
+            if (Attack > 0)
+            {
+                target.RemainedHealth -= Attack;
+                RemainedHealth -= target.Attack;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool AttackHero(Hero target, GamePlayer user)
+        {
+            if (Attack > 0)
+            {
+                target.RemainedHP -= Attack;
+                RemainedHealth -= target.AttackWithWeapon(user.Game);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

@@ -5,9 +5,9 @@ using System.Text;
 
 namespace HearthStone.Library.CommunicationInfrastructure.Operation.Handlers.PlayerOperationHandlers
 {
-    class HeroAttackHeroHandler : PlayerOperationHandler
+    class ServantAttackHandler : PlayerOperationHandler
     {
-        public HeroAttackHeroHandler(Player subject) : base(subject, 1)
+        public ServantAttackHandler(Player subject) : base(subject, 2)
         {
         }
     }

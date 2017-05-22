@@ -2,6 +2,8 @@
 using HearthStone.Library.CommunicationInfrastructure.Event.Managers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using HearthStone.Library.Effectors;
 
 namespace HearthStone.Library
 {
@@ -43,6 +45,9 @@ namespace HearthStone.Library
         public event Action<Game> OnRoundEnd;
         public event Action<Game> OnCurrentGamePlayerID_Changed;
         public event Action<Game, int> OnGameOver;
+
+        public delegate void UseCardEventHandler(Game game, GamePlayer gamePlayer, CardRecord cardRecord);
+        public event UseCardEventHandler OnUseCard;
 
         public GameEventManager EventManager { get; private set; }
 
@@ -179,6 +184,360 @@ namespace HearthStone.Library
             else if(GamePlayer2.Hero.RemainedHP <= 0)
             {
                 OnGameOver?.Invoke(this, 2);
+            }
+        }
+
+        private void UseCard(GamePlayer gamePlayer, CardRecord cardRecord)
+        {
+            gamePlayer.RemainedManaCrystal -= cardRecord.ManaCost;
+            gamePlayer.RemoveHandCard(cardRecord.CardRecordID);
+            OnUseCard?.Invoke(this, gamePlayer, cardRecord);
+        }
+        private bool CanUseCard(GamePlayer gamePlayer, CardRecord cardRecord)
+        {
+            if (gamePlayer.HandCardIDs.Contains(cardRecord.CardRecordID) && gamePlayer.RemainedManaCrystal >= cardRecord.ManaCost)
+                return true;
+            else
+                return false;
+        }
+
+        public bool TargetDisplayServant(int gamePlayerID, int servantCardRecordID, int positionIndex, int targetID, bool isTargetServant)
+        {
+            if (gamePlayerID != 1 && gamePlayerID != 2)
+                return false;
+            Field field = (gamePlayerID == 1) ? Field1 : Field2;
+            if (!field.DisplayCheck(positionIndex))
+                return false;
+            CardRecord servantCardRecord;
+            if (!GameCardManager.FindCard(servantCardRecordID, out servantCardRecord) || !(servantCardRecord is ServantCardRecord))
+                return false;
+            if (!servantCardRecord.Effectors(GameCardManager).Any(x => x is TargetEffector))
+                return false;
+            GamePlayer gamePlayer = (gamePlayerID == 1) ? GamePlayer1 : GamePlayer2;
+            if (CanUseCard(gamePlayer, servantCardRecord))
+            {
+                if(isTargetServant)
+                {
+                    CardRecord targetCardRecord;
+                    if(GameCardManager.FindCard(targetID, out targetCardRecord) && targetCardRecord is ServantCardRecord)
+                    {
+                        UseCard(gamePlayer, servantCardRecord);
+                        foreach (var effector in servantCardRecord.Effectors(GameCardManager))
+                        {
+                            if(effector is TargetEffector)
+                            {
+                                (effector as TargetEffector).AffectServant(targetCardRecord as ServantCardRecord, gamePlayer);
+                            }
+                            else if(effector is AutoExecutetEffector)
+                            {
+                                (effector as AutoExecutetEffector).Affect(gamePlayer);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    if (targetID != 1 && targetID != 2)
+                        return false;
+                    else
+                    {
+                        UseCard(gamePlayer, servantCardRecord);
+                        Hero hero = (targetID == 1) ? GamePlayer1.Hero : GamePlayer2.Hero;
+                        foreach (var effector in servantCardRecord.Effectors(GameCardManager))
+                        {
+                            if (effector is TargetEffector)
+                            {
+                                (effector as TargetEffector).AffectHero(hero, gamePlayer);
+                            }
+                            else if (effector is AutoExecutetEffector)
+                            {
+                                (effector as AutoExecutetEffector).Affect(gamePlayer);
+                            }
+                        }
+                    }
+                }
+                field.AddCard(servantCardRecordID, positionIndex);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool NonTargetDisplayServant(int gamePlayerID, int servantCardRecordID, int positionIndex)
+        {
+            if (gamePlayerID != 1 && gamePlayerID != 2)
+                return false;
+            Field field = (gamePlayerID == 1) ? Field1 : Field2;
+            if (!field.DisplayCheck(positionIndex))
+                return false;
+            CardRecord servantCardRecord;
+            if (!GameCardManager.FindCard(servantCardRecordID, out servantCardRecord) || !(servantCardRecord is ServantCardRecord))
+                return false;
+            if (servantCardRecord.Effectors(GameCardManager).Any(x => x is TargetEffector))
+                return false;
+            GamePlayer gamePlayer = (gamePlayerID == 1) ? GamePlayer1 : GamePlayer2;
+            if (CanUseCard(gamePlayer, servantCardRecord))
+            {
+                UseCard(gamePlayer, servantCardRecord);
+                foreach (var effector in servantCardRecord.Effectors(GameCardManager))
+                {
+                    if (effector is AutoExecutetEffector)
+                    {
+                        (effector as AutoExecutetEffector).Affect(gamePlayer);
+                    }
+                }
+                field.AddCard(servantCardRecordID, positionIndex);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool TargetCastSpell(int gamePlayerID, int spellCardRecordID, int targetID, bool isTargetServant)
+        {
+            if (gamePlayerID != 1 && gamePlayerID != 2)
+                return false;
+            CardRecord spellCardRecord;
+            if (!GameCardManager.FindCard(spellCardRecordID, out spellCardRecord) || !(spellCardRecord is SpellCardRecord))
+                return false;
+            if (!spellCardRecord.Effectors(GameCardManager).Any(x => x is TargetEffector))
+                return false;
+            GamePlayer gamePlayer = (gamePlayerID == 1) ? GamePlayer1 : GamePlayer2;
+            if (CanUseCard(gamePlayer, spellCardRecord))
+            {
+                if (isTargetServant)
+                {
+                    CardRecord targetCardRecord;
+                    if (GameCardManager.FindCard(targetID, out targetCardRecord) && targetCardRecord is ServantCardRecord)
+                    {
+                        UseCard(gamePlayer, spellCardRecord);
+                        foreach (var effector in spellCardRecord.Effectors(GameCardManager))
+                        {
+                            if (effector is TargetEffector)
+                            {
+                                (effector as TargetEffector).AffectServant(targetCardRecord as ServantCardRecord, gamePlayer);
+                            }
+                            else if (effector is AutoExecutetEffector)
+                            {
+                                (effector as AutoExecutetEffector).Affect(gamePlayer);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    if (targetID != 1 && targetID != 2)
+                        return false;
+                    else
+                    {
+                        UseCard(gamePlayer, spellCardRecord);
+                        Hero hero = (targetID == 1) ? GamePlayer1.Hero : GamePlayer2.Hero;
+                        foreach (var effector in spellCardRecord.Effectors(GameCardManager))
+                        {
+                            if (effector is TargetEffector)
+                            {
+                                (effector as TargetEffector).AffectHero(hero, gamePlayer);
+                            }
+                            else if (effector is AutoExecutetEffector)
+                            {
+                                (effector as AutoExecutetEffector).Affect(gamePlayer);
+                            }
+                        }
+                    }
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool NonTargeCasttSpell(int gamePlayerID, int spellCardRecordID)
+        {
+            if (gamePlayerID != 1 && gamePlayerID != 2)
+                return false;
+            CardRecord spellCardRecord;
+            if (!GameCardManager.FindCard(spellCardRecordID, out spellCardRecord) || !(spellCardRecord is SpellCardRecord))
+                return false;
+            if (spellCardRecord.Effectors(GameCardManager).Any(x => x is TargetEffector))
+                return false;
+            GamePlayer gamePlayer = (gamePlayerID == 1) ? GamePlayer1 : GamePlayer2;
+            if (CanUseCard(gamePlayer, spellCardRecord))
+            {
+                UseCard(gamePlayer, spellCardRecord);
+                foreach (var effector in spellCardRecord.Effectors(GameCardManager))
+                {
+                    if (effector is AutoExecutetEffector)
+                    {
+                        (effector as AutoExecutetEffector).Affect(gamePlayer);
+                    }
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool TargetEquipWeapon(int gamePlayerID, int weaponCardRecordID, int targetID, bool isTargetServant)
+        {
+            if (gamePlayerID != 1 && gamePlayerID != 2)
+                return false;
+            CardRecord weaponCardRecord;
+            if (!GameCardManager.FindCard(weaponCardRecordID, out weaponCardRecord) || !(weaponCardRecord is WeaponCardRecord))
+                return false;
+            if (!weaponCardRecord.Effectors(GameCardManager).Any(x => x is TargetEffector))
+                return false;
+            GamePlayer gamePlayer = (gamePlayerID == 1) ? GamePlayer1 : GamePlayer2;
+            if (CanUseCard(gamePlayer, weaponCardRecord))
+            {
+                if (isTargetServant)
+                {
+                    CardRecord targetCardRecord;
+                    if (GameCardManager.FindCard(targetID, out targetCardRecord) && targetCardRecord is ServantCardRecord)
+                    {
+                        UseCard(gamePlayer, weaponCardRecord);
+                        foreach (var effector in weaponCardRecord.Effectors(GameCardManager))
+                        {
+                            if (effector is TargetEffector)
+                            {
+                                (effector as TargetEffector).AffectServant(targetCardRecord as ServantCardRecord, gamePlayer);
+                            }
+                            else if (effector is AutoExecutetEffector)
+                            {
+                                (effector as AutoExecutetEffector).Affect(gamePlayer);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    if (targetID != 1 && targetID != 2)
+                        return false;
+                    else
+                    {
+                        UseCard(gamePlayer, weaponCardRecord);
+                        Hero hero = (targetID == 1) ? GamePlayer1.Hero : GamePlayer2.Hero;
+                        foreach (var effector in weaponCardRecord.Effectors(GameCardManager))
+                        {
+                            if (effector is TargetEffector)
+                            {
+                                (effector as TargetEffector).AffectHero(hero, gamePlayer);
+                            }
+                            else if (effector is AutoExecutetEffector)
+                            {
+                                (effector as AutoExecutetEffector).Affect(gamePlayer);
+                            }
+                        }
+                    }
+                }
+                gamePlayer.Hero.WeaponCardRecordID = weaponCardRecordID;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool NonTargetEquipWeapon(int gamePlayerID, int weaponCardRecordID)
+        {
+            if (gamePlayerID != 1 && gamePlayerID != 2)
+                return false;
+            CardRecord weaponCardRecord;
+            if (!GameCardManager.FindCard(weaponCardRecordID, out weaponCardRecord) || !(weaponCardRecord is WeaponCardRecord))
+                return false;
+            if (weaponCardRecord.Effectors(GameCardManager).Any(x => x is TargetEffector))
+                return false;
+            GamePlayer gamePlayer = (gamePlayerID == 1) ? GamePlayer1 : GamePlayer2;
+            if (CanUseCard(gamePlayer, weaponCardRecord))
+            {
+                UseCard(gamePlayer, weaponCardRecord);
+                foreach (var effector in weaponCardRecord.Effectors(GameCardManager))
+                {
+                    if (effector is AutoExecutetEffector)
+                    {
+                        (effector as AutoExecutetEffector).Affect(gamePlayer);
+                    }
+                }
+                gamePlayer.Hero.WeaponCardRecordID = weaponCardRecordID;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool ServantAttack(int gamePlayerID, int servantCardRecordID, int targetID, bool isTargetServant)
+        {
+            if (gamePlayerID != 1 && gamePlayerID != 2)
+                return false;
+            CardRecord servantCardRecord;
+            if (!GameCardManager.FindCard(servantCardRecordID, out servantCardRecord) || !(servantCardRecord is ServantCardRecord))
+                return false;
+            GamePlayer gamePlayer = (gamePlayerID == 1) ? GamePlayer1 : GamePlayer2;
+            if (isTargetServant)
+            {
+                CardRecord targetCardRecord;
+                if (GameCardManager.FindCard(targetID, out targetCardRecord) && targetCardRecord is ServantCardRecord)
+                {
+                    return (servantCardRecord as ServantCardRecord).AttackServant(targetCardRecord as ServantCardRecord, gamePlayer);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (targetID != 1 && targetID != 2)
+                    return false;
+                else
+                {
+                    Hero hero = (targetID == 1) ? GamePlayer1.Hero : GamePlayer2.Hero;
+                    return (servantCardRecord as ServantCardRecord).AttackHero(hero, gamePlayer);
+                }
+            }
+        }
+        public bool HeroAttack(int gamePlayerID, int targetID, bool isTargetServant)
+        {
+            if (gamePlayerID != 1 && gamePlayerID != 2)
+                return false;
+            GamePlayer gamePlayer = (gamePlayerID == 1) ? GamePlayer1 : GamePlayer2;
+            if (isTargetServant)
+            {
+                CardRecord targetCardRecord;
+                if (GameCardManager.FindCard(targetID, out targetCardRecord) && targetCardRecord is ServantCardRecord)
+                {
+                    return gamePlayer.Hero.AttackServant(targetCardRecord as ServantCardRecord, gamePlayer);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (targetID != 1 && targetID != 2)
+                    return false;
+                else
+                {
+                    Hero hero = (targetID == 1) ? GamePlayer1.Hero : GamePlayer2.Hero;
+                    return gamePlayer.Hero.AttackHero(hero, gamePlayer);
+                }
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using HearthStone.Protocol;
+﻿using HearthStone.Library.CardRecords;
+using HearthStone.Protocol;
 using MsgPack.Serialization;
 using System;
 using System.Collections.Generic;
@@ -124,6 +125,45 @@ namespace HearthStone.Library
             else
             {
                 return false;
+            }
+        }
+        public bool AttackServant(ServantCardRecord target, GamePlayer user)
+        {
+            if (AttackWithWeapon(user.Game) > 0)
+            {
+                target.RemainedHealth -= AttackWithWeapon(user.Game);
+                RemainedHP -= target.Attack;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool AttackHero(Hero target, GamePlayer user)
+        {
+            if (AttackWithWeapon(user.Game) > 0)
+            {
+                target.RemainedHP -= AttackWithWeapon(user.Game);
+                RemainedHP -= target.AttackWithWeapon(user.Game);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public int AttackWithWeapon(Game game)
+        {
+            CardRecord card;
+            if (game.CurrentGamePlayerID == HeroID && game.GameCardManager.FindCard(WeaponCardRecordID, out card) && (card is WeaponCardRecord))
+            {
+                WeaponCardRecord weaponCard = card as WeaponCardRecord;
+                return Attack + weaponCard.Attack;
+            }
+            else
+            {
+                return Attack;
             }
         }
     }
