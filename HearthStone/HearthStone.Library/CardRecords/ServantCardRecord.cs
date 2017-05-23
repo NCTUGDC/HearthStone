@@ -87,21 +87,6 @@ namespace HearthStone.Library.CardRecords
                 LogService.Fatal($"CradID: {cardID} is used to create ServantCardRecord");
             }
         }
-        public override void Reset()
-        {
-            base.Reset();
-            if (Card is ServantCard)
-            {
-                ServantCard servantCard = Card as ServantCard;
-                Attack = servantCard.Attack;
-                Health = servantCard.Health;
-                RemainedHealth = Health;
-            }
-            else
-            {
-                LogService.Fatal($"CradID: {Card.CardID} is used to Reset ServantCardRecord");
-            }
-        }
 
         public bool AttackServant(ServantCardRecord target, GamePlayer user)
         {

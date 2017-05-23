@@ -59,20 +59,5 @@ namespace HearthStone.Library.CardRecords
                 LogService.Fatal($"CradID: {cardID} is used to create WeaponCardRecord");
             }
         }
-        public override void Reset()
-        {
-            base.Reset();
-            if (Card is WeaponCard)
-            {
-                WeaponCard weaponCard = Card as WeaponCard;
-                Attack = weaponCard.Attack;
-                Durability = weaponCard.Durability;
-                RemainedDurability = Durability;
-            }
-            else
-            {
-                LogService.Fatal($"CradID: {Card.CardID} is used to Reset WeaponCardRecord");
-            }
-        }
     }
 }

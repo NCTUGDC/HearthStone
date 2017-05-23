@@ -36,7 +36,7 @@ namespace HearthStone.Library
         {
             if (card == null || TotalCardCount >= MaxCardCount)
                 return false;
-            else if(card.Rarity == Protocol.RarityCode.Legendary)
+            else if(card.Rarity == RarityCode.Legendary)
             {
                 if (CardCount(card.CardID) >= 1)
                 {

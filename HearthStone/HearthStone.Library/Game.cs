@@ -1,9 +1,9 @@
 ﻿using HearthStone.Library.CardRecords;
 using HearthStone.Library.CommunicationInfrastructure.Event.Managers;
+using HearthStone.Library.Effectors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using HearthStone.Library.Effectors;
 
 namespace HearthStone.Library
 {
@@ -199,7 +199,7 @@ namespace HearthStone.Library
 
         public bool TargetDisplayServant(int gamePlayerID, int servantCardRecordID, int positionIndex, int targetID, bool isTargetServant)
         {
-            if (gamePlayerID != 1 && gamePlayerID != 2)
+            if (CurrentGamePlayerID != gamePlayerID || gamePlayerID != 1 && gamePlayerID != 2)
                 return false;
             Field field = (gamePlayerID == 1) ? Field1 : Field2;
             if (!field.DisplayCheck(positionIndex))
@@ -267,7 +267,7 @@ namespace HearthStone.Library
         }
         public bool NonTargetDisplayServant(int gamePlayerID, int servantCardRecordID, int positionIndex)
         {
-            if (gamePlayerID != 1 && gamePlayerID != 2)
+            if (CurrentGamePlayerID != gamePlayerID || gamePlayerID != 1 && gamePlayerID != 2)
                 return false;
             Field field = (gamePlayerID == 1) ? Field1 : Field2;
             if (!field.DisplayCheck(positionIndex))
@@ -299,7 +299,7 @@ namespace HearthStone.Library
         }
         public bool TargetCastSpell(int gamePlayerID, int spellCardRecordID, int targetID, bool isTargetServant)
         {
-            if (gamePlayerID != 1 && gamePlayerID != 2)
+            if (CurrentGamePlayerID != gamePlayerID || gamePlayerID != 1 && gamePlayerID != 2)
                 return false;
             CardRecord spellCardRecord;
             if (!GameCardManager.FindCard(spellCardRecordID, out spellCardRecord) || !(spellCardRecord is SpellCardRecord))
@@ -362,7 +362,7 @@ namespace HearthStone.Library
         }
         public bool NonTargeCasttSpell(int gamePlayerID, int spellCardRecordID)
         {
-            if (gamePlayerID != 1 && gamePlayerID != 2)
+            if (CurrentGamePlayerID != gamePlayerID || gamePlayerID != 1 && gamePlayerID != 2)
                 return false;
             CardRecord spellCardRecord;
             if (!GameCardManager.FindCard(spellCardRecordID, out spellCardRecord) || !(spellCardRecord is SpellCardRecord))
@@ -389,7 +389,7 @@ namespace HearthStone.Library
         }
         public bool TargetEquipWeapon(int gamePlayerID, int weaponCardRecordID, int targetID, bool isTargetServant)
         {
-            if (gamePlayerID != 1 && gamePlayerID != 2)
+            if (CurrentGamePlayerID != gamePlayerID || gamePlayerID != 1 && gamePlayerID != 2)
                 return false;
             CardRecord weaponCardRecord;
             if (!GameCardManager.FindCard(weaponCardRecordID, out weaponCardRecord) || !(weaponCardRecord is WeaponCardRecord))
@@ -453,7 +453,7 @@ namespace HearthStone.Library
         }
         public bool NonTargetEquipWeapon(int gamePlayerID, int weaponCardRecordID)
         {
-            if (gamePlayerID != 1 && gamePlayerID != 2)
+            if (CurrentGamePlayerID != gamePlayerID || gamePlayerID != 1 && gamePlayerID != 2)
                 return false;
             CardRecord weaponCardRecord;
             if (!GameCardManager.FindCard(weaponCardRecordID, out weaponCardRecord) || !(weaponCardRecord is WeaponCardRecord))
@@ -481,7 +481,7 @@ namespace HearthStone.Library
         }
         public bool ServantAttack(int gamePlayerID, int servantCardRecordID, int targetID, bool isTargetServant)
         {
-            if (gamePlayerID != 1 && gamePlayerID != 2)
+            if (CurrentGamePlayerID != gamePlayerID || gamePlayerID != 1 && gamePlayerID != 2)
                 return false;
             CardRecord servantCardRecord;
             if (!GameCardManager.FindCard(servantCardRecordID, out servantCardRecord) || !(servantCardRecord is ServantCardRecord))
@@ -512,7 +512,7 @@ namespace HearthStone.Library
         }
         public bool HeroAttack(int gamePlayerID, int targetID, bool isTargetServant)
         {
-            if (gamePlayerID != 1 && gamePlayerID != 2)
+            if (CurrentGamePlayerID != gamePlayerID || gamePlayerID != 1 && gamePlayerID != 2)
                 return false;
             GamePlayer gamePlayer = (gamePlayerID == 1) ? GamePlayer1 : GamePlayer2;
             if (isTargetServant)

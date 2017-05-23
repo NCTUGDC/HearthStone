@@ -85,13 +85,6 @@ namespace HearthStone.Library
                 return false;
             }
         }
-        public virtual void  Reset()
-        {
-            while(effectorIDs.Count > 0)
-            {
-                RemoveEffector(effectorIDs[0]);
-            }
-        }
         public void Destroy()
         {
             OnDestroyed?.Invoke(this);
