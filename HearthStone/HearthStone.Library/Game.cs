@@ -86,11 +86,6 @@ namespace HearthStone.Library
             EventManager = new GameEventManager(this);
         }
 
-        private void Hero_OnRemainedHPChanged(Hero hero, int delta)
-        {
-            throw new NotImplementedException();
-        }
-
         public Game(int gameID, GamePlayer gamePlayer1, GamePlayer gamePlayer2, int roundCount, int currentGamePlayerID, GameCardManager gameCardManager)
         {
             GameID = gameID;
@@ -207,7 +202,7 @@ namespace HearthStone.Library
             CardRecord servantCardRecord;
             if (!GameCardManager.FindCard(servantCardRecordID, out servantCardRecord) || !(servantCardRecord is ServantCardRecord))
                 return false;
-            if (!servantCardRecord.Effectors(GameCardManager).Any(x => x is TargetEffector))
+            if (!servantCardRecord.Effectors(GameCardManager).Any(x => x is TargetEffector || (isTargetServant && x is MinionTargetEffector)))
                 return false;
             GamePlayer gamePlayer = (gamePlayerID == 1) ? GamePlayer1 : GamePlayer2;
             if (CanUseCard(gamePlayer, servantCardRecord))
@@ -223,6 +218,10 @@ namespace HearthStone.Library
                             if(effector is TargetEffector)
                             {
                                 (effector as TargetEffector).AffectServant(targetCardRecord as ServantCardRecord, gamePlayer);
+                            }
+                            else if(effector is MinionTargetEffector)
+                            {
+                                (effector as MinionTargetEffector).AffectServant(targetCardRecord as ServantCardRecord, gamePlayer);
                             }
                             else if(effector is AutoExecutetEffector)
                             {
@@ -275,7 +274,7 @@ namespace HearthStone.Library
             CardRecord servantCardRecord;
             if (!GameCardManager.FindCard(servantCardRecordID, out servantCardRecord) || !(servantCardRecord is ServantCardRecord))
                 return false;
-            if (servantCardRecord.Effectors(GameCardManager).Any(x => x is TargetEffector))
+            if (servantCardRecord.Effectors(GameCardManager).Any(x => x is TargetEffector || x is MinionTargetEffector))
                 return false;
             GamePlayer gamePlayer = (gamePlayerID == 1) ? GamePlayer1 : GamePlayer2;
             if (CanUseCard(gamePlayer, servantCardRecord))
@@ -304,7 +303,7 @@ namespace HearthStone.Library
             CardRecord spellCardRecord;
             if (!GameCardManager.FindCard(spellCardRecordID, out spellCardRecord) || !(spellCardRecord is SpellCardRecord))
                 return false;
-            if (!spellCardRecord.Effectors(GameCardManager).Any(x => x is TargetEffector))
+            if (!spellCardRecord.Effectors(GameCardManager).Any(x => x is TargetEffector || (isTargetServant && x is MinionTargetEffector)))
                 return false;
             GamePlayer gamePlayer = (gamePlayerID == 1) ? GamePlayer1 : GamePlayer2;
             if (CanUseCard(gamePlayer, spellCardRecord))
@@ -320,6 +319,10 @@ namespace HearthStone.Library
                             if (effector is TargetEffector)
                             {
                                 (effector as TargetEffector).AffectServant(targetCardRecord as ServantCardRecord, gamePlayer);
+                            }
+                            else if (effector is MinionTargetEffector)
+                            {
+                                (effector as MinionTargetEffector).AffectServant(targetCardRecord as ServantCardRecord, gamePlayer);
                             }
                             else if (effector is AutoExecutetEffector)
                             {
@@ -367,7 +370,7 @@ namespace HearthStone.Library
             CardRecord spellCardRecord;
             if (!GameCardManager.FindCard(spellCardRecordID, out spellCardRecord) || !(spellCardRecord is SpellCardRecord))
                 return false;
-            if (spellCardRecord.Effectors(GameCardManager).Any(x => x is TargetEffector))
+            if (spellCardRecord.Effectors(GameCardManager).Any(x => x is TargetEffector || x is MinionTargetEffector))
                 return false;
             GamePlayer gamePlayer = (gamePlayerID == 1) ? GamePlayer1 : GamePlayer2;
             if (CanUseCard(gamePlayer, spellCardRecord))
@@ -394,7 +397,7 @@ namespace HearthStone.Library
             CardRecord weaponCardRecord;
             if (!GameCardManager.FindCard(weaponCardRecordID, out weaponCardRecord) || !(weaponCardRecord is WeaponCardRecord))
                 return false;
-            if (!weaponCardRecord.Effectors(GameCardManager).Any(x => x is TargetEffector))
+            if (!weaponCardRecord.Effectors(GameCardManager).Any(x => x is TargetEffector || x is MinionTargetEffector))
                 return false;
             GamePlayer gamePlayer = (gamePlayerID == 1) ? GamePlayer1 : GamePlayer2;
             if (CanUseCard(gamePlayer, weaponCardRecord))
@@ -410,6 +413,10 @@ namespace HearthStone.Library
                             if (effector is TargetEffector)
                             {
                                 (effector as TargetEffector).AffectServant(targetCardRecord as ServantCardRecord, gamePlayer);
+                            }
+                            else if (effector is MinionTargetEffector)
+                            {
+                                (effector as MinionTargetEffector).AffectServant(targetCardRecord as ServantCardRecord, gamePlayer);
                             }
                             else if (effector is AutoExecutetEffector)
                             {
@@ -458,7 +465,7 @@ namespace HearthStone.Library
             CardRecord weaponCardRecord;
             if (!GameCardManager.FindCard(weaponCardRecordID, out weaponCardRecord) || !(weaponCardRecord is WeaponCardRecord))
                 return false;
-            if (weaponCardRecord.Effectors(GameCardManager).Any(x => x is TargetEffector))
+            if (weaponCardRecord.Effectors(GameCardManager).Any(x => x is TargetEffector || x is MinionTargetEffector))
                 return false;
             GamePlayer gamePlayer = (gamePlayerID == 1) ? GamePlayer1 : GamePlayer2;
             if (CanUseCard(gamePlayer, weaponCardRecord))

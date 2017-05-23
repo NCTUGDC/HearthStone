@@ -1,5 +1,4 @@
 ﻿using HearthStone.Protocol;
-using System;
 
 namespace HearthStone.Library.Effects
 {
@@ -15,13 +14,13 @@ namespace HearthStone.Library.Effects
         {
             get
             {
-                throw new NotImplementedException();
+                return EffectTypeCode.DrawCard;
             }
         }
 
         public override string Description(Game game, int selfGamePlayerID)
         {
-            throw new NotImplementedException();
+            return $"抽{CardCount}張牌";
         }
     }
 }

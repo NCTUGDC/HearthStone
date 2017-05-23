@@ -1,5 +1,4 @@
 ﻿using HearthStone.Protocol;
-using System;
 
 namespace HearthStone.Library.Effects
 {

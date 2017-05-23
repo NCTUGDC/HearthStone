@@ -1,5 +1,4 @@
 ﻿using HearthStone.Protocol;
-using System;
 
 namespace HearthStone.Library.Effects
 {
@@ -15,13 +14,13 @@ namespace HearthStone.Library.Effects
         {
             get
             {
-                throw new NotImplementedException();
+                return EffectTypeCode.RestoreHealth;
             }
         }
 
         public override string Description(Game game, int selfGamePlayerID)
         {
-            throw new NotImplementedException();
+            return $"恢復{RestoreNumber}點生命值";
         }
     }
 }

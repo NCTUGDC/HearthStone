@@ -18,7 +18,7 @@ namespace HearthStone.Library
                 descriptionBuilder.Append(effects[i].Description(game, selfGamePlayerID));
                 if (i != effects.Count - 1)
                 {
-                    descriptionBuilder.AppendLine();
+                    descriptionBuilder.Append('\n');
                 }
             }
             return descriptionBuilder.ToString();

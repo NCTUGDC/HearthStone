@@ -13,13 +13,13 @@ namespace HearthStone.Library.Effects
         {
             get
             {
-                throw new NotImplementedException();
+                return EffectTypeCode.DoubleMinionHealth;
             }
         }
 
         public override string Description(Game game, int selfGamePlayerID)
         {
-            throw new NotImplementedException();
+            return "使一個手下的生命值加倍";
         }
     }
 }
