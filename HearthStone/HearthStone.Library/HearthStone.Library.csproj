@@ -138,6 +138,17 @@
     <Compile Include="Effectors\TauntEffector.cs" />
     <Compile Include="Effectors\WindfuryEffector.cs" />
     <Compile Include="Effects\ChargeEffect.cs" />
+    <Compile Include="Effects\DealDamageEffect.cs" />
+    <Compile Include="Effects\DealDamageToAllEnemyMinionsEffect.cs" />
+    <Compile Include="Effects\DestroyEnemyMinionEffect.cs" />
+    <Compile Include="Effects\DoubleMinionAttackEffect.cs" />
+    <Compile Include="Effects\DoubleMinionHealthEffect.cs" />
+    <Compile Include="Effects\DrawCardEffect.cs" />
+    <Compile Include="Effects\GiveMinionAttackBuffEffect.cs" />
+    <Compile Include="Effects\GiveMinionHealthBuffEffect.cs" />
+    <Compile Include="Effects\RestoreHealthEffect.cs" />
+    <Compile Include="Effects\SilenceEffect.cs" />
+    <Compile Include="Effects\SpellDamageEffect.cs" />
     <Compile Include="Effects\TauntEffect.cs" />
     <Compile Include="Effects\WindfuryEffect.cs" />
     <Compile Include="EndPoint.cs" />

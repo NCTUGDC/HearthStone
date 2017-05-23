@@ -135,8 +135,12 @@ namespace HearthStone.Library
         {
             for(int i = 0; i < count; i++)
             {
-                int cardRecordID = Deck.Draw();
-                AddHandCard(cardRecordID);
+                int cardRecordID;
+                if(Deck.Draw(out cardRecordID))
+                {
+                    AddHandCard(cardRecordID);
+                }
+                
             }
         }
         public void ChangeHand(int[] cardRecordIDs)

@@ -110,7 +110,7 @@ namespace HearthStone.Library
         {
             if (ServantCount >= maxServantCount)
                 return false;
-            else if (positionIndex < 0 || positionIndex >= ServantCount)
+            else if (positionIndex < 0 || positionIndex > ServantCount)
                 return false;
             else
                 return true;
@@ -131,6 +131,18 @@ namespace HearthStone.Library
         public bool AnyTauntServant()
         {
             return Cards(Game.GameCardManager).Any(x => x.Effectors(Game.GameCardManager).Any(y => y is TauntEffector));
+        }
+        public bool FindCardWithPositionIndex(int positionIndex, out int cardRecordID)
+        {
+            if(fieldCardDictionary.Values.Any(x => x.PositionIndex == positionIndex))
+            {
+                cardRecordID = fieldCardDictionary.Values.First(x => x.PositionIndex == positionIndex).CardRecordID;
+                return true;
+            }
+            {
+                cardRecordID = 0;
+                return false;
+            }
         }
     }
 }

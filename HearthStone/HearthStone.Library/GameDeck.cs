@@ -23,18 +23,20 @@ namespace HearthStone.Library
             GameDeckID = gameDeckID;
             this.cardRecordIDs = cardRecordIDs;
         }
-        public int Draw()
+        public bool Draw(out int cardRecordID)
         {
             if(cardRecordIDs.Count > 0)
             {
                 int recordID = cardRecordIDs[0];
                 RemoveCard(recordID);
                 OnDrawCard?.Invoke(this, recordID);
-                return recordID;
+                cardRecordID = recordID;
+                return true;
             }
             else
             {
-                throw new NotImplementedException();
+                cardRecordID = 0;
+                return false;
             }
         }
         public void RemoveCard(int cardRecordID)
@@ -49,13 +51,16 @@ namespace HearthStone.Library
         }
         public void Shuffle(int shuffleCount)
         {
-            Random randomGenerator = new Random();
-            for (int i = 0; i < shuffleCount; i++)
+            if(cardRecordIDs.Count > 0)
             {
-                int index1 = randomGenerator.Next(cardRecordIDs.Count), index2 = randomGenerator.Next(cardRecordIDs.Count);
-                int record1ID = cardRecordIDs[index1], record2ID = cardRecordIDs[index2];
-                cardRecordIDs[index1] = record2ID;
-                cardRecordIDs[index2] = record1ID;
+                Random randomGenerator = new Random();
+                for (int i = 0; i < shuffleCount; i++)
+                {
+                    int index1 = randomGenerator.Next(cardRecordIDs.Count), index2 = randomGenerator.Next(cardRecordIDs.Count);
+                    int record1ID = cardRecordIDs[index1], record2ID = cardRecordIDs[index2];
+                    cardRecordIDs[index1] = record2ID;
+                    cardRecordIDs[index2] = record1ID;
+                }
             }
         }
     }
