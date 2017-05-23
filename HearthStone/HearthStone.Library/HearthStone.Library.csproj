@@ -132,8 +132,14 @@
     <Compile Include="Effect.cs" />
     <Compile Include="Effector.cs" />
     <Compile Include="Effectors\AutoExecutetEffector.cs" />
+    <Compile Include="Effectors\ChargeEffector.cs" />
     <Compile Include="Effectors\StatusEffector.cs" />
     <Compile Include="Effectors\TargetEffector.cs" />
+    <Compile Include="Effectors\TauntEffector.cs" />
+    <Compile Include="Effectors\WindfuryEffector.cs" />
+    <Compile Include="Effects\ChargeEffect.cs" />
+    <Compile Include="Effects\TauntEffect.cs" />
+    <Compile Include="Effects\WindfuryEffect.cs" />
     <Compile Include="EndPoint.cs" />
     <Compile Include="Field.cs" />
     <Compile Include="Game.cs" />

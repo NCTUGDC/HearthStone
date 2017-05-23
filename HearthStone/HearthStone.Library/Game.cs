@@ -110,7 +110,7 @@ namespace HearthStone.Library
             List<int> cardRecordIDs = new List<int>();
             foreach (Card card in deck.Cards)
             {
-                cardRecordIDs.Add(GameCardManager.CreateCard(card));
+                cardRecordIDs.Add(GameCardManager.CreateCardRecord(card).CardRecordID);
             }
             GameDeck gameDeck = new GameDeck(gameDeckID, cardRecordIDs);
             gameDeck.Shuffle(100);
@@ -145,13 +145,9 @@ namespace HearthStone.Library
             player.RemainedManaCrystal = player.ManaCrystal;
             player.Hero.AttackCountInThisTurn = 0;
             Field field = (CurrentGamePlayerID == 1) ? Field1 : Field2;
-            foreach(var fieldCard in field.Cards)
+            foreach(var card in field.Cards(GameCardManager))
             {
-                CardRecord card;
-                if(GameCardManager.FindCard(fieldCard.CardRecordID, out card) && card is ServantCardRecord)
-                {
-                    (card as ServantCardRecord).AttackCountInThisTurn = 0;
-                }
+                (card as ServantCardRecord).AttackCountInThisTurn = 0;
             }
             OnRoundStart?.Invoke(this);
             player.Draw(1);
@@ -260,6 +256,7 @@ namespace HearthStone.Library
                         }
                     }
                 }
+                (servantCardRecord as ServantCardRecord).IsDisplayInThisTurn = true;
                 field.AddCard(servantCardRecordID, positionIndex);
                 return true;
             }
@@ -291,6 +288,7 @@ namespace HearthStone.Library
                         (effector as AutoExecutetEffector).Affect(gamePlayer);
                     }
                 }
+                (servantCardRecord as ServantCardRecord).IsDisplayInThisTurn = true;
                 field.AddCard(servantCardRecordID, positionIndex);
                 return true;
             }
@@ -538,6 +536,66 @@ namespace HearthStone.Library
                     Hero hero = (targetID == 1) ? GamePlayer1.Hero : GamePlayer2.Hero;
                     return gamePlayer.Hero.AttackHero(hero, gamePlayer);
                 }
+            }
+        }
+        public Field OpponentField(int gamePlayerID)
+        {
+            if(gamePlayerID == 1)
+            {
+                return Field2;
+            }
+            else if(gamePlayerID == 2)
+            {
+                return Field1;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public Field SelfField(int gamePlayerID)
+        {
+            if (gamePlayerID == 1)
+            {
+                return Field1;
+            }
+            else if (gamePlayerID == 2)
+            {
+                return Field2;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public GamePlayer OpponentGamePlayer(int gamePlayerID)
+        {
+            if (gamePlayerID == 1)
+            {
+                return GamePlayer2;
+            }
+            else if (gamePlayerID == 2)
+            {
+                return GamePlayer1;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public GamePlayer SelfGamePlayer(int gamePlayerID)
+        {
+            if (gamePlayerID == 1)
+            {
+                return GamePlayer1;
+            }
+            else if (gamePlayerID == 2)
+            {
+                return GamePlayer2;
+            }
+            else
+            {
+                return null;
             }
         }
     }

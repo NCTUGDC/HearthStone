@@ -19,11 +19,6 @@ namespace HearthStone.Library.Test
         public TestCard(int cardID, int manaCost, string cardName, List<Effect> effects, RarityCode rarity) : base(cardID, manaCost, cardName, effects, rarity)
         {
         }
-
-        public override CardRecord CreateRecord(int cardRecordID)
-        {
-            throw new NotImplementedException();
-        }
     }
 
     [TestClass]

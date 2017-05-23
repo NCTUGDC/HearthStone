@@ -1,6 +1,8 @@
 ﻿using HearthStone.Library.Cards;
+using HearthStone.Library.Effects;
 using HearthStone.Protocol;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HearthStone.Library
 {
@@ -15,45 +17,79 @@ namespace HearthStone.Library
         private Dictionary<int, Card> cardDictionary = new Dictionary<int, Card>();
         public IEnumerable<Card> Cards { get { return cardDictionary.Values; } }
 
+        private Dictionary<int, Effect> effectDictionary = new Dictionary<int, Effect>();
+        public IEnumerable<Effect> Effects { get { return effectDictionary.Values; } }
+
         private CardManager()
         {
             LoadDefaultCards();
         }
         public void LoadDefaultCards()
         {
+            Dictionary<string, Effect> effectSet = new Dictionary<string, Effect>
+            {
+                { "衝鋒", new ChargeEffect(1) },
+                { "嘲諷", new TauntEffect(2) },
+                { "風怒", new WindfuryEffect(3) },
+                { "沉默", new SilenceEffect(4) },
+                { "法傷+1", new SpellDamageEffect(5, 1) },
+                { "法傷+2", new SpellDamageEffect(6, 2) },
+                { "對全部敵方手下造成1點傷害", new DealDamageToAllEnemyMinionsEffect(7, 1) },
+                { "對全部敵方手下造成2點傷害", new DealDamageToAllEnemyMinionsEffect(8, 2) },
+                { "對全部敵方手下造成4點傷害", new DealDamageToAllEnemyMinionsEffect(9, 4) },
+                { "抽2張牌", new DrawCardEffect(10, 2) },
+                { "抽3張牌", new DrawCardEffect(11, 3) },
+                { "造成2點傷害", new DealDamageEffect(12, 2) },
+                { "造成3點傷害", new DealDamageEffect(13, 3) },
+                { "造成6點傷害", new DealDamageEffect(14, 6) },
+                { "造成10點傷害", new DealDamageEffect(15, 10) },
+                { "摧毀一個敵方手下", new DestroyEnemyMinionEffect(16) },
+                { "使一個手下的攻擊力加倍", new DoubleMinionHealthEffect(17) },
+                { "使一個手下的生命值加倍", new DoubleMinionAttackEffect(18) },
+                { "賦予一個手下攻擊+2", new GiveMinionAttackBuffEffect(19, 2) },
+                { "賦予一個手下生命+2", new GiveMinionHealthBuffEffect(20, 2) },
+                { "賦予一個手下攻擊+4", new GiveMinionAttackBuffEffect(21, 4) },
+                { "賦予一個手下生命+4", new GiveMinionHealthBuffEffect(22, 4) },
+                { "恢復4點血量", new RestoreHealthEffect(23, 4) },
+            };
             List<Card> cardSet = new List<Card>
             {
-                new ServantCard(1, 4, "冰風雪人", new List<Effect>(), 4, 5, RarityCode.Free),
-                new SpellCard(2, 4, "奉獻", new List<Effect>(), RarityCode.Free),
-                new SpellCard(3, 2, "神聖精神", new List<Effect>(), RarityCode.Free),
-                new ServantCard(4, 6, "恐怖的煉獄火", new List<Effect>(), 6, 6, RarityCode.Free),
-                new SpellCard(5, 2, "斬殺", new List<Effect>(), RarityCode.Free),
-                new SpellCard(6, 3, "暗言術：死", new List<Effect>(), RarityCode.Free),
-                new SpellCard(7, 3, "飛舞刀刃", new List<Effect>(), RarityCode.Free),
-                new WeaponCard(8, 2, "熾炎戰斧", new List<Effect>(), 3, 2, RarityCode.Free),
-                new ServantCard(9, 6, "火元素", new List<Effect>(), 6, 5, RarityCode.Free),
-                new SpellCard(10, 4, "火球術", new List<Effect>(), RarityCode.Free),
-                new SpellCard(11, 7, "烈焰風暴", new List<Effect>(), RarityCode.Free),
-                new ServantCard(12, 4, "森金禦盾大師", new List<Effect>(), 3, 5, RarityCode.Free),
-                new ServantCard(13, 1, "石牙野豬", new List<Effect>(), 1, 1, RarityCode.Free),
-                new ServantCard(14, 4, "真銀勇士劍", new List<Effect>(), 4, 2, RarityCode.Free),
-                new ServantCard(15, 5, "利爪德魯伊", new List<Effect>(), 4, 4, RarityCode.Common),
-                new ServantCard(16, 2, "掠寶囤積者", new List<Effect>(), 2, 1, RarityCode.Common),
-                new ServantCard(17, 3, "血色十字軍", new List<Effect>(), 3, 1, RarityCode.Common),
-                new ServantCard(18, 2, "巫士的學徒", new List<Effect>(), 3, 2, RarityCode.Common),
-                new SpellCard(19, 3, "放狗", new List<Effect>(), RarityCode.Common),
-                new ServantCard(20, 3, "冷光神諭者", new List<Effect>(), 2, 2, RarityCode.Rare),
-                new ServantCard(21, 4, "阿古斯防衛者", new List<Effect>(), 2, 3, RarityCode.Rare),
-                new WeaponCard(22, 3, "鷹角弓", new List<Effect>(), 3, 2, RarityCode.Rare),
-                new ServantCard(23, 6, "加基森拍賣師", new List<Effect>(), 4, 4, RarityCode.Rare),
-                new ServantCard(24, 3, "受傷的大劍師", new List<Effect>(), 4, 7, RarityCode.Rare),
-                new ServantCard(25, 6, "綁匪", new List<Effect>(), 5, 3, RarityCode.Epic),
-                new SpellCard(26, 10, "炎爆術", new List<Effect>(), RarityCode.Epic),
-                new WeaponCard(27, 3, "正義之劍", new List<Effect>(), 1, 5, RarityCode.Epic),
-                new ServantCard(28, 10, "死亡之翼", new List<Effect>(), 12, 12, RarityCode.Legendary),
+                new ServantCard(1, 1, "手下A", new List<Effect>(), 1, 2, RarityCode.Free),
+                new ServantCard(2, 2, "手下B", new List<Effect>(), 2, 3, RarityCode.Free),
+                new ServantCard(3, 3, "手下C", new List<Effect>(), 3, 4, RarityCode.Free),
+                new ServantCard(4, 4, "手下D", new List<Effect>(), 4, 5, RarityCode.Free),
+                new ServantCard(5, 5, "手下E", new List<Effect>(), 5, 6, RarityCode.Free),
+                new ServantCard(6, 6, "手下F", new List<Effect>(), 6, 7, RarityCode.Free),
+
+                new ServantCard(7, 1, "衝鋒手下", new List<Effect> { effectSet["衝鋒"] }, 1, 1, RarityCode.Common),
+                new ServantCard(8, 2, "嘲諷手下", new List<Effect> { effectSet["嘲諷"] }, 1, 2, RarityCode.Common),
+                new ServantCard(9, 3, "風怒手下", new List<Effect> { effectSet["風怒"] }, 1, 2, RarityCode.Common),
+                new ServantCard(10, 4, "沉默手下", new List<Effect> { effectSet["沉默"] }, 1, 2, RarityCode.Common),
+                new ServantCard(11, 5, "法傷手下", new List<Effect> { effectSet["法傷+1"] }, 1, 2, RarityCode.Common),
+
+                new WeaponCard(12, 2, "精良武器", new List<Effect>(), 2, 3, RarityCode.Rare),
+                new WeaponCard(13, 6, "風怒武器", new List<Effect> { effectSet["風怒"] }, 2, 8, RarityCode.Epic),
+                new WeaponCard(14, 8, "法傷武器", new List<Effect> { effectSet["法傷+2"] }, 5, 2, RarityCode.Legendary),
+
+                new SpellCard(15, 2, "AOE1", new List<Effect> { effectSet["對全部敵方手下造成1點傷害"] }, RarityCode.Free),
+                new SpellCard(16, 4, "AOE2", new List<Effect> { effectSet["對全部敵方手下造成2點傷害"] }, RarityCode.Free),
+                new SpellCard(17, 7, "AOE3", new List<Effect> { effectSet["對全部敵方手下造成4點傷害"] }, RarityCode.Free),
+                new SpellCard(18, 3, "抽牌1", new List<Effect> { effectSet["抽2張牌"] }, RarityCode.Free),
+                new SpellCard(19, 5, "抽牌2", new List<Effect> { effectSet["抽3張牌"] }, RarityCode.Rare),
+                new SpellCard(20, 1, "傷害A", new List<Effect> { effectSet["造成2點傷害"] }, RarityCode.Free),
+                new SpellCard(21, 2, "傷害B", new List<Effect> { effectSet["造成3點傷害"] }, RarityCode.Free),
+                new SpellCard(22, 4, "傷害C", new List<Effect> { effectSet["造成6點傷害"] }, RarityCode.Common),
+                new SpellCard(23, 10, "傷害D", new List<Effect> { effectSet["造成10點傷害"] }, RarityCode.Epic),
+                new SpellCard(24, 5, "摧毀", new List<Effect> { effectSet["摧毀一個敵方手下"] }, RarityCode.Free),
+                new SpellCard(25, 5, "生命加倍", new List<Effect> { effectSet["使一個手下的攻擊力加倍"] }, RarityCode.Rare),
+                new SpellCard(26, 2, "攻擊加倍", new List<Effect> { effectSet["使一個手下的生命值加倍"] }, RarityCode.Common),
+                new SpellCard(27, 2, "手下加強A", new List<Effect> { effectSet["賦予一個手下攻擊+2"], effectSet["賦予一個手下生命+2"] }, RarityCode.Rare),
+                new SpellCard(28, 4, "手下加強B", new List<Effect> { effectSet["賦予一個手下攻擊+4"], effectSet["賦予一個手下生命+4"] }, RarityCode.Free),
+                new SpellCard(29, 1, "回血A", new List<Effect> { effectSet["恢復4點血量"] }, RarityCode.Free),
             };
 
             cardSet.ForEach(x => cardDictionary.Add(x.CardID, x));
+            effectSet.Values.ToList().ForEach(x => effectDictionary.Add(x.EffectID, x));
         }
         public bool FindCard(int cardID, out Card card)
         {
@@ -65,6 +101,19 @@ namespace HearthStone.Library
             else
             {
                 card = null;
+                return false;
+            }
+        }
+        public bool FindEffect(int effectID, out Effect effect)
+        {
+            if (effectDictionary.ContainsKey(effectID))
+            {
+                effect = effectDictionary[effectID];
+                return true;
+            }
+            else
+            {
+                effect = null;
                 return false;
             }
         }

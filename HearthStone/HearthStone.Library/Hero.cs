@@ -1,8 +1,10 @@
 ﻿using HearthStone.Library.CardRecords;
+using HearthStone.Library.Effectors;
 using HearthStone.Protocol;
 using MsgPack.Serialization;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HearthStone.Library
 {
@@ -129,11 +131,31 @@ namespace HearthStone.Library
         }
         public bool AttackServant(ServantCardRecord target, GamePlayer user)
         {
-            if (AttackWithWeapon(user.Game) > 0)
+            bool hasWindfury = Effectors(user.Game.GameCardManager).Any(x => x is WindfuryEffector);
+            if ((AttackCountInThisTurn < 1 || (hasWindfury && AttackCountInThisTurn < 2)) && AttackWithWeapon(user.Game) > 0)
             {
-                target.RemainedHealth -= AttackWithWeapon(user.Game);
-                RemainedHP -= target.Attack;
-                return true;
+                Field opponentField = user.Game.OpponentField(user.GamePlayerID);
+                if (opponentField.AnyTauntServant())
+                {
+                    if (target.Effectors(user.Game.GameCardManager).Any(x => x is TauntEffector))
+                    {
+                        target.RemainedHealth -= AttackWithWeapon(user.Game);
+                        RemainedHP -= target.Attack;
+                        AttackCountInThisTurn++;
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    target.RemainedHealth -= AttackWithWeapon(user.Game);
+                    RemainedHP -= target.Attack;
+                    AttackCountInThisTurn++;
+                    return true;
+                } 
             }
             else
             {
@@ -142,11 +164,21 @@ namespace HearthStone.Library
         }
         public bool AttackHero(Hero target, GamePlayer user)
         {
-            if (AttackWithWeapon(user.Game) > 0)
+            bool hasWindfury = Effectors(user.Game.GameCardManager).Any(x => x is WindfuryEffector);
+            if ((AttackCountInThisTurn < 1 || (hasWindfury && AttackCountInThisTurn < 2)) && AttackWithWeapon(user.Game) > 0)
             {
-                target.RemainedHP -= AttackWithWeapon(user.Game);
-                RemainedHP -= target.AttackWithWeapon(user.Game);
-                return true;
+                Field opponentField = user.Game.OpponentField(user.GamePlayerID);
+                if (opponentField.AnyTauntServant())
+                {
+                    return false;
+                }
+                else
+                {
+                    target.RemainedHP -= AttackWithWeapon(user.Game);
+                    RemainedHP -= target.AttackWithWeapon(user.Game);
+                    AttackCountInThisTurn++;
+                    return true;
+                }
             }
             else
             {
@@ -165,6 +197,19 @@ namespace HearthStone.Library
             {
                 return Attack;
             }
+        }
+        public IEnumerable<Effector> Effectors(GameCardManager gameCardManager)
+        {
+            List<Effector> efffectors = new List<Effector>();
+            foreach (var effectorID in EffectorIDs)
+            {
+                Effector efffector;
+                if (gameCardManager.FindEffector(effectorID, out efffector))
+                {
+                    efffectors.Add(efffector);
+                }
+            }
+            return efffectors;
         }
     }
 }

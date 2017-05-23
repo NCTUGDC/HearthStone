@@ -1,8 +1,10 @@
 ﻿using HearthStone.Library.CommunicationInfrastructure.Event.Managers;
+using HearthStone.Library.Effectors;
 using HearthStone.Protocol;
 using MsgPack.Serialization;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HearthStone.Library
 {
@@ -21,10 +23,10 @@ namespace HearthStone.Library
         public int FieldID { get; private set; }
 
         [MessagePackMember(id: 1)]
-        private Dictionary<int, FieldCardRecord> cardDictionary = new Dictionary<int, FieldCardRecord>();
-        public IEnumerable<FieldCardRecord> Cards { get { return cardDictionary.Values; } }
+        private Dictionary<int, FieldCardRecord> fieldCardDictionary = new Dictionary<int, FieldCardRecord>();
+        public IEnumerable<FieldCardRecord> FieldCards { get { return fieldCardDictionary.Values; } }
         [MessagePackIgnore]
-        public int ServantCount { get { return cardDictionary.Count; } }
+        public int ServantCount { get { return fieldCardDictionary.Count; } }
 
         [MessagePackIgnore]
         public FieldEventManager EventManager { get; private set; }
@@ -44,10 +46,10 @@ namespace HearthStone.Library
         }
         public bool AddCard(int cardRecordID, int positionIndex)
         {
-            if(cardDictionary.Count < maxServantCount && positionIndex >= 0  && positionIndex <= cardDictionary.Count)
+            if(fieldCardDictionary.Count < maxServantCount && positionIndex >= 0  && positionIndex <= fieldCardDictionary.Count)
             {
                 FieldCardRecord record = new FieldCardRecord { CardRecordID = cardRecordID, PositionIndex = positionIndex };
-                foreach(var targetCard in Cards)
+                foreach(var targetCard in FieldCards)
                 {
                     if(targetCard.PositionIndex >= positionIndex)
                     {
@@ -55,7 +57,7 @@ namespace HearthStone.Library
                         OnCardChanged?.Invoke(targetCard, DataChangeCode.Update);
                     }
                 }
-                cardDictionary.Add(cardRecordID, record);
+                fieldCardDictionary.Add(cardRecordID, record);
                 OnCardChanged?.Invoke(record, DataChangeCode.Add);
                 return true;
             }
@@ -66,12 +68,12 @@ namespace HearthStone.Library
         }
         public bool RemoveCard(int cardRecordID)
         {
-            if(cardDictionary.ContainsKey(cardRecordID))
+            if(fieldCardDictionary.ContainsKey(cardRecordID))
             {
-                FieldCardRecord record = cardDictionary[cardRecordID];
-                cardDictionary.Remove(record.CardRecordID);
+                FieldCardRecord record = fieldCardDictionary[cardRecordID];
+                fieldCardDictionary.Remove(record.CardRecordID);
                 OnCardChanged?.Invoke(record, DataChangeCode.Remove);
-                foreach (var targetCard in Cards)
+                foreach (var targetCard in FieldCards)
                 {
                     if (targetCard.PositionIndex >= record.PositionIndex)
                     {
@@ -88,9 +90,9 @@ namespace HearthStone.Library
         }
         public bool UpdateCard(int cardRecordID, int positionIndex)
         {
-            if (cardDictionary.ContainsKey(cardRecordID))
+            if (fieldCardDictionary.ContainsKey(cardRecordID))
             {
-                FieldCardRecord record = cardDictionary[cardRecordID];
+                FieldCardRecord record = fieldCardDictionary[cardRecordID];
                 record.PositionIndex = positionIndex;
                 OnCardChanged?.Invoke(record, DataChangeCode.Update);
                 return true;
@@ -112,6 +114,23 @@ namespace HearthStone.Library
                 return false;
             else
                 return true;
+        }
+        public IEnumerable<CardRecord> Cards(GameCardManager gameCardManager)
+        {
+            List<CardRecord> cards = new List<CardRecord>();
+            foreach (var fieldCard in FieldCards)
+            {
+                CardRecord cardRecord;
+                if (gameCardManager.FindCard(fieldCard.CardRecordID, out cardRecord))
+                {
+                    cards.Add(cardRecord);
+                }
+            }
+            return cards;
+        }
+        public bool AnyTauntServant()
+        {
+            return Cards(Game.GameCardManager).Any(x => x.Effectors(Game.GameCardManager).Any(y => y is TauntEffector));
         }
     }
 }

@@ -2,6 +2,9 @@
 {
     public enum EffectTypeCode : byte
     {
-        Test
+        Test,
+        Taunt,
+        Charge,
+        Windfury
     }
 }

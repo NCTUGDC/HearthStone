@@ -1,4 +1,6 @@
-﻿using HearthStone.Protocol;
+﻿using HearthStone.Library.CardRecords;
+using HearthStone.Library.Effectors;
+using HearthStone.Protocol;
 using MsgPack.Serialization;
 using System;
 using System.Collections.Generic;
@@ -11,13 +13,9 @@ namespace HearthStone.Library
         public Game Game { get; private set; }
         [MessagePackIgnore]
         private int cardRecordID_Generator = 1;
-        [MessagePackIgnore]
-        public int NewCardRecordID { get { return cardRecordID_Generator++; } }
 
         [MessagePackIgnore]
         private int effectorID_Generator = 1;
-        [MessagePackIgnore]
-        public int NewEffectorID { get { return effectorID_Generator++; } }
 
         [MessagePackMember(id: 0)]
         [MessagePackRuntimeCollectionItemType]
@@ -49,11 +47,46 @@ namespace HearthStone.Library
                 return false;
             }
         }
-        public int CreateCard(Card card)
+        public CardRecord CreateCardRecord(Card card)
         {
-            CardRecord record = card.CreateRecord(NewCardRecordID);
+            CardRecord record;
+            switch(card.CardType)
+            {
+                case CardTypeCode.Servant:
+                    record = new ServantCardRecord(cardRecordID_Generator++, card.CardID);
+                    break;
+                case CardTypeCode.Spell:
+                    record = new SpellCardRecord(cardRecordID_Generator++, card.CardID);
+                    break;
+                case CardTypeCode.Weapon:
+                    record = new WeaponCardRecord(cardRecordID_Generator++, card.CardID);
+                    break;
+                default:
+                    return null;
+            }
             LoadCard(record);
-            return record.CardRecordID;
+            foreach(Effect effect in card.Effects)
+            {
+                record.AddEffector(CreareEffector(effect).EffectorID);
+            }
+            return record;
+        }
+        public Effector CreareEffector(Effect effect)
+        {
+            Effector effector = null;
+            switch (effect.EffectType)
+            {
+                case EffectTypeCode.Taunt:
+                    effector = new TauntEffector(effectorID_Generator++, effect.EffectID);
+                    break;
+                case EffectTypeCode.Charge:
+                    effector = new ChargeEffector(effectorID_Generator++, effect.EffectID);
+                    break;
+                default:
+                    return null;
+            }
+            LoadEffector(effector);
+            return effector;
         }
         public void LoadCard(CardRecord card)
         {
@@ -81,12 +114,6 @@ namespace HearthStone.Library
                 effector = null;
                 return false;
             }
-        }
-        public int CreateEffector(Effect effect)
-        {
-            Effector effector = effect.CreateEffector(NewEffectorID);
-            LoadEffector(effector);
-            return effector.EffectorID;
         }
         public void LoadEffector(Effector effector)
         {

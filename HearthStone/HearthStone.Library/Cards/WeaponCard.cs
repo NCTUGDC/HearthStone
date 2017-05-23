@@ -23,10 +23,5 @@ namespace HearthStone.Library.Cards
             Attack = attack;
             Durability = durability;
         }
-
-        public override CardRecord CreateRecord(int cardRecordID)
-        {
-            return new WeaponCardRecord(cardRecordID, CardID);
-        }
     }
 }

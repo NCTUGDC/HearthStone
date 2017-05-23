@@ -1,6 +1,8 @@
 ﻿using HearthStone.Library.Cards;
+using HearthStone.Library.Effectors;
 using MsgPack.Serialization;
 using System;
+using System.Linq;
 
 namespace HearthStone.Library.CardRecords
 {
@@ -100,13 +102,35 @@ namespace HearthStone.Library.CardRecords
                 LogService.Fatal($"CradID: {Card.CardID} is used to Reset ServantCardRecord");
             }
         }
+
         public bool AttackServant(ServantCardRecord target, GamePlayer user)
         {
-            if (Attack > 0)
+            bool hasCharge = Effectors(user.Game.GameCardManager).Any(x => x is ChargeEffector);
+            bool hasWindfury = Effectors(user.Game.GameCardManager).Any(x => x is WindfuryEffector);
+            if ((AttackCountInThisTurn < 1 ||(hasWindfury && AttackCountInThisTurn < 2)) && (!IsDisplayInThisTurn || hasCharge) && Attack > 0)
             {
-                target.RemainedHealth -= Attack;
-                RemainedHealth -= target.Attack;
-                return true;
+                Field opponentField = user.Game.OpponentField(user.GamePlayerID);
+                if (opponentField.AnyTauntServant())
+                {
+                    if (target.Effectors(user.Game.GameCardManager).Any(x => x is TauntEffector))
+                    {
+                        target.RemainedHealth -= Attack;
+                        RemainedHealth -= target.Attack;
+                        AttackCountInThisTurn++;
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    target.RemainedHealth -= Attack;
+                    RemainedHealth -= target.Attack;
+                    AttackCountInThisTurn++;
+                    return true;
+                } 
             }
             else
             {
@@ -115,11 +139,22 @@ namespace HearthStone.Library.CardRecords
         }
         public bool AttackHero(Hero target, GamePlayer user)
         {
-            if (Attack > 0)
+            bool hasCharge = Effectors(user.Game.GameCardManager).Any(x => x is ChargeEffector);
+            bool hasWindfury = Effectors(user.Game.GameCardManager).Any(x => x is WindfuryEffector);
+            if ((AttackCountInThisTurn < 1 || (hasWindfury && AttackCountInThisTurn < 2)) && (!IsDisplayInThisTurn || hasCharge) && Attack > 0)
             {
-                target.RemainedHP -= Attack;
-                RemainedHealth -= target.AttackWithWeapon(user.Game);
-                return true;
+                Field opponentField = user.Game.OpponentField(user.GamePlayerID);
+                if (opponentField.AnyTauntServant())
+                {
+                    return false;
+                }
+                else
+                {
+                    target.RemainedHP -= Attack;
+                    RemainedHealth -= target.AttackWithWeapon(user.Game);
+                    AttackCountInThisTurn++;
+                    return true;
+                }
             }
             else
             {

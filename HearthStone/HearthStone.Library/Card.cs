@@ -26,6 +26,8 @@ namespace HearthStone.Library
         public abstract CardTypeCode CardType { get; }
         [MessagePackRuntimeCollectionItemType]
         private List<Effect> effects = new List<Effect>();
+        [MessagePackIgnore]
+        public IEnumerable<Effect> Effects { get { return effects; } }
         public RarityCode Rarity { get; private set; }
 
         public Card() { }
@@ -37,7 +39,5 @@ namespace HearthStone.Library
             this.effects = effects;
             Rarity = rarity;
         }
-
-        public abstract CardRecord CreateRecord(int cardRecordID);
     }
 }

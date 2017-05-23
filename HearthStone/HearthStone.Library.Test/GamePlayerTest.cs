@@ -11,7 +11,7 @@ namespace HearthStone.Library.Test
         public void SerializationTestMethod1()
         {
             GameCardManager gameCardManager = new GameCardManager();
-            GamePlayer gamePlayer = new GamePlayer(null, new Hero(1, 25, 30), new GameDeck(1, CardManager.Instance.Cards.Select(x => gameCardManager.CreateCard(x)).ToList()));
+            GamePlayer gamePlayer = new GamePlayer(null, new Hero(1, 25, 30), new GameDeck(1, CardManager.Instance.Cards.Select(x => gameCardManager.CreateCardRecord(x).CardRecordID).ToList()));
             byte[] serializedData = SerializationHelper.Serialize(gamePlayer);
             GamePlayer deserializedGamePlayer = SerializationHelper.Deserialize<GamePlayer>(serializedData);
             Assert.IsNotNull(deserializedGamePlayer);

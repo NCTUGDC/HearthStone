@@ -19,11 +19,6 @@ namespace HearthStone.Library.Test
             }
         }
 
-        public override Effector CreateEffector(int effectorID)
-        {
-            throw new NotImplementedException();
-        }
-
         public override string Description(Game game, int selfGamePlayerID)
         {
             return "Test Effect";

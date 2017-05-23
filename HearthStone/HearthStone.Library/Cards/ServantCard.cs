@@ -22,10 +22,5 @@ namespace HearthStone.Library.Cards
             Attack = attack;
             Health = health;
         }
-
-        public override CardRecord CreateRecord(int cardRecordID)
-        {
-            return new ServantCardRecord(cardRecordID, CardID);
-        }
     }
 }
