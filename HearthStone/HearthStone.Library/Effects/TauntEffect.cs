@@ -1,5 +1,4 @@
-﻿using HearthStone.Library.Effectors;
-using HearthStone.Protocol;
+﻿using HearthStone.Protocol;
 
 namespace HearthStone.Library.Effects
 {

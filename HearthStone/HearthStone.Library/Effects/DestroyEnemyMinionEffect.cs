@@ -1,5 +1,4 @@
 ﻿using HearthStone.Protocol;
-using System;
 
 namespace HearthStone.Library.Effects
 {
@@ -13,13 +12,13 @@ namespace HearthStone.Library.Effects
         {
             get
             {
-                throw new NotImplementedException();
+                return EffectTypeCode.DestroyEnemyMinion;
             }
         }
 
         public override string Description(Game game, int selfGamePlayerID)
         {
-            throw new NotImplementedException();
+            return "摧毀一個敵方手下";
         }
     }
 }

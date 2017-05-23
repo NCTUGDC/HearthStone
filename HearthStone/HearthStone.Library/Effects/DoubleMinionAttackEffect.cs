@@ -13,13 +13,13 @@ namespace HearthStone.Library.Effects
         {
             get
             {
-                throw new NotImplementedException();
+                return EffectTypeCode.DoubleMinionAttack;
             }
         }
 
         public override string Description(Game game, int selfGamePlayerID)
         {
-            throw new NotImplementedException();
+            return "使一個手下的攻擊力加倍";
         }
     }
 }

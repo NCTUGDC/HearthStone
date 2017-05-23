@@ -5,6 +5,17 @@
         Test,
         Taunt,
         Charge,
-        Windfury
+        Windfury,
+        SilenceMinion,
+        SpellDamage,
+        DealDamageToAllEnemyMinions,
+        DrawCard,
+        DealDamage,
+        DestroyEnemyMinion,
+        DoubleMinionHealth,
+        DoubleMinionAttack,
+        GiveMinionAttackBuff,
+        GiveMinionHealthBuff,
+        RestoreHealth
     }
 }

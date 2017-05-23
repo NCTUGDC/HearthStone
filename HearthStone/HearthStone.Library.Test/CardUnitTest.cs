@@ -16,6 +16,7 @@ namespace HearthStone.Library.Test
             }
         }
 
+        public TestCard() { }
         public TestCard(int cardID, int manaCost, string cardName, List<Effect> effects, RarityCode rarity) : base(cardID, manaCost, cardName, effects, rarity)
         {
         }
@@ -50,7 +51,18 @@ namespace HearthStone.Library.Test
             Assert.AreEqual(card.CardType, CardTypeCode.Test);
             Assert.AreEqual(card.Rarity, RarityCode.Legendary);
         }
-
+        [TestMethod]
+        public void ConstructorTestMethod3()
+        {
+            Card card = new TestCard();
+            Assert.IsNotNull(card);
+        }
+        [TestMethod]
+        public void DescriptionTestMethod3()
+        {
+            Card card = new TestCard(1, 2, "Test", new List<Effect> { new TestEffect(1), new TestEffect(2) }, RarityCode.Legendary);
+            Assert.AreEqual(card.Description(null, 0), "Test Effect\nTest Effect");
+        }
         [TestMethod]
         public void ServantCardConstructorTestMethod1()
         {
@@ -66,7 +78,11 @@ namespace HearthStone.Library.Test
             Assert.AreEqual(card.Health, 5);
             Assert.AreEqual(card.Rarity, RarityCode.Free);
         }
-
+        [TestMethod]
+        public void ServantCardConstructorTestMethod2()
+        {
+            Assert.IsNotNull(new ServantCard());
+        }
         [TestMethod]
         public void SpellCardConstructorTestMethod1()
         {
@@ -80,7 +96,11 @@ namespace HearthStone.Library.Test
             Assert.AreEqual(card.CardType, CardTypeCode.Spell);
             Assert.AreEqual(card.Rarity, RarityCode.Free);
         }
-
+        [TestMethod]
+        public void SpellCardConstructorTestMethod2()
+        {
+            Assert.IsNotNull(new SpellCard());
+        }
         [TestMethod]
         public void WeaponCardConstructorTestMethod1()
         {
@@ -95,6 +115,11 @@ namespace HearthStone.Library.Test
             Assert.AreEqual(card.Attack, 3);
             Assert.AreEqual(card.Durability, 2);
             Assert.AreEqual(card.Rarity, RarityCode.Free);
+        }
+        [TestMethod]
+        public void WeaponCardConstructorTestMethod2()
+        {
+            Assert.IsNotNull(new WeaponCard());
         }
     }
 }

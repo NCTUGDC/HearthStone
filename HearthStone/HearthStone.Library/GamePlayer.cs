@@ -13,7 +13,7 @@ namespace HearthStone.Library
         [MessagePackIgnore]
         public Player Player { get; set; }
         [MessagePackIgnore]
-        public int GamePlayerID { get { return Hero.HeroID; } }
+        public int GamePlayerID { get { return (Hero == null) ? -1 : Hero.HeroID; } }
         [MessagePackMember(id: 0)]
         public Hero Hero { get; private set; }
 
@@ -110,7 +110,7 @@ namespace HearthStone.Library
                 else
                 {
                     CardRecord cardRecord;
-                    if(Game.GameCardManager.FindCard(cardRecordID, out cardRecord))
+                    if (Game != null &&  Game.GameCardManager.FindCard(cardRecordID, out cardRecord))
                     {
                         cardRecord.Destroy();
                     }
