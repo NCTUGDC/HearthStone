@@ -426,5 +426,19 @@ namespace HearthStone.Library.Test
             test.RemoveEffector(0);
             Assert.IsTrue(effectorChangedCount == 2, "OnEffectorChanged is invoked when remove a non-exist effector ID");
         }
+
+        [TestMethod]
+        public void OnDestroyedTestMethod1()
+        {
+            bool isDestroyed = false;
+            TestCardRecord test = new TestCardRecord();
+            test.OnDestroyed += (CardRecord record) =>
+            {
+                isDestroyed = true;
+            };
+
+            test.Destroy();
+            Assert.IsTrue(isDestroyed, "OnEffectorChanged is not invoked when destroying a CardRecord");
+        }
     }
 }
