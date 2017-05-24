@@ -394,14 +394,16 @@ namespace HearthStone.Library.Test
         [TestMethod]
         public void OnManaCostChangedTestMethod1()
         {
-            bool isManaCostChanged = false;
+            int manaCostChangedCount = 0;
             TestCardRecord test = new TestCardRecord();
             test.OnManaCostChanged += (CardRecord card) =>
             {
-                isManaCostChanged = true;
+                manaCostChangedCount++;
             };
             test.ManaCost = 1;
-            Assert.IsTrue(isManaCostChanged, "OnManaCostChanged is not invoked when ManaCost changed");
+            Assert.IsTrue(manaCostChangedCount == 1, "OnManaCostChanged is not invoked when ManaCost changed");
+            test.ManaCost = 0;
+            Assert.IsTrue(manaCostChangedCount == 2, "OnManaCostChanged is not invoked when ManaCost changed");
         }
     }
 }
