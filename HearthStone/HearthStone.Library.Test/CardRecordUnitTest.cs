@@ -12,13 +12,24 @@ namespace HearthStone.Library.Test
     {
         class TestCardRecord : CardRecord
         {
-            TestCardRecord(int cardRecordID, int cardID) : base(cardRecordID, cardID) { }
+            public TestCardRecord() : base() { }
+            public TestCardRecord(int cardRecordID, int cardID) : base(cardRecordID, cardID) { }
 
-            void setCardRecordID(int ID)
+            public void SetCardRecordID(int ID)
             {
                 CardRecordID = ID;
             }
         }
 
+
+        [TestMethod]
+        public void CardRecordIDTestMethod1()
+        {
+            TestCardRecord test1 = new TestCardRecord();
+            foreach (int id in new int[] { 0, 1, 2, 3, 4 }){
+                test1.SetCardRecordID(id);
+                Assert.IsTrue(test1.CardRecordID == id, "Invalid Setter for CardRecordID: to set " + id);
+            }
+        }
     }
 }
