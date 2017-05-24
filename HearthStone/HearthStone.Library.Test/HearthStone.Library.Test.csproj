@@ -58,6 +58,7 @@
     <Compile Include="DeckUnitTest.cs" />
     <Compile Include="EffectUnitTest.cs" />
     <Compile Include="GameCardManagerUnitTest.cs" />
+    <Compile Include="GameDeckUnitTest.cs" />
     <Compile Include="HeroUnitTest.cs" />
     <Compile Include="FieldUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
