@@ -305,3 +305,4 @@ sysinfo.txt
 
 # End of https://www.gitignore.io/api/csharp,unity
 HearthStone/GeneratedReports
+!HearthStone/ExtraDLL/*.dll
