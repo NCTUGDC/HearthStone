@@ -164,10 +164,5 @@ namespace HearthStone.Library
                 OnEffectorChanged?.Invoke(effector, DataChangeCode.Add);
             }
         }
-
-        public void RegisterCardRecordEvents(CardRecord record)
-        {
-            
-        }
     }
 }
