@@ -45,7 +45,7 @@ namespace HearthStone.Library.Test
         {
             GameCardManager gameCardManager = new GameCardManager();
             gameCardManager.LoadCard(new SpellCardRecord(1, 15));
-            gameCardManager.LoadCard(new SpellCardRecord(1, 15));
+            gameCardManager.LoadCard(new SpellCardRecord(1, 15)); 
         }
     }
 }
