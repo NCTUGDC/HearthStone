@@ -405,5 +405,26 @@ namespace HearthStone.Library.Test
             test.ManaCost = 0;
             Assert.IsTrue(manaCostChangedCount == 2, "OnManaCostChanged is not invoked when ManaCost changed");
         }
+
+        [TestMethod]
+        public void OnEffectorChangedTestMethod1()
+        {
+            int effectorChangedCount = 0;
+            TestCardRecord test = new TestCardRecord();
+            test.OnEffectorChanged += (CardRecord record, int effectorID, Protocol.DataChangeCode code) =>
+            {
+                effectorChangedCount++;
+            };
+
+            test.AddEffector(0);
+            Assert.IsTrue(effectorChangedCount == 1, "OnEffectorChanged is not invoked when add a non-exist effector ID");
+            test.AddEffector(0);
+            Assert.IsTrue(effectorChangedCount == 1, "OnEffectorChanged is invoked when add an exist effector ID");
+
+            test.RemoveEffector(0);
+            Assert.IsTrue(effectorChangedCount == 2, "OnEffectorChanged is not invoked when remove an exist effector ID");
+            test.RemoveEffector(0);
+            Assert.IsTrue(effectorChangedCount == 2, "OnEffectorChanged is invoked when remove a non-exist effector ID");
+        }
     }
 }
