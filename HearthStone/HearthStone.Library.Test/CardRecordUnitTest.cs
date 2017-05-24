@@ -21,14 +21,35 @@ namespace HearthStone.Library.Test
             }
         }
 
-
         [TestMethod]
         public void CardRecordIDTestMethod1()
         {
-            TestCardRecord test1 = new TestCardRecord();
-            foreach (int id in new int[] { 0, 1, 2, 3, 4 }){
-                test1.SetCardRecordID(id);
-                Assert.IsTrue(test1.CardRecordID == id, "Invalid Setter for CardRecordID: to set " + id);
+            Assert.IsNotNull(CardManager.Instance);
+            Assert.IsNotNull(CardManager.Instance.Cards);
+            try
+            {
+                int anyValidCardID = CardManager.Instance.Cards.First<Card>().CardID;
+
+                foreach (int id in new int[] { 0, 1, 2, 3, 4 })
+                {
+                    TestCardRecord test = new TestCardRecord(id, anyValidCardID);
+                    Assert.IsTrue(test.CardRecordID == id, "Invalid Constructor Setter for CardRecordID: " + id);
+                }
+            }
+            catch (ArgumentNullException)
+            {
+                Assert.Fail("Unable to run the test case, no valid card");
+            }
+        }
+
+        [TestMethod]
+        public void CardRecordIDTestMethod2()
+        {
+            TestCardRecord test = new TestCardRecord();
+            foreach (int id in new int[] { 0, 1, 2, 3, 4 })
+            {
+                test.SetCardRecordID(id);
+                Assert.IsTrue(test.CardRecordID == id, "Invalid Setter for CardRecordID: " + id);
             }
         }
     }
