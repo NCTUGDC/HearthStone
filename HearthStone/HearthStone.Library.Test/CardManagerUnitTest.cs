@@ -15,14 +15,14 @@ namespace HearthStone.Library.Test
         public void CardManagerInstanceTestMethod1()
         {
             CardManager instance = CardManager.Instance;
-            Assert.IsNotNull(instance);
+            Assert.IsNotNull(instance, "CardManager.Instance should not be null");
         }
 
         [TestMethod]
         public void CardsEnumerableTestMethod1()
         {
             IEnumerable<Card> cards = CardManager.Instance.Cards;
-            Assert.IsNotNull(cards);
+            Assert.IsNotNull(cards, "CardManager.Instance.Cards should not be null");
         }
 
 
@@ -32,8 +32,8 @@ namespace HearthStone.Library.Test
             HashSet<int> IDs = new HashSet<int>();
             foreach (Card card in CardManager.Instance.Cards)
             {
-                Assert.IsNotNull(card);
-                Assert.IsFalse(IDs.Contains(card.CardID));
+                Assert.IsNotNull(card, "Card object in CardManager.Instance.Cards should not be null");
+                Assert.IsFalse(IDs.Contains(card.CardID), "ID of Card objects in CardManager.Instance.Cards should not be the same");
                 IDs.Add(card.CardID);
             }
         }
@@ -43,7 +43,7 @@ namespace HearthStone.Library.Test
         public void EffectsEnumerableTestMethod1()
         {
             IEnumerable<Effect> effects = CardManager.Instance.Effects;
-            Assert.IsNotNull(effects);
+            Assert.IsNotNull(effects, "CardManager.Instance.Effects should not be null");
         }
 
         [TestMethod]
@@ -52,8 +52,8 @@ namespace HearthStone.Library.Test
             HashSet<int> IDs = new HashSet<int>();
             foreach (Effect effect in CardManager.Instance.Effects)
             {
-                Assert.IsNotNull(effect);
-                Assert.IsFalse(IDs.Contains(effect.EffectID));
+                Assert.IsNotNull(effect, "Effect object in CardManager.Instance.Effects should not be null");
+                Assert.IsFalse(IDs.Contains(effect.EffectID), "ID of Effect objects in CardManager.Instance.Effects should not be the same");
                 IDs.Add(effect.EffectID);
             }
         }
