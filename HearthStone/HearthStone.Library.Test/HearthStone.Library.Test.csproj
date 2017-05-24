@@ -64,6 +64,7 @@
     <Compile Include="GameUnitTest.cs" />
     <Compile Include="ServantCardRecordUnitTest.cs" />
     <Compile Include="ServantCardUnitTest.cs" />
+    <Compile Include="SpellCardRecordUnitTest.cs" />
     <Compile Include="SpellCardUnitTest.cs" />
     <Compile Include="WeaponCardRecordUnitTest.cs" />
     <Compile Include="WeaponCardUnitTest.cs" />
