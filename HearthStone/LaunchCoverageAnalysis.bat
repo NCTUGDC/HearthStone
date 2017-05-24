@@ -64,7 +64,7 @@ REM *** check for test coverage
 "%OpenCoverExe%" ^
  -target:"%TestRunnerExe%" ^
  -targetargs:"/noisolation /testcontainer:\"%DllContainingTests%\"" ^
- -filter:"+[*]* -[*]HearthStone.Library.CommunicationInfrastructure.* -[*]HearthStone.Library.EndPoint -[*]HearthStone.Library.GameManager -[*]HearthStone.Library.LogService -[*]HearthStone.Library.Player -[*]HearthStone.Library.WaitingPlayerCounter" ^
+ -filter:"+[*]* -[*]HearthStone.Library.CommunicationInfrastructure.* -[*]HearthStone.Library.(EndPoint|GameManager|LogService|Player|WaitingPlayerCounter|Game|Effectors.*)" ^
  -mergebyhash ^
  -skipautoprops ^
  -register:user ^

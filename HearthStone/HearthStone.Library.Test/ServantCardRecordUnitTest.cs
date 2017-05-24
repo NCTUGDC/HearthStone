@@ -4,18 +4,18 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace HearthStone.Library.Test
 {
     [TestClass]
-    class ServantCardRecordUnitTest
+    public class ServantCardRecordUnitTest
     {
         [TestMethod]
-        void ServantCardRecordConstructorTestMethod()
+        public void ServantCardRecordConstructorTestMethod()
         {
             ServantCardRecord oCardRecord = new ServantCardRecord();
             oCardRecord = new ServantCardRecord(1, 2);
-            Assert.Equals(oCardRecord.CardRecordID, 1);
-            Assert.Equals(oCardRecord.CardID, 2);
+            Assert.AreEqual(oCardRecord.CardRecordID, 1);
+            Assert.AreEqual(oCardRecord.CardID, 2);
         }
 
-        void ServantCardRecordVariableAndEventTestMethod()
+        public void ServantCardRecordVariableAndEventTestMethod()
         {
             ServantCardRecord oCardRecord = new ServantCardRecord(1, 2);
             //attack
@@ -24,9 +24,9 @@ namespace HearthStone.Library.Test
                 //do nothing
             };
             oCardRecord.Attack = 3;
-            Assert.Equals(oCardRecord.Attack, 3);
+            Assert.AreEqual(oCardRecord.Attack, 3);
             oCardRecord.Attack = -3;
-            Assert.Equals(oCardRecord.Attack, 0);
+            Assert.AreEqual(oCardRecord.Attack, 0);
 
             //health
             oCardRecord.OnHealthChanged += (eventHealth) =>
@@ -34,9 +34,9 @@ namespace HearthStone.Library.Test
                 //do nothing
             };
             oCardRecord.Health = 5;
-            Assert.Equals(oCardRecord.Health, 5);
+            Assert.AreEqual(oCardRecord.Health, 5);
             oCardRecord.Health = -5;
-            Assert.Equals(oCardRecord.Health, 0);
+            Assert.AreEqual(oCardRecord.Health, 0);
 
             //remain health
             oCardRecord.OnRemainedHealthChanged += (eventRemainedHealth) =>
@@ -44,9 +44,9 @@ namespace HearthStone.Library.Test
                 //do nothing
             };
             oCardRecord.RemainedHealth = 4;
-            Assert.Equals(oCardRecord.RemainedHealth, 4);
+            Assert.AreEqual(oCardRecord.RemainedHealth, 4);
             oCardRecord.RemainedHealth = 6;
-            Assert.Equals(oCardRecord.RemainedHealth, 5);
+            Assert.AreEqual(oCardRecord.RemainedHealth, 5);
 
             //is display in this turn
             oCardRecord.OnIsDisplayInThisTurnChanged += (eventIsDisplayInThisTurnChanged) =>
@@ -54,7 +54,7 @@ namespace HearthStone.Library.Test
                 //do nothing
             };
             oCardRecord.IsDisplayInThisTurn = false;
-            Assert.Equals(oCardRecord.IsDisplayInThisTurn, false);
+            Assert.AreEqual(oCardRecord.IsDisplayInThisTurn, false);
 
             //attack count in this turn
             oCardRecord.OnAttackCountInThisTurnChanged += (eventAttackCountInThisTurnChanged) =>
@@ -62,7 +62,7 @@ namespace HearthStone.Library.Test
                 //do nothing
             };
             oCardRecord.AttackCountInThisTurn = 7;
-            Assert.Equals(oCardRecord.AttackCountInThisTurn, 7);
+            Assert.AreEqual(oCardRecord.AttackCountInThisTurn, 7);
 
         }
     }
