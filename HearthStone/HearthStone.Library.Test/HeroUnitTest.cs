@@ -15,7 +15,6 @@ namespace HearthStone.Library.Test
             Assert.AreEqual(1, hero.HeroID);
             Assert.AreEqual(15, hero.RemainedHP);
             Assert.AreEqual(30, hero.HP);
-            Assert.IsNotNull(hero.EffectorIDs);
             Assert.AreEqual(0, hero.AttackCountInThisTurn);
         }
         [TestMethod]
@@ -123,47 +122,19 @@ namespace HearthStone.Library.Test
             Assert.AreEqual(1, counter);
         }
         [TestMethod]
-        public void AddAndRemoveEffectorTestMethod1()
-        {
-            Hero hero = new Hero(1, 15, 30);
-            Assert.IsTrue(hero.AddEffector(1));
-            Assert.IsFalse(hero.AddEffector(1));
-            Assert.AreEqual(1, hero.EffectorIDs.Count(x => x == 1));
-
-            Assert.IsTrue(hero.RemoveEffector(1));
-            Assert.IsFalse(hero.RemoveEffector(1));
-            Assert.AreEqual(0, hero.EffectorIDs.Count(x => x == 1));
-
-            int effectorID = 0, addCounter = 0, removeCounter = 0;
-            hero.OnEffectorChanged += (eventHero, eventEffectorID, changeCode) => 
-            {
-                effectorID = eventEffectorID;
-                if (changeCode == Protocol.DataChangeCode.Add)
-                    addCounter++;
-                else if (changeCode == Protocol.DataChangeCode.Remove)
-                    removeCounter++;
-            };
-            Assert.IsTrue(hero.AddEffector(1));
-            Assert.IsFalse(hero.AddEffector(1));
-            Assert.AreEqual(1, hero.EffectorIDs.Count(x => x == 1));
-            Assert.AreEqual(1, effectorID);
-            Assert.AreEqual(1, addCounter);
-            Assert.AreEqual(0, removeCounter);
-
-            Assert.IsTrue(hero.RemoveEffector(1));
-            Assert.IsFalse(hero.RemoveEffector(1));
-            Assert.AreEqual(0, hero.EffectorIDs.Count(x => x == 1));
-            Assert.AreEqual(1, effectorID);
-            Assert.AreEqual(1, addCounter);
-            Assert.AreEqual(1, removeCounter);
-        }
-        [TestMethod]
         public void AttackWithWeaponTestMethod1()
         {
             Game game = GameUnitTest.InitialGameStatus();
             Hero hero = game.GamePlayer1.Hero;
+            Assert.AreEqual(0, hero.AttackWithWeapon(game));
             game.CurrentGamePlayerID = 1;
-            new Library.CardRecords.WeaponCardRecord(1, 1);
+            Card card;
+            CardManager.Instance.FindCard(12, out card);
+            CardRecord record = game.GameCardManager.CreateCardRecord(card);
+            hero.WeaponCardRecordID = record.CardRecordID;
+            Assert.AreEqual(2, hero.AttackWithWeapon(game));
+            game.CurrentGamePlayerID = 2;
+            Assert.AreEqual(0, hero.AttackWithWeapon(game));
         }
     }
 }
