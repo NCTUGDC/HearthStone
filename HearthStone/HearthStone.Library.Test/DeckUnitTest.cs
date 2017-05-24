@@ -56,7 +56,7 @@ namespace HearthStone.Library.Test
             var card = new TestCard(0, 0, "Test", new List<Effect>(), Protocol.RarityCode.Free);
             Deck deck = new Deck(1, "Test", 30, new List<Card>());
             int eventCallCounter = 0;
-            deck.OnCardChanged += (eventDeck, targetCard, code) => 
+            deck.OnCardChanged += (eventDeck, targetCard, code) =>
             {
                 Assert.AreEqual(code, Protocol.DataChangeCode.Add);
                 eventCallCounter++;
@@ -84,7 +84,7 @@ namespace HearthStone.Library.Test
             var card = new TestCard(0, 0, "Test", new List<Effect>(), Protocol.RarityCode.Free);
             Deck deck = new Deck(1, "Test", 30, new List<Card>());
 
-            for(int i = 0; i < 30; i++)
+            for (int i = 0; i < 30; i++)
             {
                 Assert.AreEqual(deck.TotalCardCount, i);
                 Assert.IsTrue(deck.AddCard(new TestCard(i, 0, "Test", new List<Effect>(), Protocol.RarityCode.Free)));
@@ -151,6 +151,49 @@ namespace HearthStone.Library.Test
             Assert.AreEqual(deck.CardCount(0), 2);
             Assert.IsFalse(deck.AddCard(card));
             Assert.AreEqual(deck.CardCount(0), 2);
+        }
+        [TestMethod]
+        public void IsCompletedTestMethod1()
+        {
+            var card = new TestCard(0, 0, "Test", new List<Effect>(), Protocol.RarityCode.Free);
+            Deck deck = new Deck(1, "Test", 1, new List<Card>());
+
+            Assert.AreEqual(false, deck.IsCompleted);
+            Assert.IsTrue(deck.AddCard(card));
+            Assert.AreEqual(true, deck.IsCompleted);
+            Assert.IsFalse(deck.AddCard(card));
+            Assert.AreEqual(true, deck.IsCompleted);
+        }
+        [TestMethod]
+        public void AddCardTestMethod4()
+        {
+            var card = new TestCard(0, 0, "Test", new List<Effect>(), Protocol.RarityCode.Legendary);
+            Deck deck = new Deck(1, "Test", 30, new List<Card>());
+
+            Assert.AreEqual(deck.TotalCardCount, 0);
+            Assert.IsTrue(deck.AddCard(card));
+            Assert.AreEqual(deck.TotalCardCount, 1);
+            Assert.IsFalse(deck.AddCard(card));
+            Assert.AreEqual(deck.TotalCardCount, 1);
+        }
+        [TestMethod]
+        public void AddCardTestMethod5()
+        {
+            var card = new TestCard(0, 0, "Test", new List<Effect>(), Protocol.RarityCode.Legendary);
+            Deck deck = new Deck(1, "Test", 30, new List<Card>());
+            int eventCallCounter = 0;
+            deck.OnCardChanged += (eventDeck, targetCard, code) =>
+            {
+                Assert.AreEqual(code, Protocol.DataChangeCode.Add);
+                eventCallCounter++;
+            };
+            Assert.AreEqual(deck.TotalCardCount, 0);
+            Assert.IsTrue(deck.AddCard(card));
+            Assert.AreEqual(deck.TotalCardCount, 1);
+            Assert.AreEqual(eventCallCounter, 1);
+            Assert.IsFalse(deck.AddCard(card));
+            Assert.AreEqual(deck.TotalCardCount, 1);
+            Assert.AreEqual(eventCallCounter, 1);
         }
     }
 }
