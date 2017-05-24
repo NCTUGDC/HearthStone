@@ -85,5 +85,30 @@ namespace HearthStone.Library.Test
             {
             }
         }
+
+        [TestMethod]
+        public void CardTestMethod1()
+        {
+            Assert.IsNotNull(CardManager.Instance);
+            Assert.IsNotNull(CardManager.Instance.Cards);
+            bool hasCards = false;
+            foreach (Card card in CardManager.Instance.Cards)
+            {
+                hasCards = true;
+                TestCardRecord test = new TestCardRecord(0, card.CardID);
+                Assert.IsTrue(test.Card == card, "Invalid Card getter for " + card.CardID);
+            }
+            if (!hasCards)
+            {
+                Assert.Fail("Unable to run the test case, no valid card");
+            }
+        }
+
+        [TestMethod]
+        public void CardTestMethod2()
+        {
+            TestCardRecord test = new TestCardRecord();
+            Assert.IsNull(test.Card, "Card getter return a non-null object for empty CardRecord");
+        }
     }
 }
