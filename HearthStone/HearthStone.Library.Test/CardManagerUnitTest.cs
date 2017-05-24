@@ -61,18 +61,33 @@ namespace HearthStone.Library.Test
         [TestMethod]
         public void FindCardTestMethod1()
         {
-            CardManager manager = CardManager.Instance;
-            int minID = int.MaxValue;
-            int maxID = int.MinValue;
-            foreach (Card card in manager.Cards)
+            foreach (Card card in CardManager.Instance.Cards)
             {
-                minID = Math.Min(minID, card.CardID);
-                maxID = Math.Max(maxID, card.CardID);
                 Card tempCard;
-                bool isCardFound = manager.FindCard(card.CardID, out tempCard);
+                bool isCardFound = CardManager.Instance.FindCard(card.CardID, out tempCard);
                 Assert.IsTrue(isCardFound, "A valid card (retrived from CardManager.Instance.Cards) not found by FindCard method: " + card.CardID);
                 Assert.IsNotNull(tempCard, "A valid card (retrived from CardManager.Instance.Cards) is null by FindCard method: " + card.CardID);
             }
         }
+
+        [TestMethod]
+        public void FindCardTestMethod2()
+        {
+            int minID = int.MaxValue;
+            int maxID = int.MinValue;
+            foreach (Card card in CardManager.Instance.Cards)
+            {
+                minID = Math.Min(minID, card.CardID);
+                maxID = Math.Max(maxID, card.CardID);
+            }
+
+            foreach (int id in new int[]{ minID - 1, maxID + 1})
+            {
+                Card tempCard;
+                bool isCardFound = CardManager.Instance.FindCard(id, out tempCard);
+                Assert.IsFalse(isCardFound, "An invalid card found by FindCard method: " + id);
+            }
+        }
+
     }
 }
