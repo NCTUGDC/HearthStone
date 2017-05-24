@@ -151,7 +151,7 @@
     <Compile Include="Effectors\WindfuryEffector.cs" />
     <Compile Include="Effects\ChargeEffect.cs" />
     <Compile Include="Effects\DealSpellDamageEffect.cs" />
-    <Compile Include="Effects\DealDamageToAllEnemyMinionsEffect.cs" />
+    <Compile Include="Effects\DealSpellDamageToAllEnemyMinionsEffect.cs" />
     <Compile Include="Effects\DestroyEnemyMinionEffect.cs" />
     <Compile Include="Effects\DoubleMinionAttackEffect.cs" />
     <Compile Include="Effects\DoubleMinionHealthEffect.cs" />

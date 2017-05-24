@@ -55,7 +55,10 @@ namespace HearthStone.Library.Test
             Assert.AreEqual("法術傷害+2", new SpellDamageEffect(1, 2).Description(null, 0));
             Assert.AreEqual("嘲諷", new TauntEffect(1).Description(null, 0));
             Assert.AreEqual("風怒", new WindfuryEffect(1).Description(null, 0));
-
+        }
+        [TestMethod]
+        public void DescriptionTestMethod2()
+        {
             Assert.AreEqual("造成1點傷害", new DealSpellDamageEffect(1, 1).Description(GameUnitTest.InitialGameStatus(), 0));
             Assert.AreEqual("造成1點傷害", new DealSpellDamageEffect(1, 1).Description(GameUnitTest.InitialGameStatus(), 1));
             Game game = GameUnitTest.InitialGameStatus();
@@ -78,6 +81,32 @@ namespace HearthStone.Library.Test
             game.GameCardManager.LoadEffector(new TauntEffector(10, 2));
             record2.AddEffector(10);
             Assert.AreEqual("造成*5點傷害", new DealSpellDamageEffect(1, 1).Description(game, 1));
+        }
+        [TestMethod]
+        public void DescriptionTestMethod3()
+        {
+            Assert.AreEqual("對全部敵方手下造成1點傷害", new DealSpellDamageToAllEnemyMinionsEffect(1, 1).Description(GameUnitTest.InitialGameStatus(), 0));
+            Assert.AreEqual("對全部敵方手下造成1點傷害", new DealSpellDamageToAllEnemyMinionsEffect(1, 1).Description(GameUnitTest.InitialGameStatus(), 1));
+            Game game = GameUnitTest.InitialGameStatus();
+            Card card;
+            CardManager.Instance.FindCard(11, out card);
+            CardRecord record = game.GameCardManager.CreateCardRecord(card);
+            game.Field1.AddCard(record.CardRecordID, 0);
+            Assert.AreEqual("對全部敵方手下造成*2點傷害", new DealSpellDamageToAllEnemyMinionsEffect(1, 1).Description(game, 1));
+            CardRecord record2 = game.GameCardManager.CreateCardRecord(card);
+            game.Field1.AddCard(record2.CardRecordID, 0);
+            Assert.AreEqual("對全部敵方手下造成*3點傷害", new DealSpellDamageToAllEnemyMinionsEffect(1, 1).Description(game, 1));
+            Effect effect;
+            CardManager.Instance.FindEffect(6, out effect);
+            Effector effector = game.GameCardManager.CreareEffector(effect);
+            record2.AddEffector(effector.EffectorID);
+            Assert.AreEqual("對全部敵方手下造成*5點傷害", new DealSpellDamageToAllEnemyMinionsEffect(1, 1).Description(game, 1));
+            game.GameCardManager.LoadEffector(new SpellDamageEffector(0, 0));
+            record2.AddEffector(0);
+            Assert.AreEqual("對全部敵方手下造成*5點傷害", new DealSpellDamageToAllEnemyMinionsEffect(1, 1).Description(game, 1));
+            game.GameCardManager.LoadEffector(new TauntEffector(10, 2));
+            record2.AddEffector(10);
+            Assert.AreEqual("對全部敵方手下造成*5點傷害", new DealSpellDamageToAllEnemyMinionsEffect(1, 1).Description(game, 1));
         }
     }
 }

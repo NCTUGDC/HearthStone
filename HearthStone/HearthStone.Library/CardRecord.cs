@@ -8,7 +8,7 @@ namespace HearthStone.Library
     public abstract class CardRecord
     {
         [MessagePackMember(id: 0)]
-        public int CardRecordID { get; private set; }
+        public int CardRecordID { get; protected set; }
 
         [MessagePackMember(id: 1)]
         public int CardID { get; private set; }
