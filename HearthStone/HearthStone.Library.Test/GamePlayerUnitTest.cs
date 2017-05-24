@@ -59,14 +59,14 @@ namespace HearthStone.Library.Test
         {
             GamePlayer gamePlayer = new GamePlayer(null, null, null);
             int eventCounter = 0;
-            gamePlayer.OnHandCardsChanged += (eventGamePlayer, cardRecordID, changeCode) => 
+            gamePlayer.OnHandCardsChanged += (eventGamePlayer, cardRecordID, changeCode) =>
             {
                 eventCounter++;
             };
             gamePlayer.AddHandCard(1);
             Assert.AreEqual(1, eventCounter);
 
-            gamePlayer.OnHasChangedHandChanged += (eventGamePlayer) => 
+            gamePlayer.OnHasChangedHandChanged += (eventGamePlayer) =>
             {
                 eventCounter++;
             };
@@ -93,7 +93,7 @@ namespace HearthStone.Library.Test
             GamePlayer gamePlayer = new GamePlayer(null, null, null);
             Assert.IsTrue(gamePlayer.AddHandCard(1));
             Assert.IsFalse(gamePlayer.AddHandCard(1));
-            for(int i = 2; i <= 10; i++)
+            for (int i = 2; i <= 10; i++)
             {
                 Assert.IsTrue(gamePlayer.AddHandCard(i));
             }
@@ -109,7 +109,7 @@ namespace HearthStone.Library.Test
             int eventCounter = 0;
             gamePlayer.OnHandCardsChanged += (eventGamePlayer, cardRecordID, changeCode) =>
             {
-                if(changeCode == Protocol.DataChangeCode.Remove)
+                if (changeCode == Protocol.DataChangeCode.Remove)
                     eventCounter++;
             };
             Assert.IsFalse(gamePlayer.RemoveHandCard(1));
@@ -125,6 +125,13 @@ namespace HearthStone.Library.Test
             {
                 1, 2, 3, 4, 5, 6
             }));
+            bool isChangedHand = false;
+            gamePlayer.OnHasChangedHandChanged += (eventGamePlayer) => 
+            {
+                isChangedHand = true;
+            };
+            Assert.IsFalse(gamePlayer.HasChangedHand);
+            Assert.IsFalse(isChangedHand);
             gamePlayer.AddHandCard(7);
             gamePlayer.AddHandCard(8);
             gamePlayer.AddHandCard(9);
@@ -135,6 +142,9 @@ namespace HearthStone.Library.Test
             Assert.AreEqual(0, gamePlayer.HandCardIDs.Count(x => x == 8));
             Assert.AreEqual(1, gamePlayer.Deck.CardRecordIDs.Count(x => x == 7));
             Assert.AreEqual(1, gamePlayer.Deck.CardRecordIDs.Count(x => x == 8));
+            Assert.IsTrue(gamePlayer.HasChangedHand);
+            Assert.IsTrue(isChangedHand);
         }
+
     }
 }

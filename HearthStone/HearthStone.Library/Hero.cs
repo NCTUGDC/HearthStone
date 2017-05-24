@@ -52,6 +52,7 @@ namespace HearthStone.Library
                 int oldValue = hp;
                 hp = Math.Max(value, 0);
                 OnHP_Changed?.Invoke(this, hp - oldValue);
+                RemainedHP = RemainedHP;
             }
         }
 
@@ -131,7 +132,9 @@ namespace HearthStone.Library
         }
         public bool AttackServant(ServantCardRecord target, GamePlayer user)
         {
-            bool hasWindfury = Effectors(user.Game.GameCardManager).Any(x => x is WindfuryEffector);
+            CardRecord weapon;
+            bool weaponWindfury = user.Game.GameCardManager.FindCard(WeaponCardRecordID, out weapon) && (weapon is WeaponCardRecord) && weapon.Effectors(user.Game.GameCardManager).Any(x => x is WindfuryEffector);
+            bool hasWindfury = Effectors(user.Game.GameCardManager).Any(x => x is WindfuryEffector) || weaponWindfury;
             if ((AttackCountInThisTurn < 1 || (hasWindfury && AttackCountInThisTurn < 2)) && AttackWithWeapon(user.Game) > 0)
             {
                 Field opponentField = user.Game.OpponentField(user.GamePlayerID);
@@ -164,7 +167,9 @@ namespace HearthStone.Library
         }
         public bool AttackHero(Hero target, GamePlayer user)
         {
-            bool hasWindfury = Effectors(user.Game.GameCardManager).Any(x => x is WindfuryEffector);
+            CardRecord weapon;
+            bool weaponWindfury = user.Game.GameCardManager.FindCard(WeaponCardRecordID, out weapon) && (weapon is WeaponCardRecord) && weapon.Effectors(user.Game.GameCardManager).Any(x => x is WindfuryEffector);
+            bool hasWindfury = Effectors(user.Game.GameCardManager).Any(x => x is WindfuryEffector) || weaponWindfury;
             if ((AttackCountInThisTurn < 1 || (hasWindfury && AttackCountInThisTurn < 2)) && AttackWithWeapon(user.Game) > 0)
             {
                 Field opponentField = user.Game.OpponentField(user.GamePlayerID);
