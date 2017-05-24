@@ -440,5 +440,38 @@ namespace HearthStone.Library.Test
             test.Destroy();
             Assert.IsTrue(isDestroyed, "OnEffectorChanged is not invoked when destroying a CardRecord");
         }
+
+        class TestEffect : Effect
+        {
+            public TestEffect(int effectID) : base(effectID) { }
+            public override HearthStone.Protocol.EffectTypeCode EffectType { get
+                {
+                    return HearthStone.Protocol.EffectTypeCode.Charge; // do not return an invalid code
+                }
+            }
+            public override string Description(Game game, int selfGamePlayerID)
+            {
+                return game.ToString();
+            }
+        }
+
+        [TestMethod]
+        public void EffectorsTestMethod1()
+        {
+            TestCardRecord test = new TestCardRecord();
+            GameCardManager manager = new GameCardManager();
+
+            Assert.IsTrue(test.Effectors(manager).Count() == 0, "Effectors count mismatch (should be 0): " + test.Effectors(manager).Count());
+
+            Assert.IsNotNull(manager.CreareEffector(new TestEffect(1)));
+            test.AddEffector(1);
+            Assert.IsTrue(test.Effectors(manager).Count() == 1, "Effectors count mismatch (should be 1): " + test.Effectors(manager).Count());
+
+            test.AddEffector(2);
+            Assert.IsTrue(test.Effectors(manager).Count() == 1, "Effectors count mismatch (should be 1): " + test.Effectors(manager).Count());
+
+            Assert.IsNotNull(manager.CreareEffector(new TestEffect(2)));
+            Assert.IsTrue(test.Effectors(manager).Count() == 2, "Effectors count mismatch (should be 2): " + test.Effectors(manager).Count());
+        }
     }
 }
