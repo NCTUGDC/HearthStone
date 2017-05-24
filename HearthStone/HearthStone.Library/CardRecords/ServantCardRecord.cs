@@ -84,7 +84,7 @@ namespace HearthStone.Library.CardRecords
             }
             else
             {
-                LogService.Fatal($"CradID: {cardID} is used to create ServantCardRecord");
+                CardRecordID = -1;
             }
         }
 

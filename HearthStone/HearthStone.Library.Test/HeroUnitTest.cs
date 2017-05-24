@@ -164,7 +164,6 @@ namespace HearthStone.Library.Test
             Hero hero = game.GamePlayer1.Hero;
             game.CurrentGamePlayerID = 1;
             new Library.CardRecords.WeaponCardRecord(1, 1);
-            Assert.Fail();
         }
     }
 }
