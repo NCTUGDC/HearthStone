@@ -389,5 +389,19 @@ namespace HearthStone.Library.Test
                 Assert.Fail("Failed destory");
             }
         }
+
+
+        [TestMethod]
+        public void OnManaCostChangedTestMethod1()
+        {
+            bool isManaCostChanged = false;
+            TestCardRecord test = new TestCardRecord();
+            test.OnManaCostChanged += (CardRecord card) =>
+            {
+                isManaCostChanged = true;
+            };
+            test.ManaCost = 1;
+            Assert.IsTrue(isManaCostChanged, "OnManaCostChanged is not invoked when ManaCost changed");
+        }
     }
 }
