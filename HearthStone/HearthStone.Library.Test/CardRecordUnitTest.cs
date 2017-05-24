@@ -117,5 +117,27 @@ namespace HearthStone.Library.Test
             TestCardRecord test = new TestCardRecord();
             Assert.IsNotNull(test.EffectorIDs);
         }
+
+        [TestMethod]
+        public void ManaCostTestMethod1()
+        {
+            TestCardRecord test = new TestCardRecord();
+            for (int i = 0; i < 100; i++)
+            {
+                test.ManaCost = i;
+                Assert.IsTrue(test.ManaCost == i, "Invalid ManaCost for " + i);
+            }
+        }
+
+        [TestMethod]
+        public void ManaCostTestMethod2()
+        {
+            TestCardRecord test = new TestCardRecord();
+            for (int i = 0; i > -100; i--)
+            {
+                test.ManaCost = i;
+                Assert.IsTrue(test.ManaCost == 0, "ManaCost should always >= 0 (" + i + ")");
+            }
+        }
     }
 }
