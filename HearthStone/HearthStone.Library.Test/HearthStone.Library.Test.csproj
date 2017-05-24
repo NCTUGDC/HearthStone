@@ -53,6 +53,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CardManagerUnitTest.cs" />
+    <Compile Include="CardRecordUnitTest.cs" />
     <Compile Include="CardUnitTest.cs" />
     <Compile Include="DeckUnitTest.cs" />
     <Compile Include="EffectUnitTest.cs" />
