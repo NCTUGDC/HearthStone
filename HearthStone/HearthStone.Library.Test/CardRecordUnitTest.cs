@@ -52,5 +52,38 @@ namespace HearthStone.Library.Test
                 Assert.IsTrue(test.CardRecordID == id, "Invalid Setter for CardRecordID: " + id);
             }
         }
+
+        [TestMethod]
+        public void CardIDTestMethod1()
+        {
+            Assert.IsNotNull(CardManager.Instance);
+            Assert.IsNotNull(CardManager.Instance.Cards);
+            bool hasCards = false;
+            foreach (Card card in CardManager.Instance.Cards)
+            {
+                hasCards = true;
+                TestCardRecord test = new TestCardRecord(0, card.CardID);
+                Assert.IsTrue(test.CardID == card.CardID, "Invalid Constructor Setter for CardRecordID: " + card.CardID);
+            }
+            if (!hasCards)
+            {
+                Assert.Fail("Unable to run the test case, no valid card");
+            }
+        }
+
+        [TestMethod]
+        public void CardIDTestMethod2()
+        {
+            Assert.IsNotNull(CardManager.Instance);
+            Assert.IsNotNull(CardManager.Instance.Cards);
+            int invalidID = int.MinValue; // assume this ID is always invalid
+            try
+            {
+                new TestCardRecord(0, invalidID);
+                Assert.Fail("CardRecord should created with an invalid CardID");
+            } catch (Exception)
+            {
+            }
+        }
     }
 }
