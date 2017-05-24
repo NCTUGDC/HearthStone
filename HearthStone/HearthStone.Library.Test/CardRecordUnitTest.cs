@@ -252,6 +252,17 @@ namespace HearthStone.Library.Test
         }
 
         [TestMethod]
+        public void AddEffectorTestMethod3()
+        {
+            TestCardRecord test = new TestCardRecord();
+            for (int i = 1; i <= 100; i++)
+            {
+                Assert.IsTrue(test.AddEffector(i), "Invalid AddEffector (return false for a valid add");
+                Assert.IsTrue(test.EffectorIDs.Count() == i, "Invalid AddEffector (size mismatch)");
+            }
+        }
+
+        [TestMethod]
         public void RemoveEffectorTestMethod1()
         {
             int[][] patterns = new int[][]
@@ -323,6 +334,19 @@ namespace HearthStone.Library.Test
                     bool isRemoved = test.RemoveEffector(effectorID);
                     Assert.IsFalse(isRemoved, "Invalid RemoveEffector (return true for an invalid remove");
                 }
+                Assert.IsTrue(test.EffectorIDs.Count() == 0, "Invalid RemoveEffector (size mismatch)");
+            }
+        }
+
+        [TestMethod]
+        public void RemoveEffectorTestMethod3()
+        {
+            TestCardRecord test = new TestCardRecord();
+            for (int i = 1; i <= 100; i++)
+            {
+                Assert.IsTrue(test.AddEffector(i), "Invalid AddEffector (return false for a valid add");
+                Assert.IsTrue(test.RemoveEffector(i), "Invalid RemoveEffector (return false for a valid remove");
+                Assert.IsFalse(test.RemoveEffector(i), "Invalid RemoveEffector (return true for an invalid remove");
                 Assert.IsTrue(test.EffectorIDs.Count() == 0, "Invalid RemoveEffector (size mismatch)");
             }
         }
