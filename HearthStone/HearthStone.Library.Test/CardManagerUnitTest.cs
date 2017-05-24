@@ -89,5 +89,36 @@ namespace HearthStone.Library.Test
             }
         }
 
+        [TestMethod]
+        public void FindEffectTestMethod1()
+        {
+            foreach (Effect effect in CardManager.Instance.Effects)
+            {
+                Effect tempEffect;
+                bool isEffectFound = CardManager.Instance.FindEffect(effect.EffectID, out tempEffect);
+                Assert.IsTrue(isEffectFound, "A valid effect (retrived from CardManager.Instance.Effects) not found by FindEffect method: " + effect.EffectID);
+                Assert.IsNotNull(tempEffect, "A valid effect (retrived from CardManager.Instance.Effects) is null by FindEffect method: " + effect.EffectID);
+            }
+        }
+
+        [TestMethod]
+        public void FindEffectTestMethod2()
+        {
+            int minID = int.MaxValue;
+            int maxID = int.MinValue;
+            foreach (Effect effect in CardManager.Instance.Effects)
+            {
+                minID = Math.Min(minID, effect.EffectID);
+                maxID = Math.Max(maxID, effect.EffectID);
+            }
+
+            foreach (int id in new int[] { minID - 1, maxID + 1 })
+            {
+                Effect tempEffect;
+                bool isEffectFound = CardManager.Instance.FindEffect(id, out tempEffect);
+                Assert.IsFalse(isEffectFound, "An invalid effect found by FindEffect method: " + id);
+            }
+        }
+
     }
 }
