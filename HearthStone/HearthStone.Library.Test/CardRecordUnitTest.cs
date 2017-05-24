@@ -110,5 +110,12 @@ namespace HearthStone.Library.Test
             TestCardRecord test = new TestCardRecord();
             Assert.IsNull(test.Card, "Card getter return a non-null object for empty CardRecord");
         }
+
+        [TestMethod]
+        public void EffectorIDsTestMethod1()
+        {
+            TestCardRecord test = new TestCardRecord();
+            Assert.IsNotNull(test.EffectorIDs);
+        }
     }
 }
