@@ -52,8 +52,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="CardManagerUnitTest.cs" />
-    <Compile Include="CardRecordUnitTest.cs" />
     <Compile Include="CardUnitTest.cs" />
     <Compile Include="DeckUnitTest.cs" />
     <Compile Include="EffectUnitTest.cs" />
@@ -65,7 +63,6 @@
     <Compile Include="GameUnitTest.cs" />
     <Compile Include="ServantCardRecordUnitTest.cs" />
     <Compile Include="ServantCardUnitTest.cs" />
-    <Compile Include="SpellCardRecordUnitTest.cs" />
     <Compile Include="SpellCardUnitTest.cs" />
     <Compile Include="WeaponCardRecordUnitTest.cs" />
     <Compile Include="WeaponCardUnitTest.cs" />
