@@ -56,8 +56,11 @@
     <Compile Include="DeckUnitTest.cs" />
     <Compile Include="EffectUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GamePlayerTest.cs" />
-    <Compile Include="GameTest.cs" />
+    <Compile Include="GamePlayerUnitTest.cs" />
+    <Compile Include="GameUnitTest.cs" />
+    <Compile Include="ServantCardUnitTest.cs" />
+    <Compile Include="SpellCardUnitTest.cs" />
+    <Compile Include="WeaponCardUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HearthStone.Library\HearthStone.Library.csproj">
