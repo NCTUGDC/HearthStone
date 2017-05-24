@@ -208,7 +208,7 @@ namespace HearthStone.Library.Test
                 foreach (int effectorID in pattern)
                 {
                     bool isAdded = test.AddEffector(effectorID);
-                    Assert.IsTrue(isAdded, "Invalid AddEffector (not added for a valid add");
+                    Assert.IsTrue(isAdded, "Invalid AddEffector (return false for a valid add");
                 }
                 foreach (int effectorID in pattern)
                 {
@@ -251,5 +251,80 @@ namespace HearthStone.Library.Test
             }
         }
 
+        [TestMethod]
+        public void RemoveEffectorTestMethod1()
+        {
+            int[][] patterns = new int[][]
+            {
+                new int[] {  },
+                new int[] { 1 },
+                new int[] { 2 },
+                new int[] { 1, 2 },
+                new int[] { 2, 1 },
+                new int[] { 1, 2, 3 },
+                new int[] { 1, 3, 2 },
+                new int[] { 2, 1, 3 },
+                new int[] { 2, 3, 1 },
+                new int[] { 3, 1, 2 },
+                new int[] { 3, 2, 1 },
+            };
+            foreach (int[] pattern in patterns)
+            {
+                TestCardRecord test = new TestCardRecord();
+                foreach (int effectorID in pattern)
+                {
+                    test.AddEffector(effectorID);
+                }
+                foreach (int effectorID in pattern)
+                {
+                    bool isRemoved = test.RemoveEffector(effectorID);
+                    Assert.IsTrue(isRemoved, "Invalid RemoveEffector (return false for a valid remove");
+                }
+                foreach (int effectorID in pattern)
+                {
+                    bool isRemoved = test.RemoveEffector(effectorID);
+                    Assert.IsFalse(isRemoved, "Invalid AddEffector (return true for an invalid remove");
+                }
+            }
+        }
+
+        [TestMethod]
+        public void RemoveEffectorTestMethod2()
+        {
+            int[][] patterns = new int[][]
+            {
+                new int[] {  },
+                new int[] { 1 },
+                new int[] { 2 },
+                new int[] { 1, 2 },
+                new int[] { 2, 1 },
+                new int[] { 1, 2, 3 },
+                new int[] { 1, 3, 2 },
+                new int[] { 2, 1, 3 },
+                new int[] { 2, 3, 1 },
+                new int[] { 3, 1, 2 },
+                new int[] { 3, 2, 1 },
+            };
+            foreach (int[] pattern in patterns)
+            {
+                TestCardRecord test = new TestCardRecord();
+                foreach (int effectorID in pattern)
+                {
+                    test.AddEffector(effectorID);
+                }
+                foreach (int effectorID in pattern)
+                {
+                    bool isRemoved = test.RemoveEffector(effectorID);
+                    Assert.IsTrue(isRemoved, "Invalid RemoveEffector (return false for a valid remove");
+                }
+                Assert.IsTrue(test.EffectorIDs.Count() == 0, "Invalid RemoveEffector (size mismatch)");
+                foreach (int effectorID in pattern)
+                {
+                    bool isRemoved = test.RemoveEffector(effectorID);
+                    Assert.IsFalse(isRemoved, "Invalid RemoveEffector (return true for an invalid remove");
+                }
+                Assert.IsTrue(test.EffectorIDs.Count() == 0, "Invalid RemoveEffector (size mismatch)");
+            }
+        }
     }
 }
