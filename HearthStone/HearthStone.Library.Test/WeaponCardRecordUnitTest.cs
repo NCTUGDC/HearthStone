@@ -20,15 +20,16 @@ namespace HearthStone.Library.Test
 
             Assert.IsNotNull(weaponcardrecord);
         }
-        /*
+        
         [TestMethod]
         public void ConstructorTestMethod3()
         {
-            CardRecords.WeaponCardRecord weaponcardrecord = new CardRecords.WeaponCardRecord(0, 13);
+            CardRecords.WeaponCardRecord weaponcardrecord = new CardRecords.WeaponCardRecord(0, 5);
 
             Assert.IsNotNull(weaponcardrecord);
+            Assert.AreEqual(weaponcardrecord.CardRecordID, -1);
         }
-        */
+        
 
         [TestMethod]
         public void DurabilityTestMethod1()
