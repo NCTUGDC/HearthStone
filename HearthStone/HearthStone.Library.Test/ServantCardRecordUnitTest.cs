@@ -7,7 +7,7 @@ namespace HearthStone.Library.Test
     public class ServantCardRecordUnitTest
     {
         [TestMethod]
-        public void ServantCardRecordConstructorTestMethod()
+        public void ServantCardRecordConstructorTestMethod1()
         {
             //test default constructor
             ServantCardRecord oCardRecord = new ServantCardRecord();
