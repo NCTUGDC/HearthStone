@@ -130,6 +130,43 @@ namespace HearthStone.Library.Test
         public void RemoveCardTestMethod4()
         {
             Field field = new Field(1);
+            field.AddCard(5, 0);
+            field.AddCard(3, 1);
+            field.RemoveCard(3);
+
+            var cards = field.FieldCards.GetEnumerator();
+            Assert.IsTrue(cards.MoveNext());
+            Assert.AreEqual(cards.Current.CardRecordID, 5);
+            Assert.AreEqual(cards.Current.PositionIndex, 0);
+        }
+
+        [TestMethod]
+        public void RemoveCardTestMethod5()
+        {
+            Field field = new Field(1);
+
+            int eventCallCounter_remove = 0;
+            int eventCallCounter_update = 0;
+            field.OnCardChanged += (fieldCard, chageCode) =>
+            {
+                if (chageCode == Protocol.DataChangeCode.Remove)
+                    eventCallCounter_remove++;
+                else
+                    eventCallCounter_update++;
+            };
+
+            field.AddCard(5, 0);
+            field.AddCard(3, 1);
+            field.RemoveCard(3);
+
+            Assert.AreEqual(eventCallCounter_remove, 1);
+            Assert.AreEqual(eventCallCounter_update, 2);
+        }
+
+        [TestMethod]
+        public void RemoveCardTestMethod6()
+        {
+            Field field = new Field(1);
 
             int eventCallCounter_remove = 0;
             int eventCallCounter_update = 0;
@@ -144,7 +181,7 @@ namespace HearthStone.Library.Test
             field.AddCard(5, 0);
             field.AddCard(3, 1);
             field.RemoveCard(5);
-           
+
             Assert.AreEqual(eventCallCounter_remove, 1);
             Assert.AreEqual(eventCallCounter_update, 3);
         }
@@ -212,6 +249,16 @@ namespace HearthStone.Library.Test
             field.AddCard(5, 0);
 
             Assert.IsFalse(field.DisplayCheck(-1));
+        }
+
+        [TestMethod]
+        public void DisplayCheckTestMethod3()
+        {
+            Field field = new Field(1);
+            for (int i = 0; i < 7; i++)
+                field.AddCard(i, i);
+
+            Assert.IsFalse(field.DisplayCheck(3));
         }
 
         [TestMethod]
