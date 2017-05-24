@@ -351,5 +351,43 @@ namespace HearthStone.Library.Test
                 Assert.IsTrue(test.EffectorIDs.Count() == 0, "Invalid RemoveEffector (size mismatch)");
             }
         }
+
+        [TestMethod]
+        public void DestroyTestMethod1()
+        {
+            try
+            {
+                TestCardRecord test = new TestCardRecord();
+                test.Destroy();
+            }
+            catch (Exception)
+            {
+                Assert.Fail("Failed destory");
+            }
+        }
+
+        [TestMethod]
+        public void DestroyTestMethod2()
+        {
+            try
+            {
+                Assert.IsNotNull(CardManager.Instance);
+                Assert.IsNotNull(CardManager.Instance.Cards);
+                if (CardManager.Instance.Cards.Count() == 0)
+                {
+                    Assert.Fail("Unable to run the test case, no valid card");
+                }
+
+                foreach (Card card in CardManager.Instance.Cards)
+                {
+                    TestCardRecord test = new TestCardRecord(assumeValidCardRecordID, card.CardID);
+                    test.Destroy();
+                }
+            }
+            catch (Exception)
+            {
+                Assert.Fail("Failed destory");
+            }
+        }
     }
 }
