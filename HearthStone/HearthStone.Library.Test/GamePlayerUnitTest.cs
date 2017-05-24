@@ -5,7 +5,7 @@ using HearthStone.Library.CardRecords;
 namespace HearthStone.Library.Test
 {
     [TestClass]
-    public class GamePlayerTest
+    public class GamePlayerUnitTest
     {
         [TestMethod]
         public void SerializationTestMethod1()
@@ -98,7 +98,7 @@ namespace HearthStone.Library.Test
                 Assert.IsTrue(gamePlayer.AddHandCard(i));
             }
             Assert.IsFalse(gamePlayer.AddHandCard(11));
-            gamePlayer.BindGame(GameTest.InitialGameStatus());
+            gamePlayer.BindGame(GameUnitTest.InitialGameStatus());
             gamePlayer.Game.GameCardManager.LoadCard(new SpellCardRecord(12, 1));
             Assert.IsFalse(gamePlayer.AddHandCard(12));
         }

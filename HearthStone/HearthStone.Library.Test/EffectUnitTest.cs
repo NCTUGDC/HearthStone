@@ -56,9 +56,9 @@ namespace HearthStone.Library.Test
             Assert.AreEqual("嘲諷", new TauntEffect(1).Description(null, 0));
             Assert.AreEqual("風怒", new WindfuryEffect(1).Description(null, 0));
 
-            Assert.AreEqual("造成1點傷害", new DealSpellDamageEffect(1, 1).Description(GameTest.InitialGameStatus(), 0));
-            Assert.AreEqual("造成1點傷害", new DealSpellDamageEffect(1, 1).Description(GameTest.InitialGameStatus(), 1));
-            Game game = GameTest.InitialGameStatus();
+            Assert.AreEqual("造成1點傷害", new DealSpellDamageEffect(1, 1).Description(GameUnitTest.InitialGameStatus(), 0));
+            Assert.AreEqual("造成1點傷害", new DealSpellDamageEffect(1, 1).Description(GameUnitTest.InitialGameStatus(), 1));
+            Game game = GameUnitTest.InitialGameStatus();
             Card card;
             CardManager.Instance.FindCard(11, out card);
             CardRecord record = game.GameCardManager.CreateCardRecord(card);

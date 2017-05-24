@@ -6,7 +6,7 @@ using System.Linq;
 namespace HearthStone.Library.Test
 {
     [TestClass]
-    public class GameTest
+    public class GameUnitTest
     {
         public static Game InitialGameStatus()
         {
