@@ -106,5 +106,102 @@ namespace HearthStone.Library.Test
             oCardRecord.AttackCountInThisTurn = 7;
             Assert.AreEqual(oCardRecord.AttackCountInThisTurn, 7);
         }
+
+        [TestMethod]
+        public void AttackHeroTestMethod1()
+        {
+            Game game = GameUnitTest.InitialGameStatus();
+            Card card;
+            CardManager.Instance.FindCard(1, out card);
+            CardRecord record = game.GameCardManager.CreateCardRecord(card);
+            Assert.IsTrue(game.Field1.AddCard(record.CardRecordID, 0));
+            Assert.IsTrue((record as ServantCardRecord).AttackHero(game.GamePlayer2.Hero, game.GamePlayer1));
+        }
+        [TestMethod]
+        public void AttackHeroTestMethod2()
+        {
+            Game game = GameUnitTest.InitialGameStatus();
+            Card card;
+            CardManager.Instance.FindCard(1, out card);
+            CardRecord record = game.GameCardManager.CreateCardRecord(card);
+            Assert.IsTrue(game.Field1.AddCard(record.CardRecordID, 0));
+            Assert.IsTrue((record as ServantCardRecord).AttackHero(game.GamePlayer2.Hero, game.GamePlayer1));
+            Assert.AreEqual(1, (record as ServantCardRecord).AttackCountInThisTurn);
+            Assert.IsFalse((record as ServantCardRecord).AttackHero(game.GamePlayer2.Hero, game.GamePlayer1));
+            Assert.AreEqual(1, (record as ServantCardRecord).AttackCountInThisTurn);
+        }
+        [TestMethod]
+        public void AttackHeroTestMethod3()
+        {
+            Game game = GameUnitTest.InitialGameStatus();
+            Card card;
+            CardManager.Instance.FindCard(1, out card);
+            CardRecord attackServantRecord = game.GameCardManager.CreateCardRecord(card);
+            Assert.IsTrue(game.Field1.AddCard(attackServantRecord.CardRecordID, 0));
+            CardManager.Instance.FindCard(8, out card);
+            CardRecord record = game.GameCardManager.CreateCardRecord(card);
+            Assert.IsTrue(game.Field2.AddCard(record.CardRecordID, 0));
+            Assert.IsTrue(game.Field2.AnyTauntServant());
+            Assert.IsFalse((attackServantRecord as ServantCardRecord).AttackHero(game.GamePlayer2.Hero, game.GamePlayer1));
+            Assert.AreEqual(0, (attackServantRecord as ServantCardRecord).AttackCountInThisTurn);
+            Assert.AreEqual(30, game.GamePlayer2.Hero.RemainedHP);
+        }
+        [TestMethod]
+        public void AttackServantTestMethod1()
+        {
+            Game game = GameUnitTest.InitialGameStatus();
+            Card card;
+            CardManager.Instance.FindCard(1, out card);
+            CardRecord attackServantRecord = game.GameCardManager.CreateCardRecord(card);
+            Assert.IsTrue(game.Field1.AddCard(attackServantRecord.CardRecordID, 0));
+            CardManager.Instance.FindCard(1, out card);
+            CardRecord record = game.GameCardManager.CreateCardRecord(card);
+            game.Field2.AddCard(record.CardRecordID, 0);
+            Assert.IsTrue((attackServantRecord as ServantCardRecord).AttackServant(record as ServantCardRecord, game.GamePlayer1));
+        }
+        [TestMethod]
+        public void AttackServantTestMethod2()
+        {
+            Game game = GameUnitTest.InitialGameStatus();
+            Card card;
+            CardManager.Instance.FindCard(1, out card);
+            CardRecord attackServantRecord = game.GameCardManager.CreateCardRecord(card);
+            Assert.IsTrue(game.Field1.AddCard(attackServantRecord.CardRecordID, 0));
+            CardManager.Instance.FindCard(1, out card);
+            CardRecord record = game.GameCardManager.CreateCardRecord(card);
+            game.Field2.AddCard(record.CardRecordID, 0);
+            Assert.IsTrue((attackServantRecord as ServantCardRecord).AttackServant(record as ServantCardRecord, game.GamePlayer1));
+            Assert.IsFalse((attackServantRecord as ServantCardRecord).AttackServant(record as ServantCardRecord, game.GamePlayer1));
+        }
+        [TestMethod]
+        public void AttackServantTestMethod3()
+        {
+            Game game = GameUnitTest.InitialGameStatus();
+            Card card;
+            CardManager.Instance.FindCard(1, out card);
+            CardRecord attackServantRecord = game.GameCardManager.CreateCardRecord(card);
+            Assert.IsTrue(game.Field1.AddCard(attackServantRecord.CardRecordID, 0));
+            CardManager.Instance.FindCard(8, out card);
+            CardRecord record = game.GameCardManager.CreateCardRecord(card);
+            game.Field2.AddCard(record.CardRecordID, 0);
+            Assert.IsTrue(game.Field2.AnyTauntServant());
+            Assert.IsTrue((attackServantRecord as ServantCardRecord).AttackServant(record as ServantCardRecord, game.GamePlayer1));
+        }
+        [TestMethod]
+        public void AttackServantTestMethod4()
+        {
+            Game game = GameUnitTest.InitialGameStatus();
+            Card card;
+            CardManager.Instance.FindCard(1, out card);
+            CardRecord attackServantRecord = game.GameCardManager.CreateCardRecord(card);
+            Assert.IsTrue(game.Field1.AddCard(attackServantRecord.CardRecordID, 0));
+            CardManager.Instance.FindCard(8, out card);
+            CardRecord record = game.GameCardManager.CreateCardRecord(card);
+            CardManager.Instance.FindCard(7, out card);
+            CardRecord record2 = game.GameCardManager.CreateCardRecord(card);
+            game.Field2.AddCard(record.CardRecordID, 0);
+            Assert.IsTrue(game.Field2.AnyTauntServant());
+            Assert.IsFalse((attackServantRecord as ServantCardRecord).AttackServant(record2 as ServantCardRecord, game.GamePlayer1));
+        }
     }
 }
