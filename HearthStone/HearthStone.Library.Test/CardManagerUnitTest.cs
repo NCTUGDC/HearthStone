@@ -12,7 +12,7 @@ namespace HearthStone.Library.Test
     {
 
         [TestMethod]
-        public void StaticInstanceTestMethod1()
+        public void CardManagerInstanceTestMethod1()
         {
             CardManager instance = CardManager.Instance;
             Assert.IsNotNull(instance);
