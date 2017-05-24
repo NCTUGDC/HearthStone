@@ -9,6 +9,7 @@ namespace HearthStone.Library.Test
         [TestMethod]
         public void ServantCardRecordConstructorTestMethod1()
         {
+            //test default constructor
             ServantCardRecord oCardRecord = new ServantCardRecord();
             Assert.IsNotNull(oCardRecord);
         }
@@ -16,6 +17,7 @@ namespace HearthStone.Library.Test
         [TestMethod]
         public void ServantCardRecordConstructorTestMethod2()
         {
+            //test legal ServantCardRecord constructor with legal cardID
             ServantCardRecord oCardRecord = new ServantCardRecord(1, 2);
             Assert.IsNotNull(oCardRecord);
             Assert.AreEqual(oCardRecord.CardRecordID, 1);
@@ -25,6 +27,7 @@ namespace HearthStone.Library.Test
         [TestMethod]
         public void ServantCardRecordConstructorTestMethod3()
         {
+            //test legal ServantCardRecord constructor with illegal cardID
             ServantCardRecord oCardRecord = new ServantCardRecord(1, 12);
             Assert.IsNotNull(oCardRecord);
             Assert.AreEqual(oCardRecord.CardRecordID, -1);
@@ -94,6 +97,8 @@ namespace HearthStone.Library.Test
         {
             ServantCardRecord oCardRecord = new ServantCardRecord(1, 2);
             //attack count in this turn
+            oCardRecord.AttackCountInThisTurn = 7;
+            Assert.AreEqual(oCardRecord.AttackCountInThisTurn, 7);
             oCardRecord.OnAttackCountInThisTurnChanged += (eventAttackCountInThisTurnChanged) =>
             {
                 //do nothing
