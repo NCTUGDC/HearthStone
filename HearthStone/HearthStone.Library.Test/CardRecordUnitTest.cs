@@ -21,6 +21,12 @@ namespace HearthStone.Library.Test
             }
         }
 
+        // assume the following IDs are always valid/invalid for testing
+        public const int assumeValidCardID = 1;
+        public const int assumeValidCardRecordID = 1;
+        public const int assumeInvalidCardID = int.MinValue;
+        public const int assumeInvalidCardRecordID = int.MinValue;
+
         [TestMethod]
         public void CardRecordIDTestMethod1()
         {
@@ -29,11 +35,9 @@ namespace HearthStone.Library.Test
 
             if (CardManager.Instance.Cards.Count<Card>() > 0)
             {
-                int anyValidCardID = CardManager.Instance.Cards.First<Card>().CardID;
-
                 foreach (int id in new int[] { 0, 1, 2, 3, 4 })
                 {
-                    TestCardRecord test = new TestCardRecord(id, anyValidCardID);
+                    TestCardRecord test = new TestCardRecord(id, assumeValidCardID);
                     Assert.IsTrue(test.CardRecordID == id, "Invalid Constructor Setter for CardRecordID: " + id);
                 }
             }
@@ -63,10 +67,9 @@ namespace HearthStone.Library.Test
             {
                 Assert.Fail("Unable to run the test case, no valid card");
             }
-            int validCardRecordID = 0; // assume 0 is always valid
             foreach (Card card in CardManager.Instance.Cards)
             {
-                TestCardRecord test = new TestCardRecord(validCardRecordID, card.CardID);
+                TestCardRecord test = new TestCardRecord(assumeValidCardRecordID, card.CardID);
                 Assert.IsTrue(test.CardID == card.CardID, "Invalid Constructor Setter for CardRecordID: " + card.CardID);
             }
         }
@@ -76,10 +79,9 @@ namespace HearthStone.Library.Test
         {
             Assert.IsNotNull(CardManager.Instance);
             Assert.IsNotNull(CardManager.Instance.Cards);
-            int invalidID = int.MinValue; // assume this ID is always invalid
             try
             {
-                new TestCardRecord(0, invalidID);
+                new TestCardRecord(0, assumeInvalidCardID);
                 Assert.Fail("CardRecord should created with an invalid CardID");
             } catch (Exception)
             {
@@ -95,10 +97,9 @@ namespace HearthStone.Library.Test
             {
                 Assert.Fail("Unable to run the test case, no valid card");
             }
-            int validCardRecordID = 0; // assume 0 is always valid
             foreach (Card card in CardManager.Instance.Cards)
             {
-                TestCardRecord test = new TestCardRecord(validCardRecordID, card.CardID);
+                TestCardRecord test = new TestCardRecord(assumeValidCardRecordID, card.CardID);
                 Assert.IsTrue(test.Card == card, "Invalid Card getter for " + card.CardID);
             }
         }
@@ -155,16 +156,14 @@ namespace HearthStone.Library.Test
 
                 Assert.IsNotNull(CardManager.Instance);
                 Assert.IsNotNull(CardManager.Instance.Cards);
-                bool hasCards = false;
-                int validCardRecordID = 0; // assume 0 is always valid
-                foreach (Card card in CardManager.Instance.Cards)
-                {
-                    hasCards = true;
-                    new TestCardRecord(validCardRecordID, card.CardID);
-                }
-                if (!hasCards)
+                if (CardManager.Instance.Cards.Count() == 0)
                 {
                     Assert.Fail("Unable to run the test case, no valid card");
+                }
+
+                foreach (Card card in CardManager.Instance.Cards)
+                {
+                    new TestCardRecord(assumeValidCardRecordID, card.CardID);
                 }
             }
             catch (Exception)
@@ -178,9 +177,7 @@ namespace HearthStone.Library.Test
         {
             try
             {
-                int invalidCardID = int.MinValue; // assume int.MinValue is always invalid
-                int invalidCardRecordID = int.MinValue; // assume int.MinValue is always invalid
-                new TestCardRecord(invalidCardRecordID, invalidCardID);
+                new TestCardRecord(assumeInvalidCardRecordID, assumeInvalidCardID);
                 Assert.Fail("An invalid CardRecord should not be created");
             }
             catch (Exception)
