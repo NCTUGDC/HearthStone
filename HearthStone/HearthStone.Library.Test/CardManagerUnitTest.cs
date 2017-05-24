@@ -1,6 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace HearthStone.Library.Test
 {
@@ -78,7 +81,7 @@ namespace HearthStone.Library.Test
                 maxID = Math.Max(maxID, card.CardID);
             }
 
-            foreach (int id in new int[]{ minID - 1, maxID + 1})
+            foreach (int id in new int[] { minID - 1, maxID + 1 })
             {
                 Card tempCard;
                 bool isCardFound = CardManager.Instance.FindCard(id, out tempCard);
