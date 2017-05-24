@@ -59,10 +59,11 @@ namespace HearthStone.Library.Test
             Assert.IsNotNull(CardManager.Instance);
             Assert.IsNotNull(CardManager.Instance.Cards);
             bool hasCards = false;
+            int validCardRecordID = 0; // assume 0 is always valid
             foreach (Card card in CardManager.Instance.Cards)
             {
                 hasCards = true;
-                TestCardRecord test = new TestCardRecord(0, card.CardID);
+                TestCardRecord test = new TestCardRecord(validCardRecordID, card.CardID);
                 Assert.IsTrue(test.CardID == card.CardID, "Invalid Constructor Setter for CardRecordID: " + card.CardID);
             }
             if (!hasCards)
@@ -92,10 +93,11 @@ namespace HearthStone.Library.Test
             Assert.IsNotNull(CardManager.Instance);
             Assert.IsNotNull(CardManager.Instance.Cards);
             bool hasCards = false;
+            int validCardRecordID = 0; // assume 0 is always valid
             foreach (Card card in CardManager.Instance.Cards)
             {
                 hasCards = true;
-                TestCardRecord test = new TestCardRecord(0, card.CardID);
+                TestCardRecord test = new TestCardRecord(validCardRecordID, card.CardID);
                 Assert.IsTrue(test.Card == card, "Invalid Card getter for " + card.CardID);
             }
             if (!hasCards)
