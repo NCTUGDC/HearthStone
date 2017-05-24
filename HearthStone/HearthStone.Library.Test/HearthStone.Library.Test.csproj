@@ -61,6 +61,7 @@
     <Compile Include="GameUnitTest.cs" />
     <Compile Include="ServantCardUnitTest.cs" />
     <Compile Include="SpellCardUnitTest.cs" />
+    <Compile Include="WeaponCardRecordUnitTest.cs" />
     <Compile Include="WeaponCardUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
