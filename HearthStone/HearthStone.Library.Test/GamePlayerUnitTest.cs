@@ -99,6 +99,7 @@ namespace HearthStone.Library.Test
             }
             Assert.IsFalse(gamePlayer.AddHandCard(11));
             gamePlayer.BindGame(GameUnitTest.InitialGameStatus());
+            ServantCardRecord card = new ServantCardRecord(12, 1);
             gamePlayer.Game.GameCardManager.LoadCard(card);
             bool destroyFlag = false;
             card.OnDestroyed += (record) => 
