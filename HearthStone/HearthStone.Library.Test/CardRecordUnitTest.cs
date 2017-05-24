@@ -121,6 +121,13 @@ namespace HearthStone.Library.Test
         }
 
         [TestMethod]
+        public void EffectorIDsTestMethod2()
+        {
+            TestCardRecord test = new TestCardRecord();
+            Assert.IsTrue(test.EffectorIDs.Count() == 0, "Empty CardRecord should not have any elements in EffectorIDs");
+        }
+
+        [TestMethod]
         public void ManaCostTestMethod1()
         {
             TestCardRecord test = new TestCardRecord();
