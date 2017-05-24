@@ -141,5 +141,47 @@ namespace HearthStone.Library.Test
                 Assert.IsTrue(test.ManaCost == 0, "ManaCost should always >= 0 (" + i + ")");
             }
         }
+
+        [TestMethod]
+        public void CardRecordConstructorTestMethod1()
+        {
+            try
+            {
+                new TestCardRecord();
+
+                Assert.IsNotNull(CardManager.Instance);
+                Assert.IsNotNull(CardManager.Instance.Cards);
+                bool hasCards = false;
+                int validCardRecordID = 0; // assume 0 is always valid
+                foreach (Card card in CardManager.Instance.Cards)
+                {
+                    hasCards = true;
+                    new TestCardRecord(validCardRecordID, card.CardID);
+                }
+                if (!hasCards)
+                {
+                    Assert.Fail("Unable to run the test case, no valid card");
+                }
+            }
+            catch (Exception)
+            {
+                Assert.Fail("Unable to construct valid CardRecord");
+            }
+        }
+
+        [TestMethod]
+        public void CardRecordConstructorTestMethod2()
+        {
+            try
+            {
+                int invalidCardID = int.MinValue; // assume int.MinValue is always invalid
+                int invalidCardRecordID = int.MinValue; // assume int.MinValue is always invalid
+                new TestCardRecord(invalidCardRecordID, invalidCardID);
+                Assert.Fail("An invalid CardRecord should not be created");
+            }
+            catch (Exception)
+            {
+            }
+        }
     }
 }
