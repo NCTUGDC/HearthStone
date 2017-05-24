@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace HearthStone.Library.Test
 {
     [TestClass]
-    class CardManagerUnitTest
+    public class CardManagerUnitTest
     {
 
         [TestMethod]
