@@ -38,5 +38,25 @@ namespace HearthStone.Library.Test
             }
         }
 
+
+        [TestMethod]
+        public void EffectsEnumerableTestMethod1()
+        {
+            IEnumerable<Effect> effects = CardManager.Instance.Effects;
+            Assert.IsNotNull(effects);
+        }
+
+        [TestMethod]
+        public void EffectsEnumerableTestMethod2()
+        {
+            HashSet<int> IDs = new HashSet<int>();
+            foreach (Effect effect in CardManager.Instance.Effects)
+            {
+                Assert.IsNotNull(effect);
+                Assert.IsFalse(IDs.Contains(effect.EffectID));
+                IDs.Add(effect.EffectID);
+            }
+        }
+
     }
 }
