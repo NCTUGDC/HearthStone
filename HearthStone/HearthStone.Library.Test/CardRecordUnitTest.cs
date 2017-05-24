@@ -26,7 +26,8 @@ namespace HearthStone.Library.Test
         {
             Assert.IsNotNull(CardManager.Instance);
             Assert.IsNotNull(CardManager.Instance.Cards);
-            try
+
+            if (CardManager.Instance.Cards.Count<Card>() > 0)
             {
                 int anyValidCardID = CardManager.Instance.Cards.First<Card>().CardID;
 
@@ -36,7 +37,7 @@ namespace HearthStone.Library.Test
                     Assert.IsTrue(test.CardRecordID == id, "Invalid Constructor Setter for CardRecordID: " + id);
                 }
             }
-            catch (ArgumentNullException)
+            else
             {
                 Assert.Fail("Unable to run the test case, no valid card");
             }
@@ -58,17 +59,15 @@ namespace HearthStone.Library.Test
         {
             Assert.IsNotNull(CardManager.Instance);
             Assert.IsNotNull(CardManager.Instance.Cards);
-            bool hasCards = false;
+            if (CardManager.Instance.Cards.Count() == 0)
+            {
+                Assert.Fail("Unable to run the test case, no valid card");
+            }
             int validCardRecordID = 0; // assume 0 is always valid
             foreach (Card card in CardManager.Instance.Cards)
             {
-                hasCards = true;
                 TestCardRecord test = new TestCardRecord(validCardRecordID, card.CardID);
                 Assert.IsTrue(test.CardID == card.CardID, "Invalid Constructor Setter for CardRecordID: " + card.CardID);
-            }
-            if (!hasCards)
-            {
-                Assert.Fail("Unable to run the test case, no valid card");
             }
         }
 
@@ -92,17 +91,15 @@ namespace HearthStone.Library.Test
         {
             Assert.IsNotNull(CardManager.Instance);
             Assert.IsNotNull(CardManager.Instance.Cards);
-            bool hasCards = false;
+            if (CardManager.Instance.Cards.Count() == 0)
+            {
+                Assert.Fail("Unable to run the test case, no valid card");
+            }
             int validCardRecordID = 0; // assume 0 is always valid
             foreach (Card card in CardManager.Instance.Cards)
             {
-                hasCards = true;
                 TestCardRecord test = new TestCardRecord(validCardRecordID, card.CardID);
                 Assert.IsTrue(test.Card == card, "Invalid Card getter for " + card.CardID);
-            }
-            if (!hasCards)
-            {
-                Assert.Fail("Unable to run the test case, no valid card");
             }
         }
 
