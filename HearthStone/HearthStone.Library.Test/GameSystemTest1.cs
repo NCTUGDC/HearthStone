@@ -92,6 +92,7 @@ namespace HearthStone.Library.Test
             #endregion
         }
         [TestMethod]
+        public void StartGameWithDeckTestMethod1()
         {
             Game game = GameSystemTestEnvironment.EmptyGame(1, 0);
             var servantCards1 = GameSystemTestEnvironment.GameWithServantCardRecordState(game, new List<int>
