@@ -135,8 +135,14 @@
     <Compile Include="Effectors\ChargeEffector.cs" />
     <Compile Include="Effectors\DealSpellDamageEffector.cs" />
     <Compile Include="Effectors\DealSpellDamageToAllEnemyMinionsEffector.cs" />
+    <Compile Include="Effectors\DestroyEnemyMinionEffector.cs" />
+    <Compile Include="Effectors\DoubleMinionAttackEffector.cs" />
+    <Compile Include="Effectors\DoubleMinionHealthEffector.cs" />
     <Compile Include="Effectors\DrawCardEffector.cs" />
+    <Compile Include="Effectors\GiveMinionAttackBuffEffector.cs" />
+    <Compile Include="Effectors\GiveMinionHealthBuffEffector.cs" />
     <Compile Include="Effectors\MinionTargetEffector.cs" />
+    <Compile Include="Effectors\RestoreHealthEffector.cs" />
     <Compile Include="Effectors\SilenceMinionEffector.cs" />
     <Compile Include="Effectors\SpellDamageEffector.cs" />
     <Compile Include="Effectors\StatusEffector.cs" />

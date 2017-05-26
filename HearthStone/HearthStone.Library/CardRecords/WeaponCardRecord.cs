@@ -26,6 +26,8 @@ namespace HearthStone.Library.CardRecords
             {
                 durability = value;
                 OnDurabilityChanged?.Invoke(this);
+                if (durability <= 0)
+                    Destroy();
             }
         }
 

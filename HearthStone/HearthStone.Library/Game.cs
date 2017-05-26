@@ -618,12 +618,9 @@ namespace HearthStone.Library
                 CardRecord record;
                 if(GameCardManager.FindCard(hero.WeaponCardRecordID, out record) && record is WeaponCardRecord)
                 {
-                    (record as WeaponCardRecord).OnDurabilityChanged += (weaponCard) =>
+                    (record as WeaponCardRecord).OnDestroyed += (weaponCard) =>
                     {
-                        if (weaponCard.Durability <= 0)
-                        {
-                            hero.WeaponCardRecordID = 0;
-                        }
+                        hero.WeaponCardRecordID = 0;
                     };
                 }
             }
@@ -638,12 +635,9 @@ namespace HearthStone.Library
                     CardRecord record;
                     if (GameCardManager.FindCard(fieldCardRecord.CardRecordID, out record) && record is ServantCardRecord)
                     {
-                        (record as ServantCardRecord).OnRemainedHealthChanged += (servantCard) =>
+                        (record as ServantCardRecord).OnDestroyed += (servantCard) =>
                         {
-                            if (servantCard.RemainedHealth <= 0)
-                            {
-                                field.RemoveCard(fieldCardRecord.CardRecordID);
-                            }
+                            field.RemoveCard(fieldCardRecord.CardRecordID);
                         };
                     }
                 }

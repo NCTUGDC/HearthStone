@@ -41,6 +41,8 @@ namespace HearthStone.Library.CardRecords
             {
                 remainedHealth = Math.Min(value, Health);
                 OnRemainedHealthChanged?.Invoke(this);
+                if (remainedHealth <= 0)
+                    Destroy();
             }
         }
         [MessagePackMember(id: 7)]

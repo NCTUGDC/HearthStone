@@ -43,14 +43,14 @@ namespace HearthStone.Library
                 { "造成3點傷害", new DealSpellDamageEffect(13, 3) },
                 { "造成6點傷害", new DealSpellDamageEffect(14, 6) },
                 { "造成10點傷害", new DealSpellDamageEffect(15, 10) },
-                //{ "摧毀一個敵方手下", new DestroyEnemyMinionEffect(16) },
-                //{ "使一個手下的攻擊力加倍", new DoubleMinionHealthEffect(17) },
-                //{ "使一個手下的生命值加倍", new DoubleMinionAttackEffect(18) },
-                //{ "賦予一個手下攻擊+2", new GiveMinionAttackBuffEffect(19, 2) },
-                //{ "賦予一個手下生命+2", new GiveMinionHealthBuffEffect(20, 2) },
-                //{ "賦予一個手下攻擊+4", new GiveMinionAttackBuffEffect(21, 4) },
-                //{ "賦予一個手下生命+4", new GiveMinionHealthBuffEffect(22, 4) },
-                //{ "恢復4點血量", new RestoreHealthEffect(23, 4) },
+                { "摧毀一個敵方手下", new DestroyEnemyMinionEffect(16) },
+                { "使一個手下的攻擊力加倍", new DoubleMinionHealthEffect(17) },
+                { "使一個手下的生命值加倍", new DoubleMinionAttackEffect(18) },
+                { "賦予一個手下攻擊+2", new GiveMinionAttackBuffEffect(19, 2) },
+                { "賦予一個手下生命+2", new GiveMinionHealthBuffEffect(20, 2) },
+                { "賦予一個手下攻擊+4", new GiveMinionAttackBuffEffect(21, 4) },
+                { "賦予一個手下生命+4", new GiveMinionHealthBuffEffect(22, 4) },
+                { "恢復4點血量", new RestoreHealthEffect(23, 4) },
             };
             List<Card> cardSet = new List<Card>
             {
@@ -80,12 +80,12 @@ namespace HearthStone.Library
                 new SpellCard(21, 2, "傷害B", new List<Effect> { effectSet["造成3點傷害"] }, RarityCode.Free),
                 new SpellCard(22, 4, "傷害C", new List<Effect> { effectSet["造成6點傷害"] }, RarityCode.Common),
                 new SpellCard(23, 10, "傷害D", new List<Effect> { effectSet["造成10點傷害"] }, RarityCode.Epic),
-                //new SpellCard(24, 5, "摧毀", new List<Effect> { effectSet["摧毀一個敵方手下"] }, RarityCode.Free),
-                //new SpellCard(25, 5, "生命加倍", new List<Effect> { effectSet["使一個手下的攻擊力加倍"] }, RarityCode.Rare),
-                //new SpellCard(26, 2, "攻擊加倍", new List<Effect> { effectSet["使一個手下的生命值加倍"] }, RarityCode.Common),
-                //new SpellCard(27, 2, "手下加強A", new List<Effect> { effectSet["賦予一個手下攻擊+2"], effectSet["賦予一個手下生命+2"] }, RarityCode.Rare),
-                //new SpellCard(28, 4, "手下加強B", new List<Effect> { effectSet["賦予一個手下攻擊+4"], effectSet["賦予一個手下生命+4"] }, RarityCode.Free),
-                //new SpellCard(29, 1, "回血A", new List<Effect> { effectSet["恢復4點血量"] }, RarityCode.Free),
+                new SpellCard(24, 5, "摧毀", new List<Effect> { effectSet["摧毀一個敵方手下"] }, RarityCode.Free),
+                new SpellCard(25, 5, "生命加倍", new List<Effect> { effectSet["使一個手下的攻擊力加倍"] }, RarityCode.Rare),
+                new SpellCard(26, 2, "攻擊加倍", new List<Effect> { effectSet["使一個手下的生命值加倍"] }, RarityCode.Common),
+                new SpellCard(27, 2, "手下加強A", new List<Effect> { effectSet["賦予一個手下攻擊+2"], effectSet["賦予一個手下生命+2"] }, RarityCode.Rare),
+                new SpellCard(28, 4, "手下加強B", new List<Effect> { effectSet["賦予一個手下攻擊+4"], effectSet["賦予一個手下生命+4"] }, RarityCode.Free),
+                new SpellCard(29, 1, "回血A", new List<Effect> { effectSet["恢復4點血量"] }, RarityCode.Free),
             };
 
             cardSet.ForEach(x => cardDictionary.Add(x.CardID, x));

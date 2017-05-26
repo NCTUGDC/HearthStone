@@ -100,24 +100,24 @@ namespace HearthStone.Library
                 case EffectTypeCode.DealSpellDamage:
                     effector = new DealSpellDamageEffector(effectorID_Generator++, effect.EffectID);
                     break;
-                //case EffectTypeCode.DestroyEnemyMinion:
-                //    effector = new DestroyEnemyMinionEffector(effectorID_Generator++, effect.EffectID);
-                //    break;
-                //case EffectTypeCode.DoubleMinionHealth:
-                //    effector = new DoubleMinionHealthEffector(effectorID_Generator++, effect.EffectID);
-                //    break;
-                //case EffectTypeCode.DoubleMinionAttack:
-                //    effector = new DoubleMinionAttackEffector(effectorID_Generator++, effect.EffectID);
-                //    break;
-                //case EffectTypeCode.GiveMinionAttackBuff:
-                //    effector = new GiveMinionAttackBuffEffector(effectorID_Generator++, effect.EffectID);
-                //    break;
-                //case EffectTypeCode.GiveMinionHealthBuff:
-                //    effector = new GiveMinionHealthBuffEffector(effectorID_Generator++, effect.EffectID);
-                //    break;
-                //case EffectTypeCode.RestoreHealth:
-                //    effector = new RestoreHealthEffector(effectorID_Generator++, effect.EffectID);
-                //    break;
+                case EffectTypeCode.DestroyEnemyMinion:
+                    effector = new DestroyEnemyMinionEffector(effectorID_Generator++, effect.EffectID);
+                    break;
+                case EffectTypeCode.DoubleMinionHealth:
+                    effector = new DoubleMinionHealthEffector(effectorID_Generator++, effect.EffectID);
+                    break;
+                case EffectTypeCode.DoubleMinionAttack:
+                    effector = new DoubleMinionAttackEffector(effectorID_Generator++, effect.EffectID);
+                    break;
+                case EffectTypeCode.GiveMinionAttackBuff:
+                    effector = new GiveMinionAttackBuffEffector(effectorID_Generator++, effect.EffectID);
+                    break;
+                case EffectTypeCode.GiveMinionHealthBuff:
+                    effector = new GiveMinionHealthBuffEffector(effectorID_Generator++, effect.EffectID);
+                    break;
+                case EffectTypeCode.RestoreHealth:
+                    effector = new RestoreHealthEffector(effectorID_Generator++, effect.EffectID);
+                    break;
                 default:
                     return null;
             }
