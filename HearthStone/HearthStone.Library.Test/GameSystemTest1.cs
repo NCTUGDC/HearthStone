@@ -9,9 +9,12 @@ namespace HearthStone.Library.Test
     {
         [TestMethod]
         public void EmptyGameTestMethod1()
-        {
-            #region game
+        {//開始一場空的遊戲 輪到1號玩家
+            #region initial
             Game game = GameSystemTestEnvironment.EmptyGame(1, 0);
+            #endregion
+
+            #region game
             Assert.AreEqual(1, game.CurrentGamePlayerID);
             Assert.AreEqual(0, game.Field1.ServantCount);
             Assert.AreEqual(0, game.Field2.ServantCount);
@@ -50,11 +53,18 @@ namespace HearthStone.Library.Test
         }
         [TestMethod]
         public void SwapHandThenStartTestMethod1()
-        {
-            #region game
+        {   //開始一場空的遊戲 輪到1號玩家 玩家1換手牌 玩家2換手牌
+            //雙方換完手牌 遊戲開始 1號玩家抽一張牌 法力水晶上限+1 並補滿法力水晶
+            #region initial
             Game game = GameSystemTestEnvironment.EmptyGame(1, 0);
+            #endregion
+
+            #region operations
             game.GamePlayer1.ChangeHand(new int[0]);
             game.GamePlayer2.ChangeHand(new int[0]);
+            #endregion
+
+            #region game
             Assert.AreEqual(1, game.CurrentGamePlayerID);
             Assert.AreEqual(0, game.Field1.ServantCount);
             Assert.AreEqual(0, game.Field2.ServantCount);
@@ -94,6 +104,9 @@ namespace HearthStone.Library.Test
         [TestMethod]
         public void StartGameWithDeckTestMethod1()
         {
+            //開始一場空的遊戲 雙方牌組都依序放置1~6號卡1張 輪到1號玩家 玩家1換手牌 玩家2換手牌
+            //雙方換完手牌 遊戲開始 1號玩家抽一張牌 法力水晶上限+1 並補滿法力水晶
+            #region initial
             Game game = GameSystemTestEnvironment.EmptyGame(1, 0);
             var servantCards1 = GameSystemTestEnvironment.GameWithServantCardRecordState(game, new List<int>
             { 1, 2, 3, 4, 5, 6 });
@@ -101,9 +114,12 @@ namespace HearthStone.Library.Test
             var servantCards2 = GameSystemTestEnvironment.GameWithServantCardRecordState(game, new List<int>
             { 1, 2, 3, 4, 5, 6 });
             GameSystemTestEnvironment.GameWithGamePlayerDeckState(game, 2, servantCards2.Select(x => x.CardRecordID).ToList());
+            #endregion
 
+            #region operations
             game.GamePlayer1.ChangeHand(new int[0]);
             game.GamePlayer2.ChangeHand(new int[0]);
+            #endregion
 
             #region game
             Assert.AreEqual(1, game.CurrentGamePlayerID);
