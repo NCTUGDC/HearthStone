@@ -184,17 +184,17 @@ namespace HearthStone.Library.Test
             Assert.IsTrue(hero.AttackHero(game.GamePlayer2.Hero, game.GamePlayer1));
             Assert.AreEqual(28, game.GamePlayer2.Hero.RemainedHP);
             Assert.AreEqual(1, hero.AttackCountInThisTurn);
-            Assert.AreEqual(7, (record as WeaponCardRecord).RemainedDurability);
+            Assert.AreEqual(7, (record as WeaponCardRecord).Durability);
 
             Assert.IsTrue(hero.AttackHero(game.GamePlayer2.Hero, game.GamePlayer1));
             Assert.AreEqual(26, game.GamePlayer2.Hero.RemainedHP);
             Assert.AreEqual(2, hero.AttackCountInThisTurn);
-            Assert.AreEqual(6, (record as WeaponCardRecord).RemainedDurability);
+            Assert.AreEqual(6, (record as WeaponCardRecord).Durability);
 
             Assert.IsFalse(hero.AttackHero(game.GamePlayer2.Hero, game.GamePlayer1));
             Assert.AreEqual(26, game.GamePlayer2.Hero.RemainedHP);
             Assert.AreEqual(2, hero.AttackCountInThisTurn);
-            Assert.AreEqual(6, (record as WeaponCardRecord).RemainedDurability);
+            Assert.AreEqual(6, (record as WeaponCardRecord).Durability);
         }
         [TestMethod]
         public void AttackServantTestMethod1()
@@ -263,7 +263,7 @@ namespace HearthStone.Library.Test
             Assert.IsTrue(hero.AttackServant((servant1Record as ServantCardRecord), game.GamePlayer1));
             Assert.AreEqual(0, (servant1Record as ServantCardRecord).RemainedHealth);
             Assert.AreEqual(1, hero.AttackCountInThisTurn);
-            Assert.AreEqual(7, (weaponRecord as WeaponCardRecord).RemainedDurability);
+            Assert.AreEqual(7, (weaponRecord as WeaponCardRecord).Durability);
 
             game.Field2.RemoveCard(servant1Record.CardRecordID);
 
@@ -274,7 +274,7 @@ namespace HearthStone.Library.Test
             Assert.IsTrue(hero.AttackServant((servant2Record as ServantCardRecord), game.GamePlayer1));
             Assert.AreEqual(28, hero.RemainedHP);
             Assert.AreEqual(2, hero.AttackCountInThisTurn);
-            Assert.AreEqual(6, (weaponRecord as WeaponCardRecord).RemainedDurability);
+            Assert.AreEqual(6, (weaponRecord as WeaponCardRecord).Durability);
         }
     }
 }

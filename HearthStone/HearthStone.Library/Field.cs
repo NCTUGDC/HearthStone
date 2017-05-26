@@ -24,7 +24,7 @@ namespace HearthStone.Library
 
         [MessagePackMember(id: 1)]
         private Dictionary<int, FieldCardRecord> fieldCardDictionary = new Dictionary<int, FieldCardRecord>();
-        public IEnumerable<FieldCardRecord> FieldCards { get { return fieldCardDictionary.Values; } }
+        public IEnumerable<FieldCardRecord> FieldCards { get { return fieldCardDictionary.Values.ToArray(); } }
         [MessagePackIgnore]
         public int ServantCount { get { return fieldCardDictionary.Count; } }
 

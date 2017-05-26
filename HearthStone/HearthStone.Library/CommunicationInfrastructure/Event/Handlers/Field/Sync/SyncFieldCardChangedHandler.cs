@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace HearthStone.Library.CommunicationInfrastructure.Event.Handlers.Field.Sync
 {
-    class SyncCardChangedHandler : SyncDataHandler<Library.Field, FieldSyncDataCode>
+    class SyncFieldCardChangedHandler : SyncDataHandler<Library.Field, FieldSyncDataCode>
     {
-        public SyncCardChangedHandler(Library.Field subject) : base(subject, 2)
+        public SyncFieldCardChangedHandler(Library.Field subject) : base(subject, 2)
         {
         }
         internal override bool Handle(FieldSyncDataCode syncCode, Dictionary<byte, object> parameters, out string errorMessage)

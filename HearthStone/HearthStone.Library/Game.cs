@@ -1,6 +1,7 @@
 ﻿using HearthStone.Library.CardRecords;
 using HearthStone.Library.CommunicationInfrastructure.Event.Managers;
 using HearthStone.Library.Effectors;
+using HearthStone.Protocol;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -80,8 +81,10 @@ namespace HearthStone.Library
             Field2 = new Field(2);
             Field2.BindGame(this);
 
-            GamePlayer1.OnHasChangedHandChanged += DetectGamePlayerChangeHand;
-            GamePlayer2.OnHasChangedHandChanged += DetectGamePlayerChangeHand;
+            AssemblyGamePlayerEvents(GamePlayer1);
+            AssemblyGamePlayerEvents(GamePlayer2);
+            AssemblyFieldEvents(Field1);
+            AssemblyFieldEvents(Field2);
 
             EventManager = new GameEventManager(this);
         }
@@ -162,19 +165,14 @@ namespace HearthStone.Library
                 return -1;
             }
         }
-        public void GameOverTest()
+        public void GameOverTest(Hero hero, int delta)
         {
-            if(GamePlayer1.Hero.RemainedHP <= 0 && GamePlayer2.Hero.RemainedHP <= 0)
+            if(hero.RemainedHP <= 0)
             {
-                OnGameOver?.Invoke(this, 0);
-            }
-            else if(GamePlayer1.Hero.RemainedHP <= 0)
-            {
-                OnGameOver?.Invoke(this, 1);
-            }
-            else if(GamePlayer2.Hero.RemainedHP <= 0)
-            {
-                OnGameOver?.Invoke(this, 2);
+                if(hero.HeroID == 1)
+                    OnGameOver?.Invoke(this, 2);
+                else if (hero.HeroID == 2)
+                    OnGameOver?.Invoke(this, 1);
             }
         }
 
@@ -604,6 +602,52 @@ namespace HearthStone.Library
             {
                 return null;
             }
+        }
+
+        private void AssemblyGamePlayerEvents(GamePlayer gamePlayer)
+        {
+            gamePlayer.OnHasChangedHandChanged += DetectGamePlayerChangeHand;
+            gamePlayer.Hero.OnRemainedHP_Changed += GameOverTest;
+            gamePlayer.Hero.OnWeaponChanged += Hero_OnWeaponChanged;
+        }
+
+        private void Hero_OnWeaponChanged(Hero hero, DataChangeCode changeCode)
+        {
+            if(changeCode == DataChangeCode.Add || changeCode == DataChangeCode.Update)
+            {
+                CardRecord record;
+                if(GameCardManager.FindCard(hero.WeaponCardRecordID, out record) && record is WeaponCardRecord)
+                {
+                    (record as WeaponCardRecord).OnDurabilityChanged += (weaponCard) =>
+                    {
+                        if (weaponCard.Durability <= 0)
+                        {
+                            hero.WeaponCardRecordID = 0;
+                        }
+                    };
+                }
+            }
+        }
+
+        private void AssemblyFieldEvents(Field field)
+        {
+            field.OnCardChanged += (fieldCardRecord, changeCode) => 
+            {
+                if(changeCode == DataChangeCode.Add)
+                {
+                    CardRecord record;
+                    if (GameCardManager.FindCard(fieldCardRecord.CardRecordID, out record) && record is ServantCardRecord)
+                    {
+                        (record as ServantCardRecord).OnRemainedHealthChanged += (servantCard) =>
+                        {
+                            if (servantCard.RemainedHealth <= 0)
+                            {
+                                field.RemoveCard(fieldCardRecord.CardRecordID);
+                            }
+                        };
+                    }
+                }
+            };
         }
     }
 }

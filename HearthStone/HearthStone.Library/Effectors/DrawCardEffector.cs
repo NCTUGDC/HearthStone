@@ -1,4 +1,4 @@
-﻿using System;
+﻿using HearthStone.Library.Effects;
 
 namespace HearthStone.Library.Effectors
 {
@@ -10,7 +10,11 @@ namespace HearthStone.Library.Effectors
 
         public override void Affect(GamePlayer user)
         {
-            throw new NotImplementedException();
+            Effect effect = Effect;
+            if(effect != null && effect is DrawCardEffect)
+            {
+                user.Draw((effect as DrawCardEffect).CardCount);
+            }
         }
     }
 }

@@ -13,7 +13,6 @@
         HeroAttackChanged,
         HeroRemainedHP_Changed,
         HeroHP_Changed,
-        HeroEffectorChanged,
         HeroAttackCountInThisTurnChanged
     }
 }

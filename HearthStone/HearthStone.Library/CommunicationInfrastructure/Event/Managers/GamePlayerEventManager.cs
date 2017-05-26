@@ -22,7 +22,7 @@ namespace HearthStone.Library.CommunicationInfrastructure.Event.Managers
             SyncDataBroker = new GamePlayerSyncDataBroker(gamePlayer);
 
             eventTable.Add(GamePlayerEventCode.SyncData, SyncDataBroker);
-            eventTable.Add(GamePlayerEventCode.DrawCard, new DrawCardHandler(gamePlayer));
+            //eventTable.Add(GamePlayerEventCode.DrawCard, new DrawCardHandler(gamePlayer));
         }
 
         internal bool Operate(GamePlayerEventCode eventCode, Dictionary<byte, object> parameters, out string errorMessage)
@@ -59,10 +59,10 @@ namespace HearthStone.Library.CommunicationInfrastructure.Event.Managers
             };
             SendEvent(GamePlayerEventCode.SyncData, syncDataParameters);
         }
-        public void DrawCard(GameDeck deck, int cardRecordID)
-        {
-            SendEvent(GamePlayerEventCode.DrawCard, new Dictionary<byte, object>());
-        }
+        //public void DrawCard(GameDeck deck, int cardRecordID)
+        //{
+        //    SendEvent(GamePlayerEventCode.DrawCard, new Dictionary<byte, object>());
+        //}
         internal void DrawCardEvent()
         {
             OnDrawCard?.Invoke(gamePlayer);

@@ -28,21 +28,9 @@ namespace HearthStone.Library.CardRecords
                 OnDurabilityChanged?.Invoke(this);
             }
         }
-        [MessagePackMember(id: 6)]
-        private int remainedDurability;
-        public int RemainedDurability
-        {
-            get { return remainedDurability; }
-            set
-            {
-                remainedDurability = Math.Min(value, Durability);
-                OnRemainedDurabilityChanged?.Invoke(this);
-            }
-        }
 
         public event Action<WeaponCardRecord> OnAttackChanged;
         public event Action<WeaponCardRecord> OnDurabilityChanged;
-        public event Action<WeaponCardRecord> OnRemainedDurabilityChanged;
 
         public WeaponCardRecord() { }
         public WeaponCardRecord(int cardRecordID, int cardID) : base(cardRecordID, cardID)
@@ -52,7 +40,6 @@ namespace HearthStone.Library.CardRecords
                 WeaponCard weaponCard = Card as WeaponCard;
                 Attack = weaponCard.Attack;
                 Durability = weaponCard.Durability;
-                RemainedDurability = Durability;
             }
             else
             {

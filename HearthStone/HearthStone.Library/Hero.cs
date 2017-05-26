@@ -112,7 +112,7 @@ namespace HearthStone.Library
                         AttackCountInThisTurn++;
                         if(weapon != null)
                         {
-                            (weapon as WeaponCardRecord).RemainedDurability--;
+                            (weapon as WeaponCardRecord).Durability--;
                         }
                         return true;
                     }
@@ -128,7 +128,7 @@ namespace HearthStone.Library
                     AttackCountInThisTurn++;
                     if (weapon != null)
                     {
-                        (weapon as WeaponCardRecord).RemainedDurability--;
+                        (weapon as WeaponCardRecord).Durability--;
                     }
                     return true;
                 } 
@@ -156,7 +156,7 @@ namespace HearthStone.Library
                     AttackCountInThisTurn++;
                     if (weapon != null)
                     {
-                        (weapon as WeaponCardRecord).RemainedDurability--;
+                        (weapon as WeaponCardRecord).Durability--;
                     }
                     return true;
                 }

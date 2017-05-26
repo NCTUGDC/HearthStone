@@ -28,8 +28,8 @@ namespace HearthStone.Library.CommunicationInfrastructure.Event.Managers
             eventTable.Add(GameEventCode.GamePlayerEvent, new GamePlayerEventBroker(game));
             eventTable.Add(GameEventCode.FieldEvent, new FieldEventBroker(game));
 
-            eventTable.Add(GameEventCode.RoundStart, new RoundStartHandler(game));
-            eventTable.Add(GameEventCode.RoundEnd, new RoundEndHandler(game));
+            //eventTable.Add(GameEventCode.RoundStart, new RoundStartHandler(game));
+            //eventTable.Add(GameEventCode.RoundEnd, new RoundEndHandler(game));
             eventTable.Add(GameEventCode.GameOver, new GameOverHandler(game));
         }
 
@@ -89,14 +89,14 @@ namespace HearthStone.Library.CommunicationInfrastructure.Event.Managers
             SendEvent(GameEventCode.FieldEvent, eventData);
         }
 
-        public void RoundStart(Game game)
-        {
-            SendEvent(GameEventCode.RoundStart, new Dictionary<byte, object>());
-        }
-        public void RoundEnd(Game game)
-        {
-            SendEvent(GameEventCode.RoundEnd, new Dictionary<byte, object>());
-        }
+        //public void RoundStart(Game game)
+        //{
+        //    SendEvent(GameEventCode.RoundStart, new Dictionary<byte, object>());
+        //}
+        //public void RoundEnd(Game game)
+        //{
+        //    SendEvent(GameEventCode.RoundEnd, new Dictionary<byte, object>());
+        //}
         public void GameOver(Game game, int winnerGamePlayerID)
         {
             Dictionary<byte, object> syncDataParameters = new Dictionary<byte, object>

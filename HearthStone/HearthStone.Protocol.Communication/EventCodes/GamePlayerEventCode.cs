@@ -3,6 +3,5 @@
     public enum GamePlayerEventCode : byte
     {
         SyncData,
-        DrawCard
     }
 }

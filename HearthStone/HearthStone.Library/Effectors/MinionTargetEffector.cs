@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using HearthStone.Library.CardRecords;
+﻿using HearthStone.Library.CardRecords;
 namespace HearthStone.Library.Effectors
 {
     public abstract class MinionTargetEffector : Effector

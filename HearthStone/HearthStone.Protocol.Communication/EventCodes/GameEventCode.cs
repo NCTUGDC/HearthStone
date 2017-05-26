@@ -6,10 +6,6 @@
         GamePlayerEvent,
         FieldEvent,
 
-        RoundStart,
-        RoundEnd,
         GameOver,
-
-        CardRecordDestroyed
     }
 }

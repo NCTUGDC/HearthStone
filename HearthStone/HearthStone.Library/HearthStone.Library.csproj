@@ -58,7 +58,7 @@
     <Compile Include="CommunicationInfrastructure\Event\Handlers\EndPoint\Sync\SyncWaitingPlayerCountHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Handlers\EventHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Handlers\Field\FieldSyncDataBroker.cs" />
-    <Compile Include="CommunicationInfrastructure\Event\Handlers\Field\Sync\SyncCardChangedHandler.cs" />
+    <Compile Include="CommunicationInfrastructure\Event\Handlers\Field\Sync\SyncFieldCardChangedHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Handlers\GamePlayer\DrawCardHandler.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Handlers\GamePlayer\GamePlayerSyncDataBroker.cs" />
     <Compile Include="CommunicationInfrastructure\Event\Handlers\GamePlayer\Sync\SyncDeckCardsChangedHandler.cs" />
@@ -133,16 +133,10 @@
     <Compile Include="Effector.cs" />
     <Compile Include="Effectors\AutoExecutetEffector.cs" />
     <Compile Include="Effectors\ChargeEffector.cs" />
-    <Compile Include="Effectors\DealDamageEffector.cs" />
-    <Compile Include="Effectors\DealDamageToAllEnemyMinionsEffector.cs" />
-    <Compile Include="Effectors\DestroyEnemyMinionEffector.cs" />
-    <Compile Include="Effectors\DoubleMinionAttackEffector.cs" />
-    <Compile Include="Effectors\DoubleMinionHealthEffector.cs" />
+    <Compile Include="Effectors\DealSpellDamageEffector.cs" />
+    <Compile Include="Effectors\DealSpellDamageToAllEnemyMinionsEffector.cs" />
     <Compile Include="Effectors\DrawCardEffector.cs" />
-    <Compile Include="Effectors\GiveMinionAttackBuffEffector.cs" />
-    <Compile Include="Effectors\GiveMinionHealthBuffEffector.cs" />
     <Compile Include="Effectors\MinionTargetEffector.cs" />
-    <Compile Include="Effectors\RestoreHealthEffector.cs" />
     <Compile Include="Effectors\SilenceMinionEffector.cs" />
     <Compile Include="Effectors\SpellDamageEffector.cs" />
     <Compile Include="Effectors\StatusEffector.cs" />

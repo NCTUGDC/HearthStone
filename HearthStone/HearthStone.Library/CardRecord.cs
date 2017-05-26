@@ -29,7 +29,7 @@ namespace HearthStone.Library
         [MessagePackMember(id: 2)]
         private List<int> effectorIDs = new List<int>();
         [MessagePackIgnore]
-        public IEnumerable<int> EffectorIDs { get { return effectorIDs; } }
+        public IEnumerable<int> EffectorIDs { get { return effectorIDs.ToArray(); } }
 
         [MessagePackMember(id: 3)]
         private int manaCost;

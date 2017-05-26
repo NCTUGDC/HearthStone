@@ -29,8 +29,8 @@ namespace HearthStone.Server
         }
         private void AssemblyGame(Game game)
         {
-            game.OnRoundStart += game.EventManager.RoundStart;
-            game.OnRoundEnd += game.EventManager.RoundEnd;
+            //game.OnRoundStart += game.EventManager.RoundStart;
+            //game.OnRoundEnd += game.EventManager.RoundEnd;
             game.OnGameOver += game.EventManager.GameOver;
             game.OnRoundCountChanged += game.EventManager.SyncDataBroker.SyncRoundCountChanged;
             game.OnCurrentGamePlayerID_Changed += game.EventManager.SyncDataBroker.SyncCurrentGamePlayerID_Changed;
@@ -42,7 +42,7 @@ namespace HearthStone.Server
             gamePlayer.OnRemainedManaCrystalChanged += gamePlayer.EventManager.SyncDataBroker.SyncRemainedManaCrystalChanged;
             gamePlayer.OnManaCrystalChanged += gamePlayer.EventManager.SyncDataBroker.SyncManaCrystalChanged;
 
-            gamePlayer.Deck.OnDrawCard += gamePlayer.EventManager.DrawCard;
+            //gamePlayer.Deck.OnDrawCard += gamePlayer.EventManager.DrawCard;
             gamePlayer.Deck.OnCardsChanged += gamePlayer.EventManager.SyncDataBroker.SyncDeckCardsChanged;
         }
     }

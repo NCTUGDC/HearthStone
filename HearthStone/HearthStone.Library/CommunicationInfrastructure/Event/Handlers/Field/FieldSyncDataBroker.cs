@@ -11,7 +11,7 @@ namespace HearthStone.Library.CommunicationInfrastructure.Event.Handlers.Field
     {
         internal FieldSyncDataBroker(Library.Field subject) : base(subject)
         {
-            syncTable.Add(FieldSyncDataCode.CardChanged, new SyncCardChangedHandler(subject));
+            syncTable.Add(FieldSyncDataCode.FieldCardChanged, new SyncFieldCardChangedHandler(subject));
         }
 
         internal override void SendSyncData(FieldSyncDataCode syncCode, Dictionary<byte, object> parameters)
@@ -26,7 +26,7 @@ namespace HearthStone.Library.CommunicationInfrastructure.Event.Handlers.Field
                 { (byte)SyncCardChangedParameterCode.DataChangeCode, (byte)changeCode },
                 { (byte)SyncCardChangedParameterCode.FieldCardRecordByteArray, SerializationHelper.Serialize(record) },
             };
-            SendSyncData(FieldSyncDataCode.CardChanged, eventData);
+            SendSyncData(FieldSyncDataCode.FieldCardChanged, eventData);
         }
     }
 }

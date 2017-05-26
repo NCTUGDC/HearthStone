@@ -16,7 +16,7 @@ namespace HearthStone.Library.Effects
         {
             get
             {
-                return EffectTypeCode.DealDamage;
+                return EffectTypeCode.DealSpellDamage;
             }
         }
 

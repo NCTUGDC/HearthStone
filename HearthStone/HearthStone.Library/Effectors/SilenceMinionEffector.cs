@@ -1,5 +1,5 @@
 ﻿using HearthStone.Library.CardRecords;
-using System;
+using HearthStone.Library.Cards;
 
 namespace HearthStone.Library.Effectors
 {
@@ -11,7 +11,16 @@ namespace HearthStone.Library.Effectors
 
         public override void AffectServant(ServantCardRecord servant, GamePlayer user)
         {
-            throw new NotImplementedException();
+            foreach (int effectorID in servant.EffectorIDs)
+            {
+                servant.RemoveEffector(effectorID);
+            }
+            if(servant.Card is ServantCard)
+            {
+                ServantCard servantCard = servant.Card as ServantCard;
+                servant.Attack = servantCard.Attack;
+                servant.Health = servantCard.Health;
+            }
         }
     }
 }

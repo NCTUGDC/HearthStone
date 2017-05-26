@@ -60,34 +60,34 @@ namespace HearthStone.Library.Test
             Assert.AreEqual(eventCallCounter, 1);
         }
 
-        [TestMethod]
-        public void RemainedDurabilityTestMethod1()
-        {
-            CardRecords.WeaponCardRecord weaponcardrecord = new CardRecords.WeaponCardRecord(0, 13);
+        //[TestMethod]
+        //public void RemainedDurabilityTestMethod1()
+        //{
+        //    CardRecords.WeaponCardRecord weaponcardrecord = new CardRecords.WeaponCardRecord(0, 13);
 
-            Assert.IsNotNull(weaponcardrecord);
-            Assert.AreEqual(weaponcardrecord.RemainedDurability, 8);
+        //    Assert.IsNotNull(weaponcardrecord);
+        //    Assert.AreEqual(weaponcardrecord.RemainedDurability, 8);
 
-            weaponcardrecord.RemainedDurability = 5;
-            Assert.AreEqual(weaponcardrecord.RemainedDurability, 5);
-        }
+        //    weaponcardrecord.RemainedDurability = 5;
+        //    Assert.AreEqual(weaponcardrecord.RemainedDurability, 5);
+        //}
 
-        [TestMethod]
-        public void RemainedDurabilityTestMethod2()
-        {
-            CardRecords.WeaponCardRecord weaponcardrecord = new CardRecords.WeaponCardRecord(0, 13);
+        //[TestMethod]
+        //public void RemainedDurabilityTestMethod2()
+        //{
+        //    CardRecords.WeaponCardRecord weaponcardrecord = new CardRecords.WeaponCardRecord(0, 13);
 
-            int eventCallCounter = 0;
-            weaponcardrecord.OnRemainedDurabilityChanged += (chageCode) =>
-            {
-                eventCallCounter++;
-            };
+        //    int eventCallCounter = 0;
+        //    weaponcardrecord.OnRemainedDurabilityChanged += (chageCode) =>
+        //    {
+        //        eventCallCounter++;
+        //    };
 
-            Assert.IsNotNull(weaponcardrecord);
-            weaponcardrecord.RemainedDurability = 5;
-            Assert.AreEqual(weaponcardrecord.RemainedDurability, 5);
-            Assert.AreEqual(eventCallCounter, 1);
-        }
+        //    Assert.IsNotNull(weaponcardrecord);
+        //    weaponcardrecord.RemainedDurability = 5;
+        //    Assert.AreEqual(weaponcardrecord.RemainedDurability, 5);
+        //    Assert.AreEqual(eventCallCounter, 1);
+        //}
 
         [TestMethod]
         public void AttackTestMethod1()

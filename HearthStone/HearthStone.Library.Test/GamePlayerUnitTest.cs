@@ -27,7 +27,7 @@ namespace HearthStone.Library.Test
 
             GameDeck deck = deserializedGamePlayer.Deck;
             Assert.IsNotNull(deck);
-            Assert.AreEqual(29, deck.CardRecordIDs.Count());
+            Assert.AreEqual(CardManager.Instance.Cards.Count(), deck.CardRecordIDs.Count());
             foreach(var cardRecordID in deck.CardRecordIDs)
             {
                 CardRecord record;

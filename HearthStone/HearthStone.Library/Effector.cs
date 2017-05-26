@@ -10,5 +10,20 @@
             EffectorID = effectorID;
             EffectID = effectID;
         }
+        public Effect Effect
+        {
+            get
+            {
+                Effect effect;
+                if (CardManager.Instance.FindEffect(EffectID, out effect))
+                {
+                    return effect;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
     }
 }
