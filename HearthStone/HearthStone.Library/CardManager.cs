@@ -87,7 +87,6 @@ namespace HearthStone.Library
                 new SpellCard(28, 4, "手下加強B", new List<Effect> { effectSet["賦予一個手下攻擊+4"], effectSet["賦予一個手下生命+4"] }, RarityCode.Free),
                 new SpellCard(29, 1, "回血A", new List<Effect> { effectSet["恢復4點血量"] }, RarityCode.Free),
             };
-
             cardSet.ForEach(x => cardDictionary.Add(x.CardID, x));
             effectSet.Values.ToList().ForEach(x => effectDictionary.Add(x.EffectID, x));
         }

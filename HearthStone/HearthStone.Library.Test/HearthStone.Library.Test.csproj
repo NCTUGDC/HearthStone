@@ -59,7 +59,10 @@
     <Compile Include="EffectUnitTest.cs" />
     <Compile Include="GameCardManagerUnitTest.cs" />
     <Compile Include="GameDeckUnitTest.cs" />
-    <Compile Include="GameSystemTest1.cs" />
+    <Compile Include="GameSystemTest\Test1.cs" />
+    <Compile Include="GameSystemTest\Test2.cs" />
+    <Compile Include="GameSystemTest\Test3.cs" />
+    <Compile Include="GameSystemTest\Test4.cs" />
     <Compile Include="GameSystemTestEnvironment.cs" />
     <Compile Include="HeroUnitTest.cs" />
     <Compile Include="FieldUnitTest.cs" />

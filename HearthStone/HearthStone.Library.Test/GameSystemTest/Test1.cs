@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Collections.Generic;
 
-namespace HearthStone.Library.Test
+namespace HearthStone.Library.Test.GameSystemTest
 {
     [TestClass]
-    public class GameSystemTest1
+    public class Test1
     {
         [TestMethod]
         public void Episode_EmptyGameTestMethod1()
