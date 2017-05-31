@@ -613,15 +613,12 @@ namespace HearthStone.Library
 
         private void Hero_OnWeaponChanged(Hero hero, DataChangeCode changeCode)
         {
-            if(changeCode == DataChangeCode.Add || changeCode == DataChangeCode.Update)
+            if(changeCode == DataChangeCode.Remove)
             {
                 CardRecord record;
-                if(GameCardManager.FindCard(hero.WeaponCardRecordID, out record) && record is WeaponCardRecord)
+                if (GameCardManager.FindCard(hero.WeaponCardRecordID, out record) && record is WeaponCardRecord)
                 {
-                    (record as WeaponCardRecord).OnDestroyed += (weaponCard) =>
-                    {
-                        hero.WeaponCardRecordID = 0;
-                    };
+                    (record as WeaponCardRecord).Destroy();
                 }
             }
         }
