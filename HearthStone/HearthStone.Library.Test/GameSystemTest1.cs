@@ -8,7 +8,7 @@ namespace HearthStone.Library.Test
     public class GameSystemTest1
     {
         [TestMethod]
-        public void EmptyGameTestMethod1()
+        public void Episode_EmptyGameTestMethod1()
         {//開始一場空的遊戲 輪到1號玩家
             #region initial
             Game game = GameSystemTestEnvironment.EmptyGame(1, 0);
@@ -52,7 +52,7 @@ namespace HearthStone.Library.Test
             #endregion
         }
         [TestMethod]
-        public void SwapHandThenStartTestMethod1()
+        public void Episode_SwapHandThenStartTestMethod1()
         {   //開始一場空的遊戲 輪到1號玩家 玩家1換手牌 玩家2換手牌
             //雙方換完手牌 遊戲開始 1號玩家抽一張牌 法力水晶上限+1 並補滿法力水晶
             #region initial
@@ -102,7 +102,7 @@ namespace HearthStone.Library.Test
             #endregion
         }
         [TestMethod]
-        public void StartGameWithDeckTestMethod1()
+        public void Episode_StartGameWithDeckTestMethod1()
         {
             //開始一場空的遊戲 雙方牌組都依序放置1~6號卡1張 輪到1號玩家 玩家1換手牌 玩家2換手牌
             //雙方換完手牌 遊戲開始 1號玩家抽一張牌 法力水晶上限+1 並補滿法力水晶
@@ -159,7 +159,7 @@ namespace HearthStone.Library.Test
             #endregion
         }
         [TestMethod]
-        public void TargetDisplayServantTestMethod1()
+        public void Episode_Display2ServantTestMethod1()
         {
             //開始一場空的遊戲 設定玩家1手牌"嘲諷手下"*1 "沉默手下"*1 法力水晶6/6
             //輪到1號玩家 玩家1出"嘲諷手下" 再出 "沉默手下"(指定"嘲諷手下")
@@ -211,15 +211,270 @@ namespace HearthStone.Library.Test
             Assert.IsTrue(game.Field1.FindCardWithPositionIndex(1, out displayedServantID));
             Assert.AreEqual(2, displayedServantID);
             Assert.IsFalse(game.Field1.AnyTauntServant());
-            CardRecord tauntServant;
-            Assert.IsTrue(game.GameCardManager.FindCard(1, out tauntServant));
-            Assert.AreEqual(0, tauntServant.EffectorIDs.Count());
+            Assert.AreEqual(0, servantCards1[0].EffectorIDs.Count());
             #endregion
 
             #region player1
             Assert.AreEqual(0, game.GamePlayer1.HandCardIDs.Count());
             Assert.AreEqual(6, game.GamePlayer1.ManaCrystal);
             Assert.AreEqual(0, game.GamePlayer1.RemainedManaCrystal);
+            #endregion
+        }
+        [TestMethod]
+        public void Episode_EquipWeaponAndAttackTestMethod1()
+        {
+            //開始一場空的遊戲 設定玩家1手牌"精良武器"*1 "風怒武器"*1 "法傷武器"*1 法力水晶8/8
+            //輪到1號玩家 玩家1出"精良武器" 並攻擊敵方英雄
+            //玩家1攻擊敵方英雄 -失敗
+            //玩家1出"風怒武器" "精良武器"被破壞 並攻擊敵方英雄
+            //玩家1攻擊敵方英雄 -失敗
+            //玩家1出"法傷武器" -失敗
+            //玩家1回合結束
+            //玩家2回合結束
+            #region initial
+            Game game = GameSystemTestEnvironment.EmptyGame(1, 1);
+            var weaponCards1 = GameSystemTestEnvironment.GameWithWeaponCardRecordState(game, new List<int>
+            { 12, 13, 14 });
+            GameSystemTestEnvironment.GameWithGamePlayerHandState(game, 1, weaponCards1.Select(x => x.CardRecordID).ToList());
+            GameSystemTestEnvironment.GameWithGamePlayerManaCrystalState(game, 1, 8, 8);
+            bool weapon1DestroyedFlag = false, weapon2DestroyedFlag = false;
+            weaponCards1[0].OnDestroyed += (weapon) => { weapon1DestroyedFlag = true; };
+            weaponCards1[1].OnDestroyed += (weapon) => { weapon2DestroyedFlag = true; };
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(3, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(8, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(8, game.GamePlayer1.RemainedManaCrystal);
+            Assert.AreEqual(0, game.GamePlayer1.Hero.AttackCountInThisTurn);
+            Assert.AreEqual(0, game.GamePlayer1.Hero.WeaponCardRecordID);
+            Assert.AreEqual(0, game.GamePlayer1.Hero.AttackWithWeapon(game));
+            #endregion
+
+            #region player2
+            Assert.AreEqual(30, game.GamePlayer2.Hero.RemainedHP);
+            #endregion
+
+            #region operations 玩家1出"精良武器"
+            Assert.IsTrue(game.NonTargetEquipWeapon(1, 1));
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(2, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(8, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(6, game.GamePlayer1.RemainedManaCrystal);
+            Assert.AreEqual(0, game.GamePlayer1.Hero.AttackCountInThisTurn);
+            Assert.AreEqual(1, game.GamePlayer1.Hero.WeaponCardRecordID);
+            Assert.AreEqual(2, game.GamePlayer1.Hero.AttackWithWeapon(game));
+            Assert.AreEqual(3, weaponCards1[0].Durability, 3);
+            Assert.IsFalse(weapon1DestroyedFlag);
+            Assert.IsFalse(weapon2DestroyedFlag);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(30, game.GamePlayer2.Hero.RemainedHP);
+            #endregion
+
+            #region operations 並攻擊敵方英雄
+            Assert.IsTrue(game.HeroAttack(1, 2, false));
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(2, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(8, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(6, game.GamePlayer1.RemainedManaCrystal);
+            Assert.AreEqual(1, game.GamePlayer1.Hero.AttackCountInThisTurn);
+            Assert.AreEqual(1, game.GamePlayer1.Hero.WeaponCardRecordID);
+            Assert.AreEqual(2, game.GamePlayer1.Hero.AttackWithWeapon(game));
+            Assert.AreEqual(2, weaponCards1[0].Durability, 3);
+            Assert.IsFalse(weapon1DestroyedFlag);
+            Assert.IsFalse(weapon2DestroyedFlag);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(28, game.GamePlayer2.Hero.RemainedHP);
+            #endregion
+
+            #region operations 玩家1攻擊敵方英雄 -失敗
+            Assert.IsFalse(game.HeroAttack(1, 2, false));
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(2, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(8, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(6, game.GamePlayer1.RemainedManaCrystal);
+            Assert.AreEqual(1, game.GamePlayer1.Hero.AttackCountInThisTurn);
+            Assert.AreEqual(1, game.GamePlayer1.Hero.WeaponCardRecordID);
+            Assert.AreEqual(2, game.GamePlayer1.Hero.AttackWithWeapon(game));
+            Assert.AreEqual(2, weaponCards1[0].Durability);
+            Assert.IsFalse(weapon1DestroyedFlag);
+            Assert.IsFalse(weapon2DestroyedFlag);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(28, game.GamePlayer2.Hero.RemainedHP);
+            #endregion
+
+            #region operations 玩家1出"風怒武器" "精良武器"被破壞
+            Assert.IsTrue(game.NonTargetEquipWeapon(1, 2));
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(1, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(8, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(0, game.GamePlayer1.RemainedManaCrystal);
+            Assert.AreEqual(1, game.GamePlayer1.Hero.AttackCountInThisTurn);
+            Assert.AreEqual(2, game.GamePlayer1.Hero.WeaponCardRecordID);
+            Assert.AreEqual(2, game.GamePlayer1.Hero.AttackWithWeapon(game));
+            Assert.AreEqual(8, weaponCards1[1].Durability);
+            Assert.IsTrue(weapon1DestroyedFlag);
+            Assert.IsFalse(weapon2DestroyedFlag);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(28, game.GamePlayer2.Hero.RemainedHP);
+            #endregion
+
+            #region operations 並攻擊敵方英雄
+            Assert.IsFalse(game.HeroAttack(1, 2, false));
+            #endregion
+            
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(1, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(8, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(0, game.GamePlayer1.RemainedManaCrystal);
+            Assert.AreEqual(2, game.GamePlayer1.Hero.AttackCountInThisTurn);
+            Assert.AreEqual(2, game.GamePlayer1.Hero.WeaponCardRecordID);
+            Assert.AreEqual(2, game.GamePlayer1.Hero.AttackWithWeapon(game));
+            Assert.AreEqual(7, weaponCards1[1].Durability);
+            Assert.IsTrue(weapon1DestroyedFlag);
+            Assert.IsFalse(weapon2DestroyedFlag);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(26, game.GamePlayer2.Hero.RemainedHP);
+            #endregion
+            
+            #region operations 玩家1攻擊敵方英雄 -失敗
+            Assert.IsFalse(game.HeroAttack(1, 2, false));
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(1, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(8, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(0, game.GamePlayer1.RemainedManaCrystal);
+            Assert.AreEqual(2, game.GamePlayer1.Hero.AttackCountInThisTurn);
+            Assert.AreEqual(2, game.GamePlayer1.Hero.WeaponCardRecordID);
+            Assert.AreEqual(2, game.GamePlayer1.Hero.AttackWithWeapon(game));
+            Assert.AreEqual(7, weaponCards1[1].Durability);
+            Assert.IsTrue(weapon1DestroyedFlag);
+            Assert.IsFalse(weapon2DestroyedFlag);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(26, game.GamePlayer2.Hero.RemainedHP);
+            #endregion
+            
+            #region operations 玩家1出"法傷武器" -失敗
+            Assert.IsFalse(game.NonTargetEquipWeapon(1, 3));
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(1, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(8, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(0, game.GamePlayer1.RemainedManaCrystal);
+            Assert.AreEqual(2, game.GamePlayer1.Hero.AttackCountInThisTurn);
+            Assert.AreEqual(2, game.GamePlayer1.Hero.WeaponCardRecordID);
+            Assert.AreEqual(2, game.GamePlayer1.Hero.AttackWithWeapon(game));
+            Assert.AreEqual(7, weaponCards1[1].Durability);
+            Assert.IsTrue(weapon1DestroyedFlag);
+            Assert.IsFalse(weapon2DestroyedFlag);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(26, game.GamePlayer2.Hero.RemainedHP);
+            #endregion
+            
+            #region operations 玩家1回合結束
+            game.EndRound();
+            #endregion
+
+            #region game
+            Assert.AreEqual(2, game.CurrentGamePlayerID);
+            Assert.AreEqual(2, game.RoundCount);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(1, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(8, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(0, game.GamePlayer1.RemainedManaCrystal);
+            Assert.AreEqual(2, game.GamePlayer1.Hero.AttackCountInThisTurn);
+            Assert.AreEqual(2, game.GamePlayer1.Hero.WeaponCardRecordID);
+            Assert.AreEqual(2, game.GamePlayer1.Hero.AttackWithWeapon(game));
+            Assert.AreEqual(7, weaponCards1[1].Durability);
+            Assert.IsTrue(weapon1DestroyedFlag);
+            Assert.IsFalse(weapon2DestroyedFlag);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(26, game.GamePlayer2.Hero.RemainedHP);
+            #endregion
+
+            #region operations 玩家2回合結束
+            game.EndRound();
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            Assert.AreEqual(3, game.RoundCount);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(1, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(9, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(9, game.GamePlayer1.RemainedManaCrystal);
+            Assert.AreEqual(0, game.GamePlayer1.Hero.AttackCountInThisTurn);
+            Assert.AreEqual(2, game.GamePlayer1.Hero.WeaponCardRecordID);
+            Assert.AreEqual(2, game.GamePlayer1.Hero.AttackWithWeapon(game));
+            Assert.AreEqual(7, weaponCards1[1].Durability);
+            Assert.IsTrue(weapon1DestroyedFlag);
+            Assert.IsFalse(weapon2DestroyedFlag);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(26, game.GamePlayer2.Hero.RemainedHP);
             #endregion
         }
     }

@@ -388,74 +388,74 @@ namespace HearthStone.Library
                 return false;
             }
         }
-        public bool TargetEquipWeapon(int gamePlayerID, int weaponCardRecordID, int targetID, bool isTargetServant)
-        {
-            if (CurrentGamePlayerID != gamePlayerID || gamePlayerID != 1 && gamePlayerID != 2)
-                return false;
-            CardRecord weaponCardRecord;
-            if (!GameCardManager.FindCard(weaponCardRecordID, out weaponCardRecord) || !(weaponCardRecord is WeaponCardRecord))
-                return false;
-            if (!weaponCardRecord.Effectors(GameCardManager).Any(x => x is TargetEffector || x is MinionTargetEffector))
-                return false;
-            GamePlayer gamePlayer = (gamePlayerID == 1) ? GamePlayer1 : GamePlayer2;
-            if (CanUseCard(gamePlayer, weaponCardRecord))
-            {
-                if (isTargetServant)
-                {
-                    CardRecord targetCardRecord;
-                    if (GameCardManager.FindCard(targetID, out targetCardRecord) && targetCardRecord is ServantCardRecord)
-                    {
-                        UseCard(gamePlayer, weaponCardRecord);
-                        foreach (var effector in weaponCardRecord.Effectors(GameCardManager))
-                        {
-                            if (effector is TargetEffector)
-                            {
-                                (effector as TargetEffector).AffectServant(targetCardRecord as ServantCardRecord, gamePlayer);
-                            }
-                            else if (effector is MinionTargetEffector)
-                            {
-                                (effector as MinionTargetEffector).AffectServant(targetCardRecord as ServantCardRecord, gamePlayer);
-                            }
-                            else if (effector is AutoExecutetEffector)
-                            {
-                                (effector as AutoExecutetEffector).Affect(gamePlayer);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                else
-                {
-                    if (targetID != 1 && targetID != 2)
-                        return false;
-                    else
-                    {
-                        UseCard(gamePlayer, weaponCardRecord);
-                        Hero hero = (targetID == 1) ? GamePlayer1.Hero : GamePlayer2.Hero;
-                        foreach (var effector in weaponCardRecord.Effectors(GameCardManager))
-                        {
-                            if (effector is TargetEffector)
-                            {
-                                (effector as TargetEffector).AffectHero(hero, gamePlayer);
-                            }
-                            else if (effector is AutoExecutetEffector)
-                            {
-                                (effector as AutoExecutetEffector).Affect(gamePlayer);
-                            }
-                        }
-                    }
-                }
-                gamePlayer.Hero.WeaponCardRecordID = weaponCardRecordID;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+        //public bool TargetEquipWeapon(int gamePlayerID, int weaponCardRecordID, int targetID, bool isTargetServant)
+        //{
+        //    if (CurrentGamePlayerID != gamePlayerID || gamePlayerID != 1 && gamePlayerID != 2)
+        //        return false;
+        //    CardRecord weaponCardRecord;
+        //    if (!GameCardManager.FindCard(weaponCardRecordID, out weaponCardRecord) || !(weaponCardRecord is WeaponCardRecord))
+        //        return false;
+        //    if (!weaponCardRecord.Effectors(GameCardManager).Any(x => x is TargetEffector || x is MinionTargetEffector))
+        //        return false;
+        //    GamePlayer gamePlayer = (gamePlayerID == 1) ? GamePlayer1 : GamePlayer2;
+        //    if (CanUseCard(gamePlayer, weaponCardRecord))
+        //    {
+        //        if (isTargetServant)
+        //        {
+        //            CardRecord targetCardRecord;
+        //            if (GameCardManager.FindCard(targetID, out targetCardRecord) && targetCardRecord is ServantCardRecord)
+        //            {
+        //                UseCard(gamePlayer, weaponCardRecord);
+        //                foreach (var effector in weaponCardRecord.Effectors(GameCardManager))
+        //                {
+        //                    if (effector is TargetEffector)
+        //                    {
+        //                        (effector as TargetEffector).AffectServant(targetCardRecord as ServantCardRecord, gamePlayer);
+        //                    }
+        //                    else if (effector is MinionTargetEffector)
+        //                    {
+        //                        (effector as MinionTargetEffector).AffectServant(targetCardRecord as ServantCardRecord, gamePlayer);
+        //                    }
+        //                    else if (effector is AutoExecutetEffector)
+        //                    {
+        //                        (effector as AutoExecutetEffector).Affect(gamePlayer);
+        //                    }
+        //                }
+        //            }
+        //            else
+        //            {
+        //                return false;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            if (targetID != 1 && targetID != 2)
+        //                return false;
+        //            else
+        //            {
+        //                UseCard(gamePlayer, weaponCardRecord);
+        //                Hero hero = (targetID == 1) ? GamePlayer1.Hero : GamePlayer2.Hero;
+        //                foreach (var effector in weaponCardRecord.Effectors(GameCardManager))
+        //                {
+        //                    if (effector is TargetEffector)
+        //                    {
+        //                        (effector as TargetEffector).AffectHero(hero, gamePlayer);
+        //                    }
+        //                    else if (effector is AutoExecutetEffector)
+        //                    {
+        //                        (effector as AutoExecutetEffector).Affect(gamePlayer);
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        gamePlayer.Hero.WeaponCardRecordID = weaponCardRecordID;
+        //        return true;
+        //    }
+        //    else
+        //    {
+        //        return false;
+        //    }
+        //}
         public bool NonTargetEquipWeapon(int gamePlayerID, int weaponCardRecordID)
         {
             if (CurrentGamePlayerID != gamePlayerID || gamePlayerID != 1 && gamePlayerID != 2)
