@@ -356,7 +356,7 @@ namespace HearthStone.Library.Test
             #endregion
 
             #region operations 並攻擊敵方英雄
-            Assert.IsFalse(game.HeroAttack(1, 2, false));
+            Assert.IsTrue(game.HeroAttack(1, 2, false));
             #endregion
             
             #region game
@@ -442,7 +442,7 @@ namespace HearthStone.Library.Test
             Assert.AreEqual(0, game.GamePlayer1.RemainedManaCrystal);
             Assert.AreEqual(2, game.GamePlayer1.Hero.AttackCountInThisTurn);
             Assert.AreEqual(2, game.GamePlayer1.Hero.WeaponCardRecordID);
-            Assert.AreEqual(2, game.GamePlayer1.Hero.AttackWithWeapon(game));
+            Assert.AreEqual(0, game.GamePlayer1.Hero.AttackWithWeapon(game));
             Assert.AreEqual(7, weaponCards1[1].Durability);
             Assert.IsTrue(weapon1DestroyedFlag);
             Assert.IsFalse(weapon2DestroyedFlag);
