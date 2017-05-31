@@ -24,24 +24,5 @@ namespace HearthStone.Library.Test
             Game game = new Game(1, new Player(1, "test1"), new Player(2, "test2"), deck1, deck2);
             Assert.IsNotNull(game);
         }
-
-        [TestMethod]
-        public void NonTargetDisplayServantTestMethod1()
-        {
-            Game game = InitialGameStatus();
-            GamePlayer currentGamePlayer = game.GamePlayer1;
-            game.CurrentGamePlayerID = currentGamePlayer.GamePlayerID;
-            currentGamePlayer.ManaCrystal = 10;
-            currentGamePlayer.RemainedManaCrystal = 10;
-            Card card;
-            CardManager.Instance.FindCard(1, out card);
-            CardRecord record = game.GameCardManager.CreateCardRecord(card);
-            currentGamePlayer.AddHandCard(record.CardID);
-            Assert.IsTrue(game.NonTargetDisplayServant(currentGamePlayer.GamePlayerID, record.CardRecordID, 0));
-            Assert.AreEqual(9, currentGamePlayer.RemainedManaCrystal);
-            int displayedCardRecordID;
-            Assert.IsTrue(game.SelfField(currentGamePlayer.GamePlayerID).FindCardWithPositionIndex(0, out displayedCardRecordID));
-            Assert.AreEqual(record.CardRecordID, displayedCardRecordID);
-        }
     }
 }
