@@ -29,6 +29,8 @@ namespace HearthStone.Library.CardRecords
             {
                 health = Math.Max(value, 0);
                 OnHealthChanged?.Invoke(this);
+                if(RemainedHealth > Health)
+                    RemainedHealth = Health;
             }
         }
 

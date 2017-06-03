@@ -3,7 +3,6 @@ using HearthStone.Library.Effectors;
 using HearthStone.Protocol;
 using MsgPack.Serialization;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace HearthStone.Library
@@ -52,7 +51,8 @@ namespace HearthStone.Library
                 int oldValue = hp;
                 hp = Math.Max(value, 0);
                 OnHP_Changed?.Invoke(this, hp - oldValue);
-                RemainedHP = RemainedHP;
+                if(HP < RemainedHP)
+                    RemainedHP = HP;
             }
         }
 
@@ -168,15 +168,26 @@ namespace HearthStone.Library
         }
         public int AttackWithWeapon(Game game)
         {
-            CardRecord card;
-            if (game.CurrentGamePlayerID == HeroID && game.GameCardManager.FindCard(WeaponCardRecordID, out card) && (card is WeaponCardRecord))
+            WeaponCardRecord weaponCard = Weapon(game.GameCardManager);
+            if(weaponCard != null && game.CurrentGamePlayerID == HeroID)
             {
-                WeaponCardRecord weaponCard = card as WeaponCardRecord;
                 return Attack + weaponCard.Attack;
             }
             else
             {
                 return Attack;
+            }
+        }
+        public WeaponCardRecord Weapon(GameCardManager gameCardManager)
+        {
+            CardRecord card;
+            if (gameCardManager.FindCard(WeaponCardRecordID, out card) && (card is WeaponCardRecord))
+            {
+                return card as WeaponCardRecord;
+            }
+            else
+            {
+                return null;
             }
         }
     }

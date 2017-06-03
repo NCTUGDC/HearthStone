@@ -25,8 +25,9 @@ namespace HearthStone.Library.Effectors
             Effect effect = Effect;
             if (effect != null && effect is DealSpellDamageEffect)
             {
-                int extraSpellDamage = user.Game.SelfField(user.GamePlayerID).Cards(user.Game.GameCardManager).Sum(x => x.Effectors(user.Game.GameCardManager).OfType<SpellDamageEffector>().Sum(y => y.SpellDamage()));
-                servant.RemainedHealth -= (effect as DealSpellDamageEffect).Damage + extraSpellDamage;
+                int extraSpellDamage1 = user.Game.SelfField(user.GamePlayerID).Cards(user.Game.GameCardManager).Sum(x => x.Effectors(user.Game.GameCardManager).OfType<SpellDamageEffector>().Sum(y => y.SpellDamage()));
+                int extraSpellDamage2 = user.Hero.Weapon(user.Game.GameCardManager).Effectors(user.Game.GameCardManager).OfType<SpellDamageEffector>().Sum(y => y.SpellDamage());
+                servant.RemainedHealth -= (effect as DealSpellDamageEffect).Damage + extraSpellDamage1 + extraSpellDamage2;
             }
         }
     }

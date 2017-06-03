@@ -1,0 +1,418 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="HearthStone.Library.Card" Collapsed="true">
+    <Position X="5.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAQAAAAEAAgAQAAAAAAAAggAAAQ=</HashCode>
+      <FileName>Card.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Effects" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="HearthStone.Library.CardManager" Collapsed="true">
+    <Position X="14.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIgAAIAAAEAAEAAAAAQAAAAIAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>CardManager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Cards" />
+      <Property Name="Effects" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="HearthStone.Library.CardRecord" Collapsed="true">
+    <Position X="13.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAEIAACAAACAAAAACAAAAACAJAAAACAAAAAggAgBA=</HashCode>
+      <FileName>CardRecord.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Card" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="HearthStone.Library.Deck" Collapsed="true">
+    <Position X="5.25" Y="4.5" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="HearthStone.Library.Deck.DeckCardChangedEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Deck.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAABIAAAAAAAAAQCAAiAEAAIAAAAABBAAAAAAAAAAEA=</HashCode>
+      <FileName>Deck.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Cards" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="HearthStone.Library.Effect" Collapsed="true">
+    <Position X="22.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAgAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effector" Collapsed="true">
+    <Position X="22.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAgAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effector.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Effect" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="HearthStone.Library.Field" Collapsed="true">
+    <Position X="0.75" Y="12" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="HearthStone.Library.Field.FieldCardRecord" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Field.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>BBAJIBAAAAAAIAUAAAAAAAAIQAgAIAAAAAAAkAAAAAA=</HashCode>
+      <FileName>Field.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Game" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="HearthStone.Library.Game" Collapsed="true">
+    <Position X="3.75" Y="12" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="HearthStone.Library.Game.UseCardEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Game.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>ABCGATAYEaAQAhAAEAMACAAAAEABAABWgIAgAIAEhVQ=</HashCode>
+      <FileName>Game.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Field1" />
+      <Property Name="Field2" />
+      <Property Name="GamePlayer1" />
+      <Property Name="GamePlayer2" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="HearthStone.Library.GameCardManager" Collapsed="true">
+    <Position X="6.75" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BBgBBAAAAAIUEAAAIACAAAAAAAgBAAAAAAAAAAABAAA=</HashCode>
+      <FileName>GameCardManager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Game" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="HearthStone.Library.GameDeck" Collapsed="true">
+    <Position X="0.75" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAgQAAAAAAAAAEABAAIAAQABAAAAAEAA=</HashCode>
+      <FileName>GameDeck.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.GamePlayer" Collapsed="true">
+    <Position X="3.75" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABQIAjAAAkIAAgBAAAAAQCAAAwgAAAggAQHAAQAAgAA=</HashCode>
+      <FileName>GamePlayer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Deck" />
+      <Property Name="Game" />
+      <Property Name="Hero" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="HearthStone.Library.Hero" Collapsed="true">
+    <Position X="3.75" Y="16" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="HearthStone.Library.Hero.HeroValueChangedEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Hero.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>QIAAAAAAAEAQAAAAEgAEAAAAQMBAAAiUAABAEACIAAg=</HashCode>
+      <FileName>Hero.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.CardRecords.ServantCardRecord" Collapsed="true">
+    <Position X="11" Y="8.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>QAAACAAAAEAQAAABAQAEAAEAAMBAAACAAABAAAAIQAg=</HashCode>
+      <FileName>CardRecords\ServantCardRecord.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.CardRecords.SpellCardRecord" Collapsed="true">
+    <Position X="13.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CardRecords\SpellCardRecord.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.CardRecords.WeaponCardRecord" Collapsed="true">
+    <Position X="15.75" Y="8.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAAAAAAAAMAAAACAEAAAABAAAAA=</HashCode>
+      <FileName>CardRecords\WeaponCardRecord.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Cards.ServantCard" Collapsed="true">
+    <Position X="5.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAAAAAAAAIgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Cards\ServantCard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Cards.SpellCard" Collapsed="true">
+    <Position X="7.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Cards\SpellCard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Cards.WeaponCard" Collapsed="true">
+    <Position X="3" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIgAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Cards\WeaponCard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effectors.AutoExecutetEffector" Collapsed="true">
+    <Position X="23.75" Y="4.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Effectors\AutoExecutetEffector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effectors.ChargeEffector" Collapsed="true">
+    <Position X="28.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effectors\ChargeEffector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effectors.DealSpellDamageEffector" Collapsed="true">
+    <Position X="40" Y="6.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effectors\DealSpellDamageEffector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effectors.DealSpellDamageToAllEnemyMinionsEffector" Collapsed="true">
+    <Position X="24.25" Y="6.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Effectors\DealSpellDamageToAllEnemyMinionsEffector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effectors.DestroyEnemyMinionEffector" Collapsed="true">
+    <Position X="16" Y="6.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effectors\DestroyEnemyMinionEffector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effectors.DoubleMinionAttackEffector" Collapsed="true">
+    <Position X="19" Y="6.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effectors\DoubleMinionAttackEffector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effectors.DoubleMinionHealthEffector" Collapsed="true">
+    <Position X="4.5" Y="6.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effectors\DoubleMinionHealthEffector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effectors.DrawCardEffector" Collapsed="true">
+    <Position X="22" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Effectors\DrawCardEffector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effectors.GiveMinionAttackBuffEffector" Collapsed="true">
+    <Position X="7.5" Y="6.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effectors\GiveMinionAttackBuffEffector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effectors.GiveMinionHealthBuffEffector" Collapsed="true">
+    <Position X="10.5" Y="6.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effectors\GiveMinionHealthBuffEffector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effectors.MinionTargetEffector" Collapsed="true">
+    <Position X="12" Y="4.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effectors\MinionTargetEffector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effectors.RestoreHealthEffector" Collapsed="true">
+    <Position X="37.5" Y="6.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effectors\RestoreHealthEffector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effectors.SilenceMinionEffector" Collapsed="true">
+    <Position X="13.5" Y="6.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effectors\SilenceMinionEffector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effectors.SpellDamageEffector" Collapsed="true">
+    <Position X="30.5" Y="6.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effectors\SpellDamageEffector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effectors.StatusEffector" Collapsed="true">
+    <Position X="31.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effectors\StatusEffector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effectors.TargetEffector" Collapsed="true">
+    <Position X="39" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effectors\TargetEffector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effectors.TauntEffector" Collapsed="true">
+    <Position X="33" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effectors\TauntEffector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effectors.WindfuryEffector" Collapsed="true">
+    <Position X="35.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effectors\WindfuryEffector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effects.ChargeEffect" Collapsed="true">
+    <Position X="4.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effects\ChargeEffect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effects.DealSpellDamageEffect" Collapsed="true">
+    <Position X="9" Y="1.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAgAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effects\DealSpellDamageEffect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effects.DealSpellDamageToAllEnemyMinionsEffect" Collapsed="true">
+    <Position X="14" Y="1.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAgAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effects\DealSpellDamageToAllEnemyMinionsEffect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effects.DestroyEnemyMinionEffect" Collapsed="true">
+    <Position X="18" Y="1.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effects\DestroyEnemyMinionEffect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effects.DoubleMinionAttackEffect" Collapsed="true">
+    <Position X="21" Y="1.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effects\DoubleMinionAttackEffect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effects.DoubleMinionHealthEffect" Collapsed="true">
+    <Position X="24" Y="1.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effects\DoubleMinionHealthEffect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effects.DrawCardEffect" Collapsed="true">
+    <Position X="27" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAEACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effects\DrawCardEffect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effects.GiveMinionAttackBuffEffect" Collapsed="true">
+    <Position X="29.25" Y="1.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAgAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effects\GiveMinionAttackBuffEffect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effects.GiveMinionHealthBuffEffect" Collapsed="true">
+    <Position X="32.25" Y="1.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAgAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effects\GiveMinionHealthBuffEffect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effects.RestoreHealthEffect" Collapsed="true">
+    <Position X="35.25" Y="1.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAQCAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effects\RestoreHealthEffect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effects.SilenceMinionEffect" Collapsed="true">
+    <Position X="37.75" Y="1.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effects\SilenceMinionEffect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effects.SpellDamageEffect" Collapsed="true">
+    <Position X="40.25" Y="1.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAgAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effects\SpellDamageEffect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effects.TauntEffect" Collapsed="true">
+    <Position X="6.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effects\TauntEffect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HearthStone.Library.Effects.WindfuryEffect" Collapsed="true">
+    <Position X="11.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effects\WindfuryEffect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Microsoft JhengHei UI" Size="9" />
+</ClassDiagram>

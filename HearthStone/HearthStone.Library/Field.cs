@@ -46,7 +46,9 @@ namespace HearthStone.Library
         }
         public bool AddCard(int cardRecordID, int positionIndex)
         {
-            if(fieldCardDictionary.Count < maxServantCount && positionIndex >= 0  && positionIndex <= fieldCardDictionary.Count)
+            if (fieldCardDictionary.ContainsKey(cardRecordID))
+                return false;
+            if (DisplayCheck(positionIndex))
             {
                 FieldCardRecord record = new FieldCardRecord { CardRecordID = cardRecordID, PositionIndex = positionIndex };
                 foreach(var targetCard in FieldCards)

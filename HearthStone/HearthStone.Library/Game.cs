@@ -190,9 +190,107 @@ namespace HearthStone.Library
                 return false;
         }
 
+        public Field OpponentField(int gamePlayerID)
+        {
+            if (gamePlayerID == 1)
+            {
+                return Field2;
+            }
+            else if (gamePlayerID == 2)
+            {
+                return Field1;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public Field SelfField(int gamePlayerID)
+        {
+            if (gamePlayerID == 1)
+            {
+                return Field1;
+            }
+            else if (gamePlayerID == 2)
+            {
+                return Field2;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public GamePlayer OpponentGamePlayer(int gamePlayerID)
+        {
+            if (gamePlayerID == 1)
+            {
+                return GamePlayer2;
+            }
+            else if (gamePlayerID == 2)
+            {
+                return GamePlayer1;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public GamePlayer SelfGamePlayer(int gamePlayerID)
+        {
+            if (gamePlayerID == 1)
+            {
+                return GamePlayer1;
+            }
+            else if (gamePlayerID == 2)
+            {
+                return GamePlayer2;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private void AssemblyGamePlayerEvents(GamePlayer gamePlayer)
+        {
+            gamePlayer.OnHasChangedHandChanged += DetectGamePlayerChangeHand;
+            gamePlayer.Hero.OnRemainedHP_Changed += GameOverTest;
+            gamePlayer.Hero.OnWeaponChanged += Hero_OnWeaponChanged;
+        }
+
+        private void Hero_OnWeaponChanged(Hero hero, DataChangeCode changeCode)
+        {
+            if (changeCode == DataChangeCode.Remove)
+            {
+                CardRecord record;
+                if (GameCardManager.FindCard(hero.WeaponCardRecordID, out record) && record is WeaponCardRecord)
+                {
+                    (record as WeaponCardRecord).Destroy();
+                }
+            }
+        }
+
+        private void AssemblyFieldEvents(Field field)
+        {
+            field.OnCardChanged += (fieldCardRecord, changeCode) =>
+            {
+                if (changeCode == DataChangeCode.Add)
+                {
+                    CardRecord record;
+                    if (GameCardManager.FindCard(fieldCardRecord.CardRecordID, out record) && record is ServantCardRecord)
+                    {
+                        (record as ServantCardRecord).OnDestroyed += (servantCard) =>
+                        {
+                            field.RemoveCard(fieldCardRecord.CardRecordID);
+                        };
+                    }
+                }
+            };
+        }
+
         public bool TargetDisplayServant(int gamePlayerID, int servantCardRecordID, int positionIndex, int targetID, bool isTargetServant)
         {
-            if (CurrentGamePlayerID != gamePlayerID || gamePlayerID != 1 && gamePlayerID != 2)
+            if (CurrentGamePlayerID != gamePlayerID)
                 return false;
             Field field = (gamePlayerID == 1) ? Field1 : Field2;
             if (!field.DisplayCheck(positionIndex))
@@ -264,7 +362,7 @@ namespace HearthStone.Library
         }
         public bool NonTargetDisplayServant(int gamePlayerID, int servantCardRecordID, int positionIndex)
         {
-            if (CurrentGamePlayerID != gamePlayerID || gamePlayerID != 1 && gamePlayerID != 2)
+            if (CurrentGamePlayerID != gamePlayerID)
                 return false;
             Field field = (gamePlayerID == 1) ? Field1 : Field2;
             if (!field.DisplayCheck(positionIndex))
@@ -296,7 +394,7 @@ namespace HearthStone.Library
         }
         public bool TargetCastSpell(int gamePlayerID, int spellCardRecordID, int targetID, bool isTargetServant)
         {
-            if (CurrentGamePlayerID != gamePlayerID || gamePlayerID != 1 && gamePlayerID != 2)
+            if (CurrentGamePlayerID != gamePlayerID)
                 return false;
             CardRecord spellCardRecord;
             if (!GameCardManager.FindCard(spellCardRecordID, out spellCardRecord) || !(spellCardRecord is SpellCardRecord))
@@ -363,7 +461,7 @@ namespace HearthStone.Library
         }
         public bool NonTargeCasttSpell(int gamePlayerID, int spellCardRecordID)
         {
-            if (CurrentGamePlayerID != gamePlayerID || gamePlayerID != 1 && gamePlayerID != 2)
+            if (CurrentGamePlayerID != gamePlayerID)
                 return false;
             CardRecord spellCardRecord;
             if (!GameCardManager.FindCard(spellCardRecordID, out spellCardRecord) || !(spellCardRecord is SpellCardRecord))
@@ -390,7 +488,7 @@ namespace HearthStone.Library
         }
         //public bool TargetEquipWeapon(int gamePlayerID, int weaponCardRecordID, int targetID, bool isTargetServant)
         //{
-        //    if (CurrentGamePlayerID != gamePlayerID || gamePlayerID != 1 && gamePlayerID != 2)
+        //    if (CurrentGamePlayerID != gamePlayerID)
         //        return false;
         //    CardRecord weaponCardRecord;
         //    if (!GameCardManager.FindCard(weaponCardRecordID, out weaponCardRecord) || !(weaponCardRecord is WeaponCardRecord))
@@ -458,7 +556,7 @@ namespace HearthStone.Library
         //}
         public bool NonTargetEquipWeapon(int gamePlayerID, int weaponCardRecordID)
         {
-            if (CurrentGamePlayerID != gamePlayerID || gamePlayerID != 1 && gamePlayerID != 2)
+            if (CurrentGamePlayerID != gamePlayerID)
                 return false;
             CardRecord weaponCardRecord;
             if (!GameCardManager.FindCard(weaponCardRecordID, out weaponCardRecord) || !(weaponCardRecord is WeaponCardRecord))
@@ -486,7 +584,7 @@ namespace HearthStone.Library
         }
         public bool ServantAttack(int gamePlayerID, int servantCardRecordID, int targetID, bool isTargetServant)
         {
-            if (CurrentGamePlayerID != gamePlayerID || gamePlayerID != 1 && gamePlayerID != 2)
+            if (CurrentGamePlayerID != gamePlayerID)
                 return false;
             CardRecord servantCardRecord;
             if (!GameCardManager.FindCard(servantCardRecordID, out servantCardRecord) || !(servantCardRecord is ServantCardRecord))
@@ -506,7 +604,7 @@ namespace HearthStone.Library
             }
             else
             {
-                if (targetID != 1 && targetID != 2)
+                if (targetID != 1 && targetID != 2 || targetID == CurrentGamePlayerID)
                     return false;
                 else
                 {
@@ -517,7 +615,7 @@ namespace HearthStone.Library
         }
         public bool HeroAttack(int gamePlayerID, int targetID, bool isTargetServant)
         {
-            if (CurrentGamePlayerID != gamePlayerID || gamePlayerID != 1 && gamePlayerID != 2)
+            if (CurrentGamePlayerID != gamePlayerID)
                 return false;
             GamePlayer gamePlayer = (gamePlayerID == 1) ? GamePlayer1 : GamePlayer2;
             if (isTargetServant)
@@ -534,7 +632,7 @@ namespace HearthStone.Library
             }
             else
             {
-                if (targetID != 1 && targetID != 2)
+                if (targetID != 1 && targetID != 2 || targetID == CurrentGamePlayerID)
                     return false;
                 else
                 {
@@ -542,103 +640,6 @@ namespace HearthStone.Library
                     return gamePlayer.Hero.AttackHero(hero, gamePlayer);
                 }
             }
-        }
-        public Field OpponentField(int gamePlayerID)
-        {
-            if(gamePlayerID == 1)
-            {
-                return Field2;
-            }
-            else if(gamePlayerID == 2)
-            {
-                return Field1;
-            }
-            else
-            {
-                return null;
-            }
-        }
-        public Field SelfField(int gamePlayerID)
-        {
-            if (gamePlayerID == 1)
-            {
-                return Field1;
-            }
-            else if (gamePlayerID == 2)
-            {
-                return Field2;
-            }
-            else
-            {
-                return null;
-            }
-        }
-        public GamePlayer OpponentGamePlayer(int gamePlayerID)
-        {
-            if (gamePlayerID == 1)
-            {
-                return GamePlayer2;
-            }
-            else if (gamePlayerID == 2)
-            {
-                return GamePlayer1;
-            }
-            else
-            {
-                return null;
-            }
-        }
-        public GamePlayer SelfGamePlayer(int gamePlayerID)
-        {
-            if (gamePlayerID == 1)
-            {
-                return GamePlayer1;
-            }
-            else if (gamePlayerID == 2)
-            {
-                return GamePlayer2;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        private void AssemblyGamePlayerEvents(GamePlayer gamePlayer)
-        {
-            gamePlayer.OnHasChangedHandChanged += DetectGamePlayerChangeHand;
-            gamePlayer.Hero.OnRemainedHP_Changed += GameOverTest;
-            gamePlayer.Hero.OnWeaponChanged += Hero_OnWeaponChanged;
-        }
-
-        private void Hero_OnWeaponChanged(Hero hero, DataChangeCode changeCode)
-        {
-            if(changeCode == DataChangeCode.Remove)
-            {
-                CardRecord record;
-                if (GameCardManager.FindCard(hero.WeaponCardRecordID, out record) && record is WeaponCardRecord)
-                {
-                    (record as WeaponCardRecord).Destroy();
-                }
-            }
-        }
-
-        private void AssemblyFieldEvents(Field field)
-        {
-            field.OnCardChanged += (fieldCardRecord, changeCode) => 
-            {
-                if(changeCode == DataChangeCode.Add)
-                {
-                    CardRecord record;
-                    if (GameCardManager.FindCard(fieldCardRecord.CardRecordID, out record) && record is ServantCardRecord)
-                    {
-                        (record as ServantCardRecord).OnDestroyed += (servantCard) =>
-                        {
-                            field.RemoveCard(fieldCardRecord.CardRecordID);
-                        };
-                    }
-                }
-            };
         }
     }
 }

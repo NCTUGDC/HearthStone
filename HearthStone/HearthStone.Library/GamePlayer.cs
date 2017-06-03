@@ -1,4 +1,5 @@
 ﻿using HearthStone.Library.CommunicationInfrastructure.Event.Managers;
+using HearthStone.Library.CardRecords;
 using HearthStone.Protocol;
 using MsgPack.Serialization;
 using System;

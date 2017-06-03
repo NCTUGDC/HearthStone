@@ -10,8 +10,8 @@ namespace HearthStone.Library.Effectors
 
         public int SpellDamage()
         {
-            Effect effect;
-            if(CardManager.Instance.FindEffect(EffectID, out effect) && effect is SpellDamageEffect)
+            Effect effect = Effect;
+            if (effect != null && effect is SpellDamageEffect)
             {
                 return (effect as SpellDamageEffect).Damage;
             }
