@@ -415,7 +415,7 @@ namespace HearthStone.Library.Test.GameSystemTest
             #endregion
 
             #region operations 玩家1出"傷害A"對"手下A"造成效果
-            Assert.IsTrue(game.TargetCastSpell(1, spellCards[2].CardRecordID, servantCards[0].CardRecordID, true));
+            Assert.IsTrue(game.TargetCastSpell(1, spellCards[0].CardRecordID, servantCards[0].CardRecordID, true));
             #endregion
 
             #region game
