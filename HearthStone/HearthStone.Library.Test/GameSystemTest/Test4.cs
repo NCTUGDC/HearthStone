@@ -16,7 +16,69 @@ namespace HearthStone.Library.Test.GameSystemTest
             //確認手牌與法力水晶變化
             //"衝鋒手下"攻擊敵方手下A
             //確認敵方場上手下的血量與生存狀況
-            Assert.Fail();
+            #region initial
+            Game game = GameSystemTestEnvironment.EmptyGame(1, 1);
+            var servantCards = GameSystemTestEnvironment.GameWithServantCardRecordState(game, new List<int>
+            { 7, 1, 1 });
+            GameSystemTestEnvironment.GameWithGamePlayerHandState(game, 1, new List<int> { servantCards[0].CardRecordID });
+            GameSystemTestEnvironment.GameWithGamePlayerManaCrystalState(game, 1, 10, 10);
+            GameSystemTestEnvironment.GameWithFieldState(game, new List<int>(), new List<int> { servantCards[1].CardRecordID, servantCards[2].CardRecordID });
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            Assert.AreEqual(2, game.Field2.ServantCount);
+            Assert.AreEqual(2, servantCards[1].RemainedHealth);
+            Assert.AreEqual(2, servantCards[2].RemainedHealth);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(1, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(10, game.GamePlayer1.RemainedManaCrystal);
+            #endregion
+
+            #region operations 玩家1出"衝鋒手下"
+            Assert.IsTrue(game.NonTargetDisplayServant(1, servantCards[0].CardRecordID, 0));
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            Assert.AreEqual(1, game.Field1.ServantCount);
+            Assert.AreEqual(2, game.Field2.ServantCount);
+            Assert.IsTrue(servantCards[0].IsDisplayInThisTurn);
+            Assert.AreEqual(0, servantCards[0].AttackCountInThisTurn);
+            Assert.AreEqual(1, servantCards[0].RemainedHealth);
+            Assert.AreEqual(2, servantCards[1].RemainedHealth);
+            Assert.AreEqual(2, servantCards[2].RemainedHealth);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(0, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(9, game.GamePlayer1.RemainedManaCrystal);
+            #endregion
+
+            #region operations "衝鋒手下"攻擊敵方手下A
+            Assert.IsTrue(game.ServantAttack(1, servantCards[0].CardRecordID, servantCards[1].CardRecordID, true));
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            Assert.AreEqual(0, game.Field1.ServantCount);
+            Assert.AreEqual(2, game.Field2.ServantCount);
+            Assert.IsTrue(servantCards[0].IsDisplayInThisTurn);
+            Assert.AreEqual(1, servantCards[0].AttackCountInThisTurn);
+            Assert.AreEqual(0, servantCards[0].RemainedHealth);
+            Assert.AreEqual(1, servantCards[1].RemainedHealth);
+            Assert.AreEqual(2, servantCards[2].RemainedHealth);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(0, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(9, game.GamePlayer1.RemainedManaCrystal);
+            #endregion
         }
         [TestMethod]
         public void Episode_ServantAttack_嘲諷效果_TestMethod1()
