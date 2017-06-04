@@ -108,7 +108,48 @@ namespace HearthStone.Library.Test.GameSystemTest
             //輪到1號玩家 玩家1出"摧毀" 對象為敵方位置1的手下
             //確認手牌與法力水晶變化
             //確認敵方場上手下的血量與生存狀況
-            Assert.Fail();
+            #region initial
+            Game game = GameSystemTestEnvironment.EmptyGame(1, 1);
+            var spellCards = GameSystemTestEnvironment.GameWithSpellCardRecordState(game, new List<int>
+            { 24 });
+            var servantCards = GameSystemTestEnvironment.GameWithServantCardRecordState(game, new List<int>
+            { 1, 2, 3 });
+            GameSystemTestEnvironment.GameWithGamePlayerHandState(game, 1, new List<int> { spellCards[0].CardRecordID });
+            GameSystemTestEnvironment.GameWithGamePlayerManaCrystalState(game, 1, 10, 10);
+            GameSystemTestEnvironment.GameWithFieldState(game, new List<int>(), servantCards.Select(x => x.CardRecordID).ToList());
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            Assert.AreEqual(3, game.Field2.ServantCount);
+            Assert.AreEqual(2, servantCards[0].RemainedHealth);
+            Assert.AreEqual(3, servantCards[1].RemainedHealth);
+            Assert.AreEqual(4, servantCards[2].RemainedHealth);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(1, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(10, game.GamePlayer1.RemainedManaCrystal);
+            #endregion
+
+            #region operations 玩家1出"摧毀" 對象為敵方位置1的手下
+            Assert.IsTrue(game.TargetCastSpell(1, spellCards[0].CardRecordID, servantCards[0].CardRecordID, true));
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            Assert.AreEqual(2, game.Field2.ServantCount);
+            Assert.AreEqual(2, servantCards[0].RemainedHealth);
+            Assert.AreEqual(3, servantCards[1].RemainedHealth);
+            Assert.AreEqual(4, servantCards[2].RemainedHealth);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(0, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(5, game.GamePlayer1.RemainedManaCrystal);
+            #endregion
         }
         [TestMethod]
         public void Episode_CastSpell_生命加倍_TestMethod1()
