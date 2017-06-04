@@ -59,7 +59,46 @@ namespace HearthStone.Library.Test.GameSystemTest
             //開始一場空的遊戲 設定玩家1手牌"抽牌2"*1 牌組有CardID1~6的卡各1張 法力水晶10/10
             //輪到1號玩家 玩家1出"抽牌2"
             //確認手牌與法力水晶變化
-            Assert.Fail();
+            #region initial
+            Game game = GameSystemTestEnvironment.EmptyGame(1, 1);
+            var spellCards = GameSystemTestEnvironment.GameWithSpellCardRecordState(game, new List<int>
+            { 19 });
+            var servantCards = GameSystemTestEnvironment.GameWithServantCardRecordState(game, new List<int>
+            { 1, 2, 3, 4, 5, 6 });
+            GameSystemTestEnvironment.GameWithGamePlayerDeckState(game, 1, servantCards.Select(x => x.CardRecordID).ToList());
+            GameSystemTestEnvironment.GameWithGamePlayerHandState(game, 1, new List<int> { spellCards[0].CardRecordID });
+            GameSystemTestEnvironment.GameWithGamePlayerManaCrystalState(game, 1, 10, 10);
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(6, game.GamePlayer1.Deck.CardRecordIDs.Count());
+            Assert.AreEqual(1, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(10, game.GamePlayer1.RemainedManaCrystal);
+            #endregion
+
+            #region operations 玩家1出"抽牌1"
+            Assert.IsTrue(game.NonTargeCasttSpell(1, spellCards[0].CardRecordID));
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(3, game.GamePlayer1.Deck.CardRecordIDs.Count());
+            Assert.AreEqual(3, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(5, game.GamePlayer1.RemainedManaCrystal);
+            int[] handCardIDs = game.GamePlayer1.HandCardIDs.ToArray();
+            Assert.AreEqual(handCardIDs[0], servantCards[0].CardRecordID);
+            Assert.AreEqual(handCardIDs[1], servantCards[1].CardRecordID);
+            Assert.AreEqual(handCardIDs[2], servantCards[2].CardRecordID);
+            #endregion
         }
         [TestMethod]
         public void Episode_CastSpell_摧毀_TestMethod1()
