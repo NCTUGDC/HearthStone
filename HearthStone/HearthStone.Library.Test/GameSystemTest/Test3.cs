@@ -486,7 +486,141 @@ namespace HearthStone.Library.Test.GameSystemTest
             //確認手牌與法力水晶變化
             //確認場上手下的攻擊與血量
             //確認雙方英雄的血量
-            Assert.Fail();
+            #region initial
+            Game game = GameSystemTestEnvironment.EmptyGame(1, 1);
+            var spellCards = GameSystemTestEnvironment.GameWithSpellCardRecordState(game, new List<int>
+            { 29, 29, 29, 29 });
+            var servantCards = GameSystemTestEnvironment.GameWithServantCardRecordState(game, new List<int>
+            { 6, 6 });
+            servantCards[0].RemainedHealth = 3;
+            game.GamePlayer1.Hero.RemainedHP = 10;
+            servantCards[1].RemainedHealth = 1;
+            game.GamePlayer2.Hero.RemainedHP = 28;
+            GameSystemTestEnvironment.GameWithGamePlayerHandState(game, 1, spellCards.Select(x => x.CardRecordID).ToList());
+            GameSystemTestEnvironment.GameWithGamePlayerManaCrystalState(game, 1, 10, 10);
+            GameSystemTestEnvironment.GameWithFieldState(game, new List<int> { servantCards[0].CardRecordID }, new List<int> { servantCards[1].CardRecordID });
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            Assert.AreEqual(3, servantCards[0].RemainedHealth);
+            Assert.AreEqual(7, servantCards[0].Health);
+            Assert.AreEqual(1, servantCards[1].RemainedHealth);
+            Assert.AreEqual(7, servantCards[1].Health);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(4, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(10, game.GamePlayer1.RemainedManaCrystal);
+            Assert.AreEqual(10, game.GamePlayer1.Hero.RemainedHP);
+            Assert.AreEqual(30, game.GamePlayer1.Hero.HP);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(28, game.GamePlayer2.Hero.RemainedHP);
+            Assert.AreEqual(30, game.GamePlayer2.Hero.HP);
+            #endregion
+
+            #region operations 玩家1出"回血A" 對象為我方的手下
+            Assert.IsTrue(game.TargetCastSpell(1, spellCards[0].CardRecordID, servantCards[0].CardRecordID, true));
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            Assert.AreEqual(7, servantCards[0].RemainedHealth);
+            Assert.AreEqual(7, servantCards[0].Health);
+            Assert.AreEqual(1, servantCards[1].RemainedHealth);
+            Assert.AreEqual(7, servantCards[1].Health);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(3, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(9, game.GamePlayer1.RemainedManaCrystal);
+            Assert.AreEqual(10, game.GamePlayer1.Hero.RemainedHP);
+            Assert.AreEqual(30, game.GamePlayer1.Hero.HP);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(28, game.GamePlayer2.Hero.RemainedHP);
+            Assert.AreEqual(30, game.GamePlayer2.Hero.HP);
+            #endregion
+
+            #region operations 玩家1出"回血A" 對象為敵方的手下
+            Assert.IsTrue(game.TargetCastSpell(1, spellCards[1].CardRecordID, servantCards[1].CardRecordID, true));
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            Assert.AreEqual(7, servantCards[0].RemainedHealth);
+            Assert.AreEqual(7, servantCards[0].Health);
+            Assert.AreEqual(5, servantCards[1].RemainedHealth);
+            Assert.AreEqual(7, servantCards[1].Health);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(2, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(8, game.GamePlayer1.RemainedManaCrystal);
+            Assert.AreEqual(10, game.GamePlayer1.Hero.RemainedHP);
+            Assert.AreEqual(30, game.GamePlayer1.Hero.HP);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(28, game.GamePlayer2.Hero.RemainedHP);
+            Assert.AreEqual(30, game.GamePlayer2.Hero.HP);
+            #endregion
+
+            #region operations 玩家1出"回血A" 對象為敵方的英雄
+            Assert.IsTrue(game.TargetCastSpell(1, spellCards[2].CardRecordID, 2, false));
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            Assert.AreEqual(7, servantCards[0].RemainedHealth);
+            Assert.AreEqual(7, servantCards[0].Health);
+            Assert.AreEqual(5, servantCards[1].RemainedHealth);
+            Assert.AreEqual(7, servantCards[1].Health);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(1, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(7, game.GamePlayer1.RemainedManaCrystal);
+            Assert.AreEqual(10, game.GamePlayer1.Hero.RemainedHP);
+            Assert.AreEqual(30, game.GamePlayer1.Hero.HP);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(30, game.GamePlayer2.Hero.RemainedHP);
+            Assert.AreEqual(30, game.GamePlayer2.Hero.HP);
+            #endregion
+
+            #region operations 玩家1出"回血A" 對象為我方的英雄
+            Assert.IsTrue(game.TargetCastSpell(1, spellCards[3].CardRecordID, 1, false));
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            Assert.AreEqual(7, servantCards[0].RemainedHealth);
+            Assert.AreEqual(7, servantCards[0].Health);
+            Assert.AreEqual(5, servantCards[1].RemainedHealth);
+            Assert.AreEqual(7, servantCards[1].Health);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(0, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(6, game.GamePlayer1.RemainedManaCrystal);
+            Assert.AreEqual(14, game.GamePlayer1.Hero.RemainedHP);
+            Assert.AreEqual(30, game.GamePlayer1.Hero.HP);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(30, game.GamePlayer2.Hero.RemainedHP);
+            Assert.AreEqual(30, game.GamePlayer2.Hero.HP);
+            #endregion
         }
     }
 }
