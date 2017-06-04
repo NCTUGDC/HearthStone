@@ -95,8 +95,121 @@ namespace HearthStone.Library.Test.GameSystemTest
             //"手下A"攻擊玩家1英雄 -失敗
             //確認手下A與玩家1英雄的血量與手下A本回合攻擊次數
             //"手下A"攻擊嘲諷手下
-            //確認敵方場上手下的血量與生存狀況
-            Assert.Fail();
+            //確認手下A本回合攻擊次數
+            //確認場上手下的血量與生存狀況
+            #region initial
+            Game game = GameSystemTestEnvironment.EmptyGame(1, 1);
+            var servantCards = GameSystemTestEnvironment.GameWithServantCardRecordState(game, new List<int>
+            { 8, 1 });
+            GameSystemTestEnvironment.GameWithGamePlayerHandState(game, 1, new List<int> { servantCards[0].CardRecordID });
+            GameSystemTestEnvironment.GameWithGamePlayerManaCrystalState(game, 1, 10, 10);
+            GameSystemTestEnvironment.GameWithFieldState(game, new List<int>(), new List<int> { servantCards[1].CardRecordID });
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            Assert.AreEqual(1, game.Field2.ServantCount);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(1, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(10, game.GamePlayer1.RemainedManaCrystal);
+            #endregion
+
+            #region operations 玩家1出"嘲諷手下"
+            Assert.IsTrue(game.NonTargetDisplayServant(1, servantCards[0].CardRecordID, 0));
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            Assert.AreEqual(1, game.Field1.ServantCount);
+            Assert.AreEqual(1, game.Field2.ServantCount);
+            Assert.IsTrue(game.Field1.AnyTauntServant());
+            Assert.IsTrue(servantCards[0].IsDisplayInThisTurn);
+            Assert.AreEqual(0, servantCards[0].AttackCountInThisTurn);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(0, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(8, game.GamePlayer1.RemainedManaCrystal);
+            #endregion
+
+            #region operations "嘲諷手下"攻擊"手下A" -失敗
+            Assert.IsFalse(game.ServantAttack(1, servantCards[0].CardRecordID, servantCards[1].CardRecordID, true));
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            Assert.AreEqual(1, game.Field1.ServantCount);
+            Assert.AreEqual(1, game.Field2.ServantCount);
+            Assert.IsTrue(game.Field1.AnyTauntServant());
+            Assert.IsTrue(servantCards[0].IsDisplayInThisTurn);
+            Assert.AreEqual(0, servantCards[0].AttackCountInThisTurn);
+            Assert.AreEqual(2, servantCards[1].RemainedHealth);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(0, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(8, game.GamePlayer1.RemainedManaCrystal);
+            #endregion
+
+            #region operations 結束回合
+            game.EndRound();
+            #endregion
+
+            #region game
+            Assert.AreEqual(2, game.CurrentGamePlayerID);
+            Assert.AreEqual(1, game.Field1.ServantCount);
+            Assert.AreEqual(1, game.Field2.ServantCount);
+            Assert.IsTrue(game.Field1.AnyTauntServant());
+            Assert.IsFalse(servantCards[1].IsDisplayInThisTurn);
+            Assert.AreEqual(0, servantCards[1].AttackCountInThisTurn);
+            Assert.AreEqual(2, servantCards[0].RemainedHealth);
+            Assert.AreEqual(2, servantCards[1].RemainedHealth);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(0, game.GamePlayer2.HandCardIDs.Count());
+            Assert.AreEqual(1, game.GamePlayer2.ManaCrystal);
+            Assert.AreEqual(1, game.GamePlayer2.RemainedManaCrystal);
+            #endregion
+
+            #region operations "手下A"攻擊玩家1英雄 -失敗
+            Assert.IsFalse(game.ServantAttack(2, servantCards[1].CardRecordID, 1, false));
+            #endregion
+
+            #region game
+            Assert.AreEqual(2, game.CurrentGamePlayerID);
+            Assert.AreEqual(1, game.Field1.ServantCount);
+            Assert.AreEqual(1, game.Field2.ServantCount);
+            Assert.IsTrue(game.Field1.AnyTauntServant());
+            Assert.IsFalse(servantCards[1].IsDisplayInThisTurn);
+            Assert.AreEqual(0, servantCards[1].AttackCountInThisTurn);
+            Assert.AreEqual(2, servantCards[0].RemainedHealth);
+            Assert.AreEqual(2, servantCards[1].RemainedHealth);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(30, game.GamePlayer1.Hero.RemainedHP);
+            #endregion
+
+            #region operations "手下A"攻擊嘲諷手下
+            Assert.IsTrue(game.ServantAttack(2, servantCards[1].CardRecordID, servantCards[0].CardRecordID, true));
+            #endregion 
+
+            #region game
+            Assert.AreEqual(2, game.CurrentGamePlayerID);
+            Assert.AreEqual(1, game.Field1.ServantCount);
+            Assert.AreEqual(1, game.Field2.ServantCount);
+            Assert.IsTrue(game.Field1.AnyTauntServant());
+            Assert.IsFalse(servantCards[1].IsDisplayInThisTurn);
+            Assert.AreEqual(1, servantCards[1].AttackCountInThisTurn);
+            Assert.AreEqual(1, servantCards[0].RemainedHealth);
+            Assert.AreEqual(1, servantCards[1].RemainedHealth);
+            #endregion
         }
         [TestMethod]
         public void Episode_ServantAttack_風怒效果_TestMethod1()
