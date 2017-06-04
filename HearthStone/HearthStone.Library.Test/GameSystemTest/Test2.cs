@@ -316,7 +316,56 @@ namespace HearthStone.Library.Test.GameSystemTest
             //確認手牌與法力水晶變化
             //確認敵方場上手下的血量與生存狀況
             //確認敵方英雄血量狀況
-            Assert.Fail();
+            #region initial
+            Game game = GameSystemTestEnvironment.EmptyGame(1, 1);
+            var spellCards = GameSystemTestEnvironment.GameWithSpellCardRecordState(game, new List<int>
+            { 23 });
+            var servantCards = GameSystemTestEnvironment.GameWithServantCardRecordState(game, new List<int>
+            { 6, 6 });
+            GameSystemTestEnvironment.GameWithGamePlayerHandState(game, 1, new List<int> { spellCards[0].CardRecordID });
+            GameSystemTestEnvironment.GameWithGamePlayerManaCrystalState(game, 1, 10, 10);
+            GameSystemTestEnvironment.GameWithFieldState(game, new List<int>(), new List<int> { servantCards[0].CardRecordID, servantCards[1].CardRecordID });
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            Assert.AreEqual(2, game.Field2.ServantCount);
+            Assert.AreEqual(7, servantCards[0].RemainedHealth);
+            Assert.AreEqual(7, servantCards[1].RemainedHealth);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(1, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(10, game.GamePlayer1.RemainedManaCrystal);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(30, game.GamePlayer2.Hero.RemainedHP);
+            Assert.AreEqual(30, game.GamePlayer2.Hero.HP);
+            #endregion
+
+            #region operations 玩家1出"傷害D"對敵方英雄釋放效果
+            Assert.IsTrue(game.TargetCastSpell(1, spellCards[0].CardRecordID, 2, false));
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            Assert.AreEqual(2, game.Field2.ServantCount);
+            Assert.AreEqual(7, servantCards[0].RemainedHealth);
+            Assert.AreEqual(7, servantCards[1].RemainedHealth);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(0, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(0, game.GamePlayer1.RemainedManaCrystal);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(20, game.GamePlayer2.Hero.RemainedHP);
+            Assert.AreEqual(30, game.GamePlayer2.Hero.HP);
+            #endregion
         }
     }
 }
