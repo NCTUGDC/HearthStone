@@ -166,7 +166,66 @@ namespace HearthStone.Library.Test.GameSystemTest
             //玩家1出"生命加倍" 對象為敵方的手下
             //確認手牌與法力水晶變化
             //確認場上手下的攻擊與血量
-            Assert.Fail();
+            #region initial
+            Game game = GameSystemTestEnvironment.EmptyGame(1, 1);
+            var spellCards = GameSystemTestEnvironment.GameWithSpellCardRecordState(game, new List<int>
+            { 26, 26 });
+            var servantCards = GameSystemTestEnvironment.GameWithServantCardRecordState(game, new List<int>
+            { 1, 1 });
+            GameSystemTestEnvironment.GameWithGamePlayerHandState(game, 1, spellCards.Select(x => x.CardRecordID).ToList());
+            GameSystemTestEnvironment.GameWithGamePlayerManaCrystalState(game, 1, 10, 10);
+            GameSystemTestEnvironment.GameWithFieldState(game, new List<int> { servantCards[0].CardRecordID }, new List<int> { servantCards[1].CardRecordID });
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            Assert.AreEqual(2, servantCards[0].RemainedHealth);
+            Assert.AreEqual(2, servantCards[0].Health);
+            Assert.AreEqual(2, servantCards[1].RemainedHealth);
+            Assert.AreEqual(2, servantCards[1].Health);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(2, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(10, game.GamePlayer1.RemainedManaCrystal);
+            #endregion
+
+            #region operations 玩家1出"生命加倍" 對象為我方的手下
+            Assert.IsTrue(game.TargetCastSpell(1, spellCards[0].CardRecordID, servantCards[0].CardRecordID, true));
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            Assert.AreEqual(4, servantCards[0].RemainedHealth);
+            Assert.AreEqual(4, servantCards[0].Health);
+            Assert.AreEqual(2, servantCards[1].RemainedHealth);
+            Assert.AreEqual(2, servantCards[1].Health);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(1, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(8, game.GamePlayer1.RemainedManaCrystal);
+            #endregion
+
+            #region operations 玩家1出"生命加倍" 對象為敵方的手下
+            Assert.IsTrue(game.TargetCastSpell(1, spellCards[1].CardRecordID, servantCards[1].CardRecordID, true));
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            Assert.AreEqual(4, servantCards[0].RemainedHealth);
+            Assert.AreEqual(4, servantCards[0].Health);
+            Assert.AreEqual(4, servantCards[1].RemainedHealth);
+            Assert.AreEqual(4, servantCards[1].Health);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(0, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(6, game.GamePlayer1.RemainedManaCrystal);
+            #endregion
         }
         [TestMethod]
         public void Episode_CastSpell_攻擊加倍_TestMethod1()
