@@ -266,7 +266,46 @@ namespace HearthStone.Library.Test.GameSystemTest
             //輪到1號玩家 玩家1出"傷害C"對位置1的手下釋放效果
             //確認手牌與法力水晶變化
             //確認敵方場上手下的血量與生存狀況
-            Assert.Fail();
+            #region initial
+            Game game = GameSystemTestEnvironment.EmptyGame(1, 1);
+            var spellCards = GameSystemTestEnvironment.GameWithSpellCardRecordState(game, new List<int>
+            { 22 });
+            var servantCards = GameSystemTestEnvironment.GameWithServantCardRecordState(game, new List<int>
+            { 6, 6 });
+            GameSystemTestEnvironment.GameWithGamePlayerHandState(game, 1, new List<int> { spellCards[0].CardRecordID });
+            GameSystemTestEnvironment.GameWithGamePlayerManaCrystalState(game, 1, 10, 10);
+            GameSystemTestEnvironment.GameWithFieldState(game, new List<int>(), new List<int> { servantCards[0].CardRecordID, servantCards[1].CardRecordID });
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            Assert.AreEqual(2, game.Field2.ServantCount);
+            Assert.AreEqual(7, servantCards[0].RemainedHealth);
+            Assert.AreEqual(7, servantCards[1].RemainedHealth);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(1, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(10, game.GamePlayer1.RemainedManaCrystal);
+            #endregion
+
+            #region operations 玩家1出"傷害C"對位置0的手下釋放效果
+            Assert.IsTrue(game.TargetCastSpell(1, spellCards[0].CardRecordID, servantCards[0].CardRecordID, true));
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            Assert.AreEqual(2, game.Field2.ServantCount);
+            Assert.AreEqual(1, servantCards[0].RemainedHealth);
+            Assert.AreEqual(7, servantCards[1].RemainedHealth);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(0, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(6, game.GamePlayer1.RemainedManaCrystal);
+            #endregion
         }
         [TestMethod]
         public void Episode_CastSpell_傷害D_TestMethod1()
