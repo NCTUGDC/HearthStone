@@ -229,7 +229,189 @@ namespace HearthStone.Library.Test.GameSystemTest
             //確認"風怒手下"與玩家2英雄的血量與"風怒手下"本回合攻擊次數
             //"風怒手下"攻擊玩家2英雄 -失敗
             //確認"風怒手下"與玩家2英雄的血量與"風怒手下"本回合攻擊次數
-            Assert.Fail();
+            #region initial
+            Game game = GameSystemTestEnvironment.EmptyGame(1, 1);
+            var servantCards = GameSystemTestEnvironment.GameWithServantCardRecordState(game, new List<int>
+            { 9 });
+            GameSystemTestEnvironment.GameWithGamePlayerHandState(game, 1, new List<int> { servantCards[0].CardRecordID });
+            GameSystemTestEnvironment.GameWithGamePlayerManaCrystalState(game, 1, 10, 10);
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            Assert.IsFalse(servantCards[0].IsDisplayInThisTurn);
+            Assert.AreEqual(0, servantCards[0].AttackCountInThisTurn);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(1, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(10, game.GamePlayer1.RemainedManaCrystal);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(30, game.GamePlayer2.Hero.RemainedHP);
+            #endregion
+
+            #region operations 玩家1出"風怒手下"
+            Assert.IsTrue(game.NonTargetDisplayServant(1, servantCards[0].CardRecordID, 0));
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            Assert.IsTrue(servantCards[0].IsDisplayInThisTurn);
+            Assert.AreEqual(0, servantCards[0].AttackCountInThisTurn);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(0, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(7, game.GamePlayer1.RemainedManaCrystal);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(30, game.GamePlayer2.Hero.RemainedHP);
+            #endregion
+
+            #region operations "風怒手下"攻擊敵方英雄 -失敗
+            Assert.IsFalse(game.ServantAttack(1, servantCards[0].CardRecordID, 2, false));
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            Assert.IsTrue(servantCards[0].IsDisplayInThisTurn);
+            Assert.AreEqual(0, servantCards[0].AttackCountInThisTurn);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(0, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(7, game.GamePlayer1.RemainedManaCrystal);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(30, game.GamePlayer2.Hero.RemainedHP);
+            #endregion
+
+            #region operations 結束回合
+            game.EndRound();
+            #endregion
+
+            #region game
+            Assert.AreEqual(2, game.CurrentGamePlayerID);
+            Assert.IsTrue(servantCards[0].IsDisplayInThisTurn);
+            Assert.AreEqual(0, servantCards[0].AttackCountInThisTurn);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(0, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(7, game.GamePlayer1.RemainedManaCrystal);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(30, game.GamePlayer2.Hero.RemainedHP);
+            #endregion
+
+            #region operations "風怒手下"攻擊敵方英雄 -失敗
+            Assert.IsFalse(game.ServantAttack(1, servantCards[0].CardRecordID, 2, false));
+            #endregion
+
+            #region game
+            Assert.AreEqual(2, game.CurrentGamePlayerID);
+            Assert.IsTrue(servantCards[0].IsDisplayInThisTurn);
+            Assert.AreEqual(0, servantCards[0].AttackCountInThisTurn);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(0, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(7, game.GamePlayer1.RemainedManaCrystal);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(30, game.GamePlayer2.Hero.RemainedHP);
+            #endregion
+
+            #region operations 結束回合
+            game.EndRound();
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            Assert.IsFalse(servantCards[0].IsDisplayInThisTurn);
+            Assert.AreEqual(0, servantCards[0].AttackCountInThisTurn);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(0, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(10, game.GamePlayer1.RemainedManaCrystal);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(30, game.GamePlayer2.Hero.RemainedHP);
+            #endregion
+
+            #region operations "風怒手下"攻擊玩家2英雄
+            Assert.IsTrue(game.ServantAttack(1, servantCards[0].CardRecordID, 2, false));
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            Assert.IsFalse(servantCards[0].IsDisplayInThisTurn);
+            Assert.AreEqual(1, servantCards[0].AttackCountInThisTurn);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(0, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(10, game.GamePlayer1.RemainedManaCrystal);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(29, game.GamePlayer2.Hero.RemainedHP);
+            #endregion
+
+            #region operations "風怒手下"攻擊玩家2英雄
+            Assert.IsTrue(game.ServantAttack(1, servantCards[0].CardRecordID, 2, false));
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            Assert.IsFalse(servantCards[0].IsDisplayInThisTurn);
+            Assert.AreEqual(2, servantCards[0].AttackCountInThisTurn);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(0, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(10, game.GamePlayer1.RemainedManaCrystal);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(28, game.GamePlayer2.Hero.RemainedHP);
+            #endregion
+
+            #region operations "風怒手下"攻擊玩家2英雄
+            Assert.IsFalse(game.ServantAttack(1, servantCards[0].CardRecordID, 2, false));
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            Assert.IsFalse(servantCards[0].IsDisplayInThisTurn);
+            Assert.AreEqual(2, servantCards[0].AttackCountInThisTurn);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(0, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(10, game.GamePlayer1.RemainedManaCrystal);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(28, game.GamePlayer2.Hero.RemainedHP);
+            #endregion
         }
         [TestMethod]
         public void Episode_CastSpell_傷害A_手下法傷效果_TestMethod1()

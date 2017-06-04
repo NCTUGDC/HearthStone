@@ -146,6 +146,7 @@ namespace HearthStone.Library
             foreach(var card in field.Cards(GameCardManager))
             {
                 (card as ServantCardRecord).AttackCountInThisTurn = 0;
+                (card as ServantCardRecord).IsDisplayInThisTurn = false;
             }
             OnRoundStart?.Invoke(this);
             player.Draw(1);
