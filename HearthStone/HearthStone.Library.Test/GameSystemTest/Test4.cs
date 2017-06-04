@@ -438,9 +438,8 @@ namespace HearthStone.Library.Test.GameSystemTest
         [TestMethod]
         public void Episode_CastSpell_傷害A_武器與手下法傷效果_TestMethod1()
         {
-            //開始一場空的遊戲 設定玩家1手牌"法傷手下"*1 "法傷武器"*1 "傷害A"*2 法力水晶10/10
-            //輪到1號玩家 玩家1出"法傷手下"
-            //確認手牌與法力水晶變化
+            //開始一場空的遊戲 設定玩家1手牌"法傷武器"*1 "傷害A"*2 法力水晶10/10
+            //玩家1場上有 "法傷手下"*1
             //玩家1出"傷害A"對敵方英雄造成效果
             //確認手牌與法力水晶變化
             //確認敵方英雄的血量
@@ -449,7 +448,94 @@ namespace HearthStone.Library.Test.GameSystemTest
             //玩家1出"傷害A"對敵方英雄造成效果
             //確認手牌與法力水晶變化
             //確認敵方英雄的血量
-            Assert.Fail();
+            #region initial
+            Game game = GameSystemTestEnvironment.EmptyGame(1, 1);
+            var spellCards = GameSystemTestEnvironment.GameWithSpellCardRecordState(game, new List<int>
+            { 20, 20 });
+            var weaponCards = GameSystemTestEnvironment.GameWithWeaponCardRecordState(game, new List<int>
+            { 14 });
+            var servantCards = GameSystemTestEnvironment.GameWithServantCardRecordState(game, new List<int>
+            { 11});
+            GameSystemTestEnvironment.GameWithGamePlayerHandState(game, 1, new List<int> { weaponCards[0].CardRecordID, spellCards[0].CardRecordID, spellCards[1].CardRecordID });
+            GameSystemTestEnvironment.GameWithGamePlayerManaCrystalState(game, 1, 10, 10);
+            GameSystemTestEnvironment.GameWithFieldState(game, new List<int> { servantCards[0].CardRecordID }, new List<int>());
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(3, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(10, game.GamePlayer1.RemainedManaCrystal);
+            Assert.AreEqual(0, game.GamePlayer1.Hero.WeaponCardRecordID);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(30, game.GamePlayer2.Hero.RemainedHP);
+            Assert.AreEqual(30, game.GamePlayer2.Hero.HP);
+            #endregion
+
+            #region operations 玩家1出"傷害A"對敵方英雄造成效果
+            Assert.IsTrue(game.TargetCastSpell(1, spellCards[0].CardRecordID, 2, false));
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(2, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(9, game.GamePlayer1.RemainedManaCrystal);
+            Assert.AreEqual(0, game.GamePlayer1.Hero.WeaponCardRecordID);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(27, game.GamePlayer2.Hero.RemainedHP);
+            Assert.AreEqual(30, game.GamePlayer2.Hero.HP);
+            #endregion
+
+            #region operations 玩家1出"法傷武器"
+            Assert.IsTrue(game.NonTargetEquipWeapon(1, weaponCards[0].CardRecordID));
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(1, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(1, game.GamePlayer1.RemainedManaCrystal);
+            Assert.AreEqual(weaponCards[0].CardRecordID, game.GamePlayer1.Hero.WeaponCardRecordID);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(27, game.GamePlayer2.Hero.RemainedHP);
+            Assert.AreEqual(30, game.GamePlayer2.Hero.HP);
+            #endregion
+
+            #region operations 玩家1出"傷害A"對敵方英雄造成效果
+            Assert.IsTrue(game.TargetCastSpell(1, spellCards[1].CardRecordID, 2, false));
+            #endregion
+
+            #region game
+            Assert.AreEqual(1, game.CurrentGamePlayerID);
+            #endregion
+
+            #region player1
+            Assert.AreEqual(0, game.GamePlayer1.HandCardIDs.Count());
+            Assert.AreEqual(10, game.GamePlayer1.ManaCrystal);
+            Assert.AreEqual(0, game.GamePlayer1.RemainedManaCrystal);
+            Assert.AreEqual(weaponCards[0].CardRecordID, game.GamePlayer1.Hero.WeaponCardRecordID);
+            #endregion
+
+            #region player2
+            Assert.AreEqual(22, game.GamePlayer2.Hero.RemainedHP);
+            Assert.AreEqual(30, game.GamePlayer2.Hero.HP);
+            #endregion
         }
     }
 }
