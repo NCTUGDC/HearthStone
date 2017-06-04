@@ -143,6 +143,9 @@ namespace HearthStone.Library.Test.GameSystemTest
             Assert.AreEqual(2, servantCards[0].RemainedHealth);
             Assert.AreEqual(3, servantCards[1].RemainedHealth);
             Assert.AreEqual(4, servantCards[2].RemainedHealth);
+            int positionIndex1ServantID;
+            Assert.IsTrue(game.Field2.FindCardWithPositionIndex(1, out positionIndex1ServantID));
+            Assert.AreEqual(servantCards[2].CardRecordID, positionIndex1ServantID);
             #endregion
 
             #region player1
